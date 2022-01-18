@@ -26,8 +26,8 @@ assignees: ''
 ### `2.5h`
 ### `3h`
 
-# Labels
-- Estimated Time: `E: 1.5h`
-- Group: `client`
-- Sprint: `Sprint 1`
-- Urgency: `Middle`
+# Urgency
+> Pick one
+### `Low`
+### `Middle`
+### `High`
