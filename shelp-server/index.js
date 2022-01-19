@@ -24,6 +24,9 @@ app.use(
   }),
 );
 
+app.get('/', (req, res) => {
+  res.json({ text: 'HELLO' });
+});
 app.use('/', indexRouter);
 
 // app.get("/", (req, res) => {
