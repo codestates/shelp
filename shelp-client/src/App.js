@@ -9,6 +9,7 @@ import Mypage from './mypage.js';
 function App() {
   return (
     <div className="App">
+      test중입니다.
       <Switch>
         <Route>
           <Intro />
