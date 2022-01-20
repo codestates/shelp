@@ -20,35 +20,36 @@ module.exports = {
   },
   profile: {
     get: (req, res) => {
-        res.send('profile 입니다');
+      res.send('get, profile 입니다');
     },
     put: (req, res) => {
-      res.send('profile 입니다');
+      res.send('put, profile 입니다');
     },
     delete: (req, res) => {
-      res.send('profile 입니다');
+      res.send('delete, profile 입니다');
     },
   },
   recipe: {
     get: (req, res) => {
-        res.send('recipe 입니다');
+      res.send('get, recipe 입니다');
     },
     getById: (req, res) => {
-      res.send('recipe 입니다');
+      const id = req.params.id;
+      res.send(`recipe get ${id} 입니다`);
     },
   },
   user: {
     signout: (req, res) => {
-        res.send('user 입니다');
+      res.send('signout user 입니다');
     },
     signup: (req, res) => {
-      res.send('user 입니다');
+      res.send('signup user 입니다');
     },
     signin: (req, res) => {
-      res.send('user 입니다');
+      res.send('signin user 입니다');
     },
     check: (req, res) => {
-      res.send('user 입니다');
+      res.send('check user 입니다');
     },
   },
 };

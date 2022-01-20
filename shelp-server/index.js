@@ -1,42 +1,39 @@
 const express = require("express");
-const indexRouter = require('./router');
+const cookieParser = require('cookie-parser');
+const dotenv = require('dotenv');
+const morgan = require('morgan');
 const cors = require('cors');
 const app = express();
-const port = 4000;
 
-const mysql = require('mysql');
-const dotenv = require('dotenv');
-const config = require('./config/index.js');
+const config = require('./config/config.js');
+const { SERVER_PORT } = config;
+const port = SERVER_PORT || 4000;
+
 dotenv.config();
 
-const con = mysql.createConnection(
-  config[process.env.NODE_ENV || 'development']
-);
+// Routes
+const indexRouter = require('./routes');
 
-con.connect((err) => {
-  if (err) throw err;
-});
-
+// Middle-ware
+app.use(morgan('dev'));
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(cookieParser());
 app.use(
   cors({
     origin: true,
+    method: ['GET', 'POST', 'PUT', 'DELETE'],
     credentials: true,
   }),
 );
 
-app.get('/', (req, res) => {
-  res.json({ text: 'HELLO' });
-});
+// router
 app.use('/', indexRouter);
 
-// app.get("/", (req, res) => {
-//   console.log('===point a===')
-//   const queryString = `SELECT * FROM test`;
-
-//   con.query(queryString, (error, result) => {
-//     res.send(result);
-//   });
-// });
+// test용
+app.get('/', (req, res) => {
+  res.send('HELLO');
+});
 
 app.listen(port, () => {
   console.log(`server listening at http://localhost:${port}`);
