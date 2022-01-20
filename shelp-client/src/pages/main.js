@@ -2,7 +2,7 @@ import { useState, useRef, useEffect } from "react";
 import { Route, Switch, Link, Routes } from "react-router-dom";
 import styled from "styled-components";
 import Mypage from "./mypage.js";
-
+// 조건에 따라 변하는 스타일만 styled component로 만들기
 export function Main() {
   const Mainpage = styled.div`
     background-color: #f5f5f5;
@@ -67,40 +67,15 @@ export function Main() {
     setModal(!modal);
   };
 
-  // const boxRef = useRef(null);
-  // const [ScrollY, setScrollY] = useState(0);
-  // const [ScrollActive, setScrollActive] = useState(false);
-
-  // function logit() {
-  //     setScrollY(boxRef.current.scrollTop);
-  //     if (boxRef.current.scrollTop > 30) {
-  //         setScrollActive(true);
-  //     } else {
-  //         setScrollActive(false);
-  //     }
-  // }
-
-  // useEffect(() => {
-  //     function watchScroll() {
-  //         boxRef.current.addEventListener("scroll", logit);
-  //     }
-  //     watchScroll();
-  //     return () => {
-  //         boxRef.current.removeEventListener("scroll", logit);
-  //     };
-  // });
   function MainContent() {
     return (
       <Content>
         <Shelf>
-          {" "}
-          {/* left: 식재료 칸 */}
           <div className="searchArea">
             <input className="searchBar" />
             <input className="searchButton" type="button" />
           </div>
           <ScrollBox>
-            {/*useRef={boxRef}*/}
             <ul className="grocery">
               {/* props: expDate, name, quant, storage, desc */}
               <li>
@@ -120,8 +95,6 @@ export function Main() {
           <input className="addButton" type="button" value="add item" />
         </Shelf>
         <Recipes>
-          {" "}
-          {/* right: 레시피 칸 */}
           <ul>
             <li>
               <recipeimg></recipeimg>
@@ -144,7 +117,6 @@ export function Main() {
           <logo className="shelpLogo">
             <Link to="/">shelp</Link>
           </logo>
-          {/* <input className='mypageButton' type='button' value='mypage' /> */}
           <Link to="/mypage">mypage</Link>
         </Navbar>
         <Routes>
