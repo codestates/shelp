@@ -1,30 +1,15 @@
-import logo from './logo.svg';
 import './App.css';
-import { BrowserRouter, Route, Switch, Link } from 'react-router-dom';
-import Intro from './intro.js';
-import Signup from './signup.js';
-import Main from './main.js';
-import Mypage from './mypage.js'; 
+import React from 'react';
+import { Route, Switch, Link } from 'react-router-dom';
+import Intro from './pages/intro.js';
+import Signup from './pages/signup.js';
+import Main from './pages/main.js'
+import Mypage from './pages/mypage.js'; 
 
 function App() {
   return (
-    <div className="App">
-      test중입니다.
-      <Switch>
-        <Route>
-          <Intro />
-        </Route>
-        <Route>
-          <Signup />
-        </Route>
-        <Route>
-          <Main />
-        </Route>
-        <Route>
-          <Mypage />
-        </Route>
-      </Switch>
-    </div>
+    <>
+    </>
   );
 }
 
