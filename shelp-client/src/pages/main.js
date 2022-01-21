@@ -10,16 +10,9 @@ const axios = require('axios').default;
 export function Main() {
 
   const [modal, setModal] = useState(false);
-
   const modalcontroller = () => {
     setModal(!modal);
   };
-  const addItem = () => {
-
-  } 
-  const editItem = () => {
-
-  }
 
   return (
     <div>
