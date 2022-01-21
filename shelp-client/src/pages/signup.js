@@ -22,11 +22,9 @@ const Container = styled.div`
 `;
 
 function Signup() {
-  const [userInfo, setUserInfo] = useState({
-    email: "",
-    name: "",
-    password: "",
-  });
+  const [email, setEmail] = useState();
+  const [userName, setUserName] = useState();
+  const [password, setPassword] = useState();
   const [pwCheck, setPwCheck] = useState("비밀번호는 8자 이상이어야 합니다");
 
   return (
