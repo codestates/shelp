@@ -2,112 +2,65 @@ import { useState, useRef, useEffect } from "react";
 import { Route, Switch, Link, Routes } from "react-router-dom";
 import styled from "styled-components";
 import Mypage from "./mypage.js";
+import Modal from "./modals.js";
+const axios = require('axios').default;
 
+// 조건에 따라 변하는 스타일만 styled component로 만들기
 export function Main() {
-  const Mainpage = styled.div`
-    background-color: #f5f5f5;
-    width: 100%;
-    height: 500px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  `;
-  const Navbar = styled.div`
-    background-color: #cee6f5;
-    height: 50px;
-    width: 100rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0 20px;
-  `;
-  const Content = styled.div`
-    background-color: whitesmoke;
-    height: 90%;
-    width: 100rem;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around;
-  `;
-  const Shelf = styled.div`
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-    align-items: center;
-  `;
-  const Recipes = styled.div`
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: center;
-  `;
-  const Modal = styled.div`
-    background-color: slategrey;
-    height: 300px;
-    width: 300px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-    align-items: center;
-  `;
-  const Options = styled.div`
-    height: 12em;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-    align-items: center;
-  `;
-  const ScrollBox = styled.div`
-    /* overflow: scroll; */
-  `;
-
+  let temp = 'apple';
+  const [item, setItem] = useState(temp);
+  const [exp, setExp] = useState(null);
+  const [quantity, setQuantity] = useState(null);
+  const [storage, setStorage] = useState(null);
   const [modal, setModal] = useState(false);
+  const [recipes, setRecipes] = useState(null); //초기값은 데이터 없음 안내문구를 넣어줄 것
 
   const modalcontroller = () => {
     setModal(!modal);
   };
 
-  // const boxRef = useRef(null);
-  // const [ScrollY, setScrollY] = useState(0);
-  // const [ScrollActive, setScrollActive] = useState(false);
+  const itemValueController = (e) => {
+    // 모달창의 아이템 이름을 입력하면 입력한 이름으로 설정
+    setItem(null);
+  }
 
-  // function logit() {
-  //     setScrollY(boxRef.current.scrollTop);
-  //     if (boxRef.current.scrollTop > 30) {
-  //         setScrollActive(true);
-  //     } else {
-  //         setScrollActive(false);
-  //     }
-  // }
+  const deleteButtonController = () => {
+    axios.delete('http://localhost:4000/items/id');
+    setModal(false);
+  }
 
-  // useEffect(() => {
-  //     function watchScroll() {
-  //         boxRef.current.addEventListener("scroll", logit);
-  //     }
-  //     watchScroll();
-  //     return () => {
-  //         boxRef.current.removeEventListener("scroll", logit);
-  //     };
-  // });
+  const addItem = () => {
+
+  } 
+  
+  const editItem = () => {
+
+  }
+
+  async function searchRecipe (el)  {
+    const uerId = await axios.get(); // el 의 id를 찾기 위해서 서버에 요청
+    const recipes = await axios.get(); // 위에서 찾은 id를 가지고 서버에 레시피 요청
+    setRecipes(recipes.data[0]);
+  }
+
   function MainContent() {
     return (
-      <Content>
-        <Shelf>
-          {" "}
-          {/* left: 식재료 칸 */}
+      <content className='mainpage-content'>
+        <shelf className='mainpage-shelf'>
           <div className="searchArea">
             <input className="searchBar" />
             <input className="searchButton" type="button" />
           </div>
-          <ScrollBox>
-            {/*useRef={boxRef}*/}
+          <scrollbox className='mainpage-scrollbox'>
             <ul className="grocery">
               {/* props: expDate, name, quant, storage, desc */}
               <li>
-                <itemname>서울우유</itemname>
-                <itemexp>2022-02-01</itemexp>
-                <itemquant>2</itemquant>
-                <itemstorage>냉장</itemstorage>
+                <iteminfo onClick={()=>{searchRecipe(item)}}>
+                  <itemname>{item}</itemname>
+                  <itemexp>{exp}</itemexp>
+                  <itemquant>{quantity}</itemquant>
+                  <itemstorage>{storage}</itemstorage>
+                </iteminfo>
                 <input
                   className="editButton"
                   type="button"
@@ -116,95 +69,90 @@ export function Main() {
                 />
               </li>
             </ul>
-          </ScrollBox>
-          <input className="addButton" type="button" value="add item" />
-        </Shelf>
-        <Recipes>
-          {" "}
-          {/* right: 레시피 칸 */}
+          </scrollbox>
+          <input className="addButton" type="button" value="add item" onClick={modalcontroller} />
+        </shelf>
+        <recipes className='mainpage-recipes'>
           <ul>
             <li>
               <recipeimg></recipeimg>
-              <recipename>우유김치찌개</recipename>
+              <recipename>{우유김치찌개}</recipename>
               <a href="https://www.dispatch.co.kr/2034029">
                 delicious kimchichigae recipe
               </a>
             </li>
           </ul>
-        </Recipes>
-      </Content>
+        </recipes>
+      </content>
     );
   }
 
   return (
     <div>
-      <Mainpage onClick={modal ? modalcontroller : null}>
-        <Navbar>
+      <mainpage className='mainpage' onClick={modal ? modalcontroller : null}>
+        <navbar className='mainpage-navbar'>
           <nav></nav>
           <logo className="shelpLogo">
             <Link to="/">shelp</Link>
           </logo>
-          {/* <input className='mypageButton' type='button' value='mypage' /> */}
           <Link to="/mypage">mypage</Link>
-        </Navbar>
+        </navbar>
         <Routes>
           <Route path="/mypage" element={<Mypage />} />
           <Route path="/" element={<MainContent />} />
         </Routes>
-      </Mainpage>
+      </mainpage>
 
       {/* 아래부터는 모달창 입니다 */}
-      {modal ? (
-        <Modal className="modalPage hide">
-          <Options>
-            <input className="itemName" type="text" />
-            <input className="expDate" type="date" />
-            <input className="quantity" type="number" />
-            <div className="options">
-              <input
-                className="option1"
-                type="radio"
-                name="storage"
-                value="상온"
-              />
-              <input
-                className="option2"
-                type="radio"
-                name="storage"
-                value="냉장"
-              />
-              <input
-                className="option3"
-                type="radio"
-                name="storage"
-                value="냉동"
-              />
-            </div>
-          </Options>
-          <decisionbutton>
+      {modal ? 
+      <modal className="mainpage-modal">
+        <options className='mainpage-options'>
+        <input className="itemName" type="text" value={item} onClick={itemValueController}/>
+        <input className="expDate" type="date" value={exp}/>
+        <input className="quantity" type="number" value={quantity}/>
+        <div className="options">
             <input
-              className="cancelButton"
-              type="button"
-              value="cancel"
-              onClick={modalcontroller}
+            className="option1"
+            type="radio"
+            name="storage"
+            value="상온"
             />
             <input
-              className="doneButton"
-              type="button"
-              value="done"
-              onClick={modalcontroller}
+            className="option2"
+            type="radio"
+            name="storage"
+            value="냉장"
             />
             <input
-              className="deleteButton"
-              type="button"
-              value="delete"
-              onClick={modalcontroller}
+            className="option3"
+            type="radio"
+            name="storage"
+            value="냉동"
             />
-          </decisionbutton>
-        </Modal>
-      ) : (
-        <div></div>
-      )}
+        </div>
+        </options>
+        <decisionbutton>
+            <input
+            className="cancelButton"
+            type="button"
+            value="cancel"
+            onClick={modalcontroller}
+        />
+        <input
+            className="doneButton"
+            type="button"
+            value="done"
+            onClick={editItem}
+        />
+        <input
+            className="deleteButton"
+            type="button"
+            value="delete"
+            onClick={deleteButtonController}
+        />
+        </decisionbutton>
+      </modal>: 
+      <div></div>}
     </div>
   );
 }
