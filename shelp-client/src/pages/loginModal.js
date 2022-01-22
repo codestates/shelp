@@ -1,5 +1,12 @@
+
+import { Link } from "react-router-dom";
+import axios from "axios";
 import { useState } from "react";
 import styled from "styled-components";
+const serverUrl = "https://randomdomain:4000";
+
+axios.defaults.withCredentials = true;
+
 
 const ModalBackdrop = styled.div`
   position: fixed;
@@ -42,10 +49,30 @@ const ModalView = styled.div`
   }
 `;
 
-export default function LoginModal({ modalHandler }) {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-
+export default function LoginModal({ modalHandler, handleResponseSuccess }) {
+  const [loginInfo, setLoginInfo] = useState({
+    email: "",
+    password: "",
+  });
+  const [errorMessage, setErrorMessage] = useState("");
+  const handleInputValue = (key) => (e) => {
+    setLoginInfo({ ...loginInfo, [key]: e.target.value });
+  };
+  const handleLogin = () => {
+    if (loginInfo.email.length === 0 || loginInfo.password.length === 0) {
+      return setErrorMessage("이메일과 비밀번호를 입력하세요");
+    } else {
+      axios
+        .post(`${serverUrl}/user/signin`, {
+          email: loginInfo.email,
+          password: loginInfo.password,
+        })
+        .then((res) => {
+          handleResponseSuccess(res.body.data);
+        });
+    }
+  };
+  
   return (
     <ModalContainer>
       <ModalBackdrop onClick={modalHandler}>
@@ -55,23 +82,21 @@ export default function LoginModal({ modalHandler }) {
           </span>
           <div className="title">로그인</div>
           <div>
-            아이디 <input onChange={(e) => setEmail(e.target.value)} />
+            이메일 <input onChange={(e) => handleInputValue("email")} />
           </div>
           <div>
-            비밀번호{" "}
+            비밀번호
             <input
-              onChange={(e) => setPassword(e.target.value)}
+              onChange={(e) => handleInputValue("password")}
               type="password"
             />
           </div>
           <button>로그인</button>
           <div className="query">
             <div>계정이 없으신가요?</div>
-            <button onClick={() => window.location.replace("/signup")}>
-              회원가입
-            </button>
-            <div>{email}</div>
-            <div>{password}</div>
+            <Link to="/signup">회원가입</Link>
+            <div>{loginInfo.email}</div>
+            <div>{loginInfo.password}</div>
           </div>
         </ModalView>
       </ModalBackdrop>

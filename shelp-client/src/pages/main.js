@@ -23,13 +23,14 @@ export function Main() {
           </logo>
           <Link to="/mypage">mypage</Link>
         </navbar>
-        <Routes>
+        {/* <Routes>
           <Route path="/mypage" element={<Mypage />} />
           <Route
             path="/"
             element={<MainPageContent modalcontroller={modalcontroller} />}
           />
-        </Routes>
+        </Routes> */}
+        <MainPageContent />
       </mainpage>
 
       {/* 아래부터는 모달창 입니다 */}

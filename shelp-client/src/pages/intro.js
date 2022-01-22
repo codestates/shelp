@@ -31,7 +31,7 @@ const TouchPoint = styled.div`
   padding: 100px;
 `;
 
-export default function Intro({ setIsLogin }) {
+export default function Intro({ setIsLogin, handleResponseSuccess }) {
   const [isModalOpen, SetIsModalOpen] = useState(false);
   const modalHandler = () => {
     SetIsModalOpen(!isModalOpen);
@@ -44,7 +44,12 @@ export default function Intro({ setIsLogin }) {
         <button onClick={modalHandler}>로그인</button>
         <button onClick={modalHandler}>회원가입</button>
       </TouchPoint>
-      {isModalOpen ? <LoginModal modalHandler={modalHandler} /> : null}
+      {isModalOpen ? (
+        <LoginModal
+          modalHandler={modalHandler}
+          handleResponseSuccess={handleResponseSuccess}
+        />
+      ) : null}
       <Wallpaper></Wallpaper>
     </div>
   );
