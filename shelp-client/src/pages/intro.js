@@ -1,8 +1,11 @@
-import axios from "axios";
+//import axios from "axios";
+import { useState } from "react";
 import styled from "styled-components";
+import LoginModal from "./loginModal";
 
 const Wallpaper = styled.div`
   display: flex;
+  flex-direction: column;
   position: absolute;
   top: 0;
   left: 0;
@@ -19,59 +22,35 @@ const Wallpaper = styled.div`
 `;
 
 const TouchPoint = styled.div`
-  flex-direction: column;
-  position: absolute;
+  display: inline-block;
+  position: sticky; // sticky  absolute
+  z-index: 999;
   bottom: 200px;
   right: 200px;
-  background-color: aquamarine;
+  background-color: cyan;
   padding: 100px;
 `;
 
-function Intro({ setIsLogin }) {
-  const logInHandler = () => {
-    // axios
-    //   .post("localhost:4000/user/signin", {
-    //     user_email: "test_email",
-    //     user_password: "test_password",
-    //   })
-    //   .then((res) => {
-    //     if (res.body.message === "ok") {
-    //       setIsLogin(true);
-    //     } else {
-    //       console.log()
-    //     }
-    //   });
-    setIsLogin(true);
+export default function Intro({ setIsLogin, handleResponseSuccess }) {
+  const [isModalOpen, SetIsModalOpen] = useState(false);
+  const modalHandler = () => {
+    SetIsModalOpen(!isModalOpen);
   };
 
   return (
-    <Wallpaper>
+    <div>
       <TouchPoint>
-        this is touch point, you can login by the button below
-        <div>
-          <button onClick={logInHandler}>login</button>
-        </div>
+        <div>오늘의 상차림, Shelp 와 함께하세요</div>
+        <button onClick={modalHandler}>로그인</button>
+        <button onClick={modalHandler}>회원가입</button>
       </TouchPoint>
-    </Wallpaper>
+      {isModalOpen ? (
+        <LoginModal
+          modalHandler={modalHandler}
+          handleResponseSuccess={handleResponseSuccess}
+        />
+      ) : null}
+      <Wallpaper></Wallpaper>
+    </div>
   );
 }
-
-export default Intro;
-
-// import styled from "styled-components";
-
-// function Intro() {
-//   return <Container>hello~!</Container>;
-// }
-
-// const Container = styled.div`
-//   position: absolute;
-//   top: 0;
-//   left: 0;
-//   width: 100%;
-//   height: 100%;
-//   background: url(https://source.unsplash.com/random/1920x1080);
-//   background-size: cover;
-// `;
-
-// export default Intro;
