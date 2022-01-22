@@ -1,3 +1,4 @@
+
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { useState } from "react";
@@ -5,6 +6,7 @@ import styled from "styled-components";
 const serverUrl = "https://randomdomain:4000";
 
 axios.defaults.withCredentials = true;
+
 
 const ModalBackdrop = styled.div`
   position: fixed;
@@ -70,7 +72,7 @@ export default function LoginModal({ modalHandler, handleResponseSuccess }) {
         });
     }
   };
-
+  
   return (
     <ModalContainer>
       <ModalBackdrop onClick={modalHandler}>
