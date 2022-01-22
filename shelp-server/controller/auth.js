@@ -23,7 +23,7 @@ module.exports = {
                 const accessToken = generateAccessToken({ dataValues: { userInfo } });
                 sendAccessToken(res, accessToken, 200, { data: userInfo, message: 'Signin succeed' });
             } catch (err) {
-                return res.status(404).json({ message: "Not found" });
+                return res.status(500).json({ message: "Internal server error" });
             }
         }
     },
@@ -44,7 +44,7 @@ module.exports = {
                 return res.status(200).send({ message: 'Signout succeed' });
             }
         } catch (err) {
-            res.status(404).send({ message: 'Not found' });
+            return res.status(500).json({ message: "Internal server error" });
         }
     },
 
@@ -79,7 +79,7 @@ module.exports = {
                 }
             })
             .catch((err) => {
-                return res.status(404).json({ message: "Not found" });
+                res.status(500).json({ message: "Internal server error" });
             });
     },
 
@@ -103,7 +103,7 @@ module.exports = {
             // 사용할 수 없는 email
             res.status(200).json({ available: false });
         } catch {
-            res.status(404).json({ message: "Not found" });
+            res.status(500).json({ message: "Internal server error" });
         }
     }
 };

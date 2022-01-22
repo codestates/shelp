@@ -2,24 +2,13 @@ const { items } = require('../models');
 const { generateAccessToken, sendAccessToken, isAuthorized } = require('./token');
 module.exports = {
     get: async (req, res) => {
-        // console.log(isAuthorized(req));
         const userId = isAuthorized(req).userInfo.id;
-        // console.log(userId);
-        // const userId = 1;
         const itemInfo = await items.findAll({ where: { userId: userId } });
         res.status(200).json({ data: itemInfo, message: 'ok' });
     },
 
     post: async (req, res) => {
         const itemInfo = req.body;
-        // const itemInfo = {
-        //     userId: 1,
-        //     name: "우유",
-        //     desc: "빨리 먹어야함",
-        //     quantity: '1',
-        //     expiration: "2022-02-05",
-        //     storage: "냉장",
-        // }
         const result = await items.create(
             {
                 userId: itemInfo.userId,
@@ -43,15 +32,6 @@ module.exports = {
             expiration: req.body.expiration,
             storage: req.body.storage,
         }
-        // const itemId = 2;
-        // const itemInfo = {
-        //     userId: 2,
-        //     name: "우유",
-        //     desc: "빨리 먹어야함",
-        //     quantity: 1,
-        //     expiration: "2022-02-05",
-        //     storage: "냉장",
-        // }
         const result = await items.update(itemInfo, { where: { id: itemId } });
         // result 0 or 1
         if (!result) {
