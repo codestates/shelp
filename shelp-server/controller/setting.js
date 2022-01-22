@@ -25,7 +25,7 @@ module.exports = {
 
             }
         } catch (err) {
-            res.status(404).send({ message: 'Not found' });
+            res.status(500).json({ message: "Internal server error" });
         }
     },
 };

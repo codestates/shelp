@@ -23,11 +23,11 @@ module.exports = {
     },
 
     put: async (req, res) => {
-        const { username, password, image, desc } = req.body;
+        const { name, password, image, desc } = req.body;
         const accessToken = req.cookies.jwt
 
-        if (!username || !password || !image) {
-            return res.status(404).json({ message: 'Insufficient parameters supplied' })
+        if (!name || !password || !image) {
+            return res.status(400).json({ message: 'Insufficient parameters supplied' })
         }
         if (!accessToken) {
             return res.status(404).send({ message: 'Not authorized' });
@@ -36,7 +36,7 @@ module.exports = {
             const verifyInfo = isAuthorized(req);
             if (verifyInfo) {
                 await users.update({
-                    username: username,
+                    name: name,
                     password: password,
                     image: image,
                     desc, desc
