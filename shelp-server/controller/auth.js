@@ -23,7 +23,7 @@ module.exports = {
                 const accessToken = generateAccessToken({ dataValues: { userInfo } });
                 sendAccessToken(res, accessToken, 200, { data: userInfo, message: 'Signin succeed' });
             } catch (err) {
-                return res.status(500).json({ message: "Internal server error" });
+                res.status(500).json({ message: "Internal server error" });
             }
         }
     },
@@ -44,19 +44,19 @@ module.exports = {
                 return res.status(200).send({ message: 'Signout succeed' });
             }
         } catch (err) {
-            return res.status(500).json({ message: "Internal server error" });
+            res.status(500).json({ message: "Internal server error" });
         }
     },
 
     signup: (req, res) => {
-        const { username, email, password, image, desc } = req.body
+        const { name, email, password, image, desc } = req.body
 
-        if (!username || !email || !password || !image) {
+        if (!name || !email || !password || !image) {
             return res.status(422).json({ message: 'Insufficient parameters supplied' })
         }
         users.findOrCreate({
             where: {
-                username, username,
+                name, name,
                 email: email,
                 password: password,
                 image: image,
@@ -88,7 +88,7 @@ module.exports = {
         const { email } = req.body;
 
         if (!email) {
-            return res.status(404).json({ message: 'Insufficient parameters supplied' })
+            return res.status(400).json({ message: 'Insufficient parameters supplied' })
         }
         try {
             const userInfo = await users.findOne({

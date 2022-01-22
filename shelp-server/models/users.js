@@ -22,7 +22,7 @@ module.exports = (sequelize, DataTypes) => {
       autoIncrement: true,
       allowNull: false,
     },
-    username: {
+    name: {
       type: DataTypes.STRING,
       allowNull: false,
     },
