@@ -47,8 +47,8 @@ function Mypage () {
         setUserDesc(e.target.value);
     }
     const handleRadio = (e) => {    
-        console.log(alrm)
         setAlrm(e.target.value);
+        console.log(alrm)
     }
 
     return (

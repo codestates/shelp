@@ -9,18 +9,26 @@ export function MainpageModal ({modalcontroller}) {
     const [item, setItem] = useState(temp);
     const [exp, setExp] = useState(null);
     const [quantity, setQuantity] = useState(null);
-    const [modal, setModal] = useState(false);
-
-    const deleteButtonController = () => {
-        axios.delete('http://localhost:4000/items/id');
-        setModal(false);
-    }
+    // const [modal, setModal] = useState(false);
 
     const itemValueController = (e) => {
-        // 모달창의 아이템 이름을 입력하면 입력한 이름으로 설정
-        setItem(null);
+        setItem(e.target.value);
+        console.log(item)
+    }
+    const expValueController = (e) => {
+        setExp(e.target.value);
+        console.log(exp)
+    }
+    const quantityValueController = (e) => {
+        setQuantity(e.target.value);
+        console.log(quantity)
     }
 
+    const deleteButtonController = () => {
+        // axios.delete('http://localhost:4000/items/id');
+        // setModal(false);
+    }
+    
     const editItem = () => {
 
     }
@@ -28,9 +36,9 @@ export function MainpageModal ({modalcontroller}) {
     return (
         <modal className="mainpage-modal">
             <options className='mainpage-options'>
-                <input className="itemName" type="text" value={item} onClick={itemValueController}/>
-                <input className="expDate" type="date" value={exp}/>
-                <input className="quantity" type="number" value={quantity}/>
+                <input className="itemName" type="text" value={item} onChange={itemValueController}/>
+                <input className="expDate" type="date" value={exp} onChange={expValueController}/>
+                <input className="quantity" type="number" value={quantity} onChange={quantityValueController}/>
                 <div className="options">
                     <input
                     className="option1"
