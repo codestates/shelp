@@ -11,14 +11,36 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      this.belongsTo(models.items, { foreignKey: 'itemId' });
+      this.belongsTo(models.items, { foreignKey: 'itemId', targetKey: 'id' });
     }
   }
   recipes.init({
-    itemId: DataTypes.INTEGER,
-    url: DataTypes.STRING,
-    domain: DataTypes.STRING,
-    image: DataTypes.BLOB
+    id: {
+      type: DataTypes.INTEGER,
+      primaryKey: true,
+      autoIncrement: true,
+      allowNull: false,
+    },
+    itemId: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
+    name: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    url: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    domain: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    image: {
+      type: DataTypes.BLOB,
+      allowNull: false,
+    },
   }, {
     sequelize,
     modelName: 'recipes',
