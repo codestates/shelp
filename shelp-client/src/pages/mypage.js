@@ -9,21 +9,21 @@ function Mypage({ userinfo, setUserinfo }) {
   // const [tempUserInfo, setTempUserInfo] = useState(userinfo);
   const [button, setButton] = useState(true);
   const handleChange = (e, key) => {
-    setUserInfo({...userInfo, [key]: e.target.value});
-  }
+    setUserInfo({ ...userInfo, [key]: e.target.value });
+  };
 
   const handleButtonEdit = () => {
     setButton(!button);
-  }
+  };
   const handleButtonSave = () => {
-    setUserinfo(userInfo)
+    setUserinfo(userInfo);
     // axios({
     //   method: "put",
     //   url: "",
     //   data: userinfo
     // })
     setButton(!button);
-  }
+  };
 
   return (
     <div>
@@ -43,46 +43,76 @@ function Mypage({ userinfo, setUserinfo }) {
         </div>
         <div>
           <div>
-            {
-              button ?
-              <h3>{userinfo.name}</h3>:
+            {button ? (
+              <h3>{userinfo.name}</h3>
+            ) : (
               <input
-              placeholder={userinfo.name}
-              onChange={(e)=>{handleChange(e, 'name')}}
+                placeholder={userinfo.name}
+                onChange={(e) => {
+                  handleChange(e, "name");
+                }}
               ></input>
-            }
+            )}
           </div>
           <div>
-            {
-              button ?
-              <h3>{userinfo.email}</h3>:
+            {button ? (
+              <h3>{userinfo.email}</h3>
+            ) : (
               <input
-              placeholder={userinfo.email}
-              onChange={(e)=>{handleChange(e, 'email')}}
+                placeholder={userinfo.email}
+                onChange={(e) => {
+                  handleChange(e, "email");
+                }}
               ></input>
-            }
+            )}
           </div>
           <div>
-            {
-              button ?
-              <h3>{userinfo.desc}</h3>:
+            {button ? (
+              <h3>{userinfo.desc}</h3>
+            ) : (
               <input
-              placeholder={userinfo.desc}
-              onChange={(e)=>{handleChange(e, 'desc')}}
+                placeholder={userinfo.desc}
+                onChange={(e) => {
+                  handleChange(e, "desc");
+                }}
               ></input>
-            }
+            )}
           </div>
         </div>
       </section>
       <setting>
         <div className="option1">
-          <button className={userinfo.period==='1d'? 'chosen': '1d-option'} type="radio" name="setalrm" value="1d" onClick={(e)=>{handleChange(e, 'period')}}>
+          <button
+            className={userinfo.period === "1d" ? "chosen" : "1d-option"}
+            type="radio"
+            name="setalrm"
+            value="1d"
+            onClick={(e) => {
+              handleChange(e, "period");
+            }}
+          >
             1d
           </button>
-          <button className={userinfo.period==='3d'? 'chosen': '3d-option'} type="radio" name="setalrm" value="3d" onClick={(e)=>{handleChange(e, 'period')}}>
+          <button
+            className={userinfo.period === "3d" ? "chosen" : "3d-option"}
+            type="radio"
+            name="setalrm"
+            value="3d"
+            onClick={(e) => {
+              handleChange(e, "period");
+            }}
+          >
             3d
           </button>
-          <button className={userinfo.period==='5d'? 'chosen': '5d-option'} type="radio" name="setalrm" value="5d" onClick={(e)=>{handleChange(e, 'period')}}>
+          <button
+            className={userinfo.period === "5d" ? "chosen" : "5d-option"}
+            type="radio"
+            name="setalrm"
+            value="5d"
+            onClick={(e) => {
+              handleChange(e, "period");
+            }}
+          >
             5d
           </button>
         </div>
@@ -90,11 +120,11 @@ function Mypage({ userinfo, setUserinfo }) {
         <div>option3</div>
       </setting>
       <div>
-        {
-          button? 
-          <button onClick={handleButtonEdit}>edit</button>:
+        {button ? (
+          <button onClick={handleButtonEdit}>edit</button>
+        ) : (
           <button onClick={handleButtonSave}>save</button>
-        }
+        )}
       </div>
     </div>
   );

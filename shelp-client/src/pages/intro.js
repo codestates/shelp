@@ -1,7 +1,6 @@
-//import axios from "axios";
 import { useState } from "react";
 import styled from "styled-components";
-import LoginModal from "./loginModal";
+import { LoginModal } from "./modals.js";
 
 const Wallpaper = styled.div`
   display: flex;
@@ -33,6 +32,7 @@ const TouchPoint = styled.div`
 
 export default function Intro({ setIsLogin, handleResponseSuccess }) {
   const [isModalOpen, SetIsModalOpen] = useState(false);
+
   const modalHandler = () => {
     SetIsModalOpen(!isModalOpen);
   };
