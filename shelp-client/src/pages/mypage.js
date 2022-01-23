@@ -4,58 +4,26 @@ import styled from "styled-components";
 const axios = require("axios").default;
 
 function Mypage({ userinfo, setUserinfo }) {
-  //   const [userInfo, setUserInfo] = useState({
-  //       name: "",
-  //       email: "",
-  //       desc: "",
-  //       alrm: "",
+  const [userInfo, setUserInfo] = useState(userinfo);
 
-  //   });
-  const [userName, setUserName] = useState(null); // 유저 이름
-  const [userEmail, setUserEmail] = useState(null); // 유저 이메일
-  const [userDesc, setUserDesc] = useState(null); // 유저 설명
-  const [alrm, setAlrm] = useState(null); // 유저 알림 설정
-  const [editBox, setEditBox] = useState(true);
-  const [editBox2, setEditBox2] = useState(true);
-  const [editBox3, setEditBox3] = useState(true);
+  // const [tempUserInfo, setTempUserInfo] = useState(userinfo);
+  const [button, setButton] = useState(true);
+  const handleChange = (e, key) => {
+    setUserInfo({...userInfo, [key]: e.target.value});
+  }
 
-  const nameModal = (e) => {
-    if (e.target.value) {
-      console.log("noting");
-    } else {
-      console.log("something");
-    }
-    setEditBox(!editBox);
-    // console.log(e.target.value);
+  const handleButtonEdit = () => {
+    setButton(!button);
+  }
+  const handleButtonSave = () => {
+    setUserinfo(userInfo)
     // axios({
-    //     method: 'put',
-    //     url: '',
-    //     data: {
-    //         "username":
-    //     }
+    //   method: "put",
+    //   url: "",
+    //   data: userinfo
     // })
-  };
-  const emailModal = (e) => {
-    setEditBox2(!editBox2);
-  };
-  const descModal = (e) => {
-    setEditBox3(!editBox3);
-  };
-
-    const handleChangeName = (e) => {
-        setUserName(e.target.value);
-        console.log(userName)
-    }
-    const handleChangeEmail = (e) => {
-        setUserEmail(e.target.value);
-    }
-    const handleChangeDesc = (e) => {
-        setUserDesc(e.target.value);
-    }
-    const handleRadio = (e) => {    
-        setAlrm(e.target.value);
-        console.log(alrm)
-    }
+    setButton(!button);
+  }
 
   return (
     <div>
@@ -75,34 +43,46 @@ function Mypage({ userinfo, setUserinfo }) {
         </div>
         <div>
           <div>
-            <input
+            {
+              button ?
+              <h3>{userinfo.name}</h3>:
+              <input
               placeholder={userinfo.name}
-              onChange={(e) => setUserinfo(e.target.value)}
-            ></input>
+              onChange={(e)=>{handleChange(e, 'name')}}
+              ></input>
+            }
           </div>
           <div>
-            <input
+            {
+              button ?
+              <h3>{userinfo.email}</h3>:
+              <input
               placeholder={userinfo.email}
-              onChange={(e) => setUserinfo(e.target.value)}
-            ></input>
+              onChange={(e)=>{handleChange(e, 'email')}}
+              ></input>
+            }
           </div>
           <div>
-            <input
+            {
+              button ?
+              <h3>{userinfo.desc}</h3>:
+              <input
               placeholder={userinfo.desc}
-              onChange={(e) => setUserinfo(e.target.value)}
-            ></input>
+              onChange={(e)=>{handleChange(e, 'desc')}}
+              ></input>
+            }
           </div>
         </div>
       </section>
       <setting>
         <div className="option1">
-          <button type="radio" name="setalrm" value="1d" onClick={handleRadio}>
+          <button className={userinfo.period==='1d'? 'chosen': '1d-option'} type="radio" name="setalrm" value="1d" onClick={(e)=>{handleChange(e, 'period')}}>
             1d
           </button>
-          <button type="radio" name="setalrm" value="3d" onClick={handleRadio}>
+          <button className={userinfo.period==='3d'? 'chosen': '3d-option'} type="radio" name="setalrm" value="3d" onClick={(e)=>{handleChange(e, 'period')}}>
             3d
           </button>
-          <button type="radio" name="setalrm" value="5d" onClick={handleRadio}>
+          <button className={userinfo.period==='5d'? 'chosen': '5d-option'} type="radio" name="setalrm" value="5d" onClick={(e)=>{handleChange(e, 'period')}}>
             5d
           </button>
         </div>
@@ -110,7 +90,11 @@ function Mypage({ userinfo, setUserinfo }) {
         <div>option3</div>
       </setting>
       <div>
-        <button>save</button>
+        {
+          button? 
+          <button onClick={handleButtonEdit}>edit</button>:
+          <button onClick={handleButtonSave}>save</button>
+        }
       </div>
     </div>
   );
