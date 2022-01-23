@@ -2,8 +2,6 @@ import { Route, Switch, Link, Routes } from "react-router-dom";
 import { useState, useRef, useEffect } from "react";
 import styled from "styled-components";
 import Mypage from "./mypage.js";
-import { MainpageModal } from "../components/mainpage-modal.js";
-import { MainPageContent } from "../components/mainpage-content.js";
 import { AddItemModal } from "./modals.js";
 const axios = require("axios").default;
 const serverUrl = "https://randomdomain:4000";

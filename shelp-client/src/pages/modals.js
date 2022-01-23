@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import { useState } from "react";
 import styled from "styled-components";
-const serverUrl = "https://randomdomain:4000";
+const serverUrl = "http://localhost:4000";
 
 axios.defaults.withCredentials = true;
 
@@ -49,28 +49,29 @@ const ModalView = styled.div`
 
 // ========================여기까지가 모달 공통 컴포넌트입니다.================================
 
-export function LoginModal({ modalHandler }) {
+export function LoginModal({ modalHandler, handleResponseSuccess }) {
   const [loginInfo, setLoginInfo] = useState({
     email: "",
     password: "",
   });
+
   const [errorMessage, setErrorMessage] =
     useState("에러메시지가 여기 표시됩니다.");
+
   const handleInputValue = (e, key) => {
     setLoginInfo({ ...loginInfo, [key]: e.target.value });
   };
+
   const handleLogin = () => {
     if (loginInfo.email.length === 0 || loginInfo.password.length === 0) {
-      return setErrorMessage("이메일과 비밀번호를 입력하세요");
+      setErrorMessage("이메일과 비밀번호를 입력하세요");
     } else {
-      axios
-        .post(`${serverUrl}signin`, {
-          email: loginInfo.email,
-          password: loginInfo.password,
-        })
-        .then((res) => {
-          //handleResponseSuccess();
-        });
+      axios.post(`${serverUrl}/user/signin`, loginInfo).then((res) => {
+        if (res.status === 200) {
+          console.log("=======>", res.data.data);
+          handleResponseSuccess(res.data.data);
+        }
+      });
     }
   };
 
@@ -95,7 +96,7 @@ export function LoginModal({ modalHandler }) {
           <div>{loginInfo.email}</div>
           <div>{loginInfo.password}</div>
           <div>{errorMessage}</div>
-          <button>로그인</button>
+          <button onClick={handleLogin}>로그인</button>
           <div className="query">
             <Link to="/signup">회원가입</Link>
           </div>

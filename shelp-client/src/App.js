@@ -5,19 +5,26 @@ import Signup from "./pages/signup";
 import Main from "./pages/main";
 import Mypage from "./pages/mypage";
 import axios from "axios";
-const serverUrl = "https://localhost:4000";
+const serverUrl = "http://localhost:4000";
 
 export default function App() {
   const [isLogin, setIsLogin] = useState(false);
+  // const [setting, setSetting] = useState();
 
   const [userinfo, setUserinfo] = useState({
-    email: "email-string",
-    name: "name-string",
-    desc: "desc-string",
-    image: "image--blob-url",
+    id: 0,
+    email: "new",
+    name: "hi",
+    desc: "",
+    // image: { type: "Buffer", data: [] },
+    image: "testImage",
+    password: "1234",
+    createdAt: "",
+    updatedAt: "",
   });
+
   const isAuthenticated = () => {
-    if (userinfo !== null) {
+    if (userinfo.name !== "") {
       setIsLogin(true);
     }
   };
@@ -35,8 +42,8 @@ export default function App() {
   // };
 
   useEffect(() => {
-    isAuthenticated();
-  }, []);
+    handleResponseSuccess(userinfo);
+  });
 
   return (
     <div>
@@ -45,10 +52,7 @@ export default function App() {
           path="/"
           element={
             !isLogin ? (
-              <Intro
-                setIsLogin={setIsLogin}
-                handleResponseSuccess={handleResponseSuccess}
-              />
+              <Intro handleResponseSuccess={handleResponseSuccess} />
             ) : (
               <Main />
             )

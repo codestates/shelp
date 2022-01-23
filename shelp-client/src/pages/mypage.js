@@ -2,26 +2,29 @@ import { Link } from "react-router-dom";
 import { useState } from "react";
 import styled from "styled-components";
 const axios = require("axios").default;
+const serverUrl = "http://localhost:4000";
 
 function Mypage({ userinfo, setUserinfo }) {
-  const [userInfo, setUserInfo] = useState(userinfo);
+  // const [userInfo, setUserInfo] = useState(userinfo);
 
   // const [tempUserInfo, setTempUserInfo] = useState(userinfo);
   const [button, setButton] = useState(true);
   const handleChange = (e, key) => {
-    setUserInfo({ ...userInfo, [key]: e.target.value });
+    setUserinfo({ ...userinfo, [key]: e.target.value });
   };
 
   const handleButtonEdit = () => {
     setButton(!button);
   };
   const handleButtonSave = () => {
-    setUserinfo(userInfo);
-    // axios({
-    //   method: "put",
-    //   url: "",
-    //   data: userinfo
-    // })
+    setUserinfo(userinfo);
+    const { name, password, image, desc } = userinfo;
+    axios
+      .put(`${serverUrl}/profile`, { name, password, image, desc })
+      .then((res) => {
+        console(res);
+      });
+
     setButton(!button);
   };
 
@@ -30,7 +33,7 @@ function Mypage({ userinfo, setUserinfo }) {
       <navbar className="mainpage-navbar">
         <nav></nav>
         <logo className="shelfLogo">
-          <Link to="/">shelf</Link>
+          <Link to="/">Shelp</Link>
         </logo>
         <Link to="/mypage">mypage</Link>
       </navbar>
@@ -44,14 +47,39 @@ function Mypage({ userinfo, setUserinfo }) {
         <div>
           <div>
             {button ? (
-              <h3>{userinfo.name}</h3>
+              <div>
+                <h3>{userinfo.name}</h3>
+                <h3>{userinfo.desc}</h3>
+                <h3>{userinfo.image}</h3>
+                <h3>{userinfo.password}</h3>
+              </div>
             ) : (
-              <input
-                placeholder={userinfo.name}
-                onChange={(e) => {
-                  handleChange(e, "name");
-                }}
-              ></input>
+              <div>
+                <input
+                  placeholder={userinfo.name}
+                  onChange={(e) => {
+                    handleChange(e, "name");
+                  }}
+                />
+                <input
+                  placeholder={userinfo.desc}
+                  onChange={(e) => {
+                    handleChange(e, "desc");
+                  }}
+                />
+                <input
+                  placeholder={userinfo.image}
+                  onChange={(e) => {
+                    handleChange(e, "image");
+                  }}
+                />
+                <input
+                  placeholder={userinfo.password}
+                  onChange={(e) => {
+                    handleChange(e, "password");
+                  }}
+                />
+              </div>
             )}
           </div>
           <div>
