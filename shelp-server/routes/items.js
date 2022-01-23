@@ -1,10 +1,10 @@
-const router = require('express').Router();
-const controller = require('../controller');
+const router = require("express").Router();
+const controller = require("../controller/item");
 
-router.get('/', controller.items.get);
-router.post('/', controller.items.post);
-router.put('/', controller.items.put);
-router.get('/:id', controller.items.getById);
-router.delete('/:id', controller.items.delete);
+router.get("/", controller.get);
+router.post("/", controller.post);
+router.put("/", controller.put);
+router.get("/:id", controller.getById);
+router.delete("/:id", controller.delete);
 
 module.exports = router;

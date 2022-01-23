@@ -30,7 +30,7 @@ const TouchPoint = styled.div`
   padding: 100px;
 `;
 
-export default function Intro({ setIsLogin, handleResponseSuccess }) {
+export default function Intro({ handleResponseSuccess }) {
   const [isModalOpen, SetIsModalOpen] = useState(false);
 
   const modalHandler = () => {
