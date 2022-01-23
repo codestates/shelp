@@ -1,31 +1,65 @@
-import logo from './logo.svg';
-import './App.css';
-import { BrowserRouter, Route, Switch, Link } from 'react-router-dom';
-import Intro from './intro.js';
-import Signup from './signup.js';
-import Main from './main.js';
-import Mypage from './mypage.js'; 
+import { useState, useEffect } from "react";
+import { Routes, Route } from "react-router-dom";
+import Intro from "./pages/intro";
+import Signup from "./pages/signup";
+import Main from "./pages/main";
+import Mypage from "./pages/mypage";
+import axios from "axios";
+const serverUrl = "https://localhost:4000";
 
-function App() {
+export default function App() {
+  const [isLogin, setIsLogin] = useState(false);
+
+  const [userinfo, setUserinfo] = useState({
+    email: "email-string",
+    name: "name-string",
+    desc: "desc-string",
+    image: "image--blob-url",
+  });
+  const isAuthenticated = () => {
+    if (userinfo !== null) {
+      setIsLogin(true);
+    }
+  };
+
+  const handleResponseSuccess = (data) => {
+    setUserinfo(data);
+    isAuthenticated();
+  };
+
+  // const handleLogout = () => {
+  //   axios.post(`${serverUrl}/signout`).then((res) => {
+  //     setUserinfo(null);
+  //     setIsLogin(false);
+  //   });
+  // };
+
+  useEffect(() => {
+    isAuthenticated();
+  }, []);
+
   return (
-    <div className="App">
-      test중입니다.
-      <Switch>
-        <Route>
-          <Intro />
-        </Route>
-        <Route>
-          <Signup />
-        </Route>
-        <Route>
-          <Main />
-        </Route>
-        <Route>
-          <Mypage />
-        </Route>
-      </Switch>
+    <div>
+      <Routes>
+        <Route
+          path="/"
+          element={
+            !isLogin ? (
+              <Intro
+                setIsLogin={setIsLogin}
+                handleResponseSuccess={handleResponseSuccess}
+              />
+            ) : (
+              <Main />
+            )
+          }
+        />
+        <Route path="/signup" element={<Signup />} />
+        <Route
+          path="/mypage"
+          element={<Mypage userinfo={userinfo} setUserinfo={setUserinfo} />}
+        />
+      </Routes>
     </div>
   );
 }
-
-export default App;
