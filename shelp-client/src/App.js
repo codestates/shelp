@@ -9,13 +9,13 @@ const serverUrl = "https://localhost:4000";
 
 export default function App() {
   const [isLogin, setIsLogin] = useState(false);
+
   const [userinfo, setUserinfo] = useState({
     email: "email-string",
     name: "name-string",
     desc: "desc-string",
     image: "image--blob-url",
   });
-
   const isAuthenticated = () => {
     if (userinfo !== null) {
       setIsLogin(true);
