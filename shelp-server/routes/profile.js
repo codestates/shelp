@@ -1,8 +1,8 @@
-const router = require('express').Router();
-const controller = require('../controller');
+const router = require("express").Router();
+const controller = require("../controller/profile");
 
-router.get('/', controller.profile.get);
-router.put('/', controller.profile.put);
-router.delete('/', controller.profile.delete);
+router.get("/", controller.get);
+router.put("/", controller.put);
+router.delete("/", controller.delete);
 
 module.exports = router;
