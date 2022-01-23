@@ -3,115 +3,61 @@ import { useState } from "react";
 import styled from "styled-components";
 const axios = require("axios").default;
 
+const Navigator = styled.nav`
+  display: flex;
+  flex-direction: row;
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 3.5rem;
+  min-width: 100%;
+  background-color: white;
+  border: lightgrey solid 1px;
+`;
+
+const Logo = styled.div`
+  flex: 1 0 auto;
+
+  border: black solid 1px;
+  background-size: 1% auto; // cover;
+  background-repeat: no-repeat;
+
+  > img {
+    max-height: 2rem;
+    margin: 1rem;
+  }
+`;
+
+const Blank = styled.div`
+  flex: 10 0 auto;
+  border: black solid 1px;
+`;
+
+const NavButton = styled.div`
+  flex: 1 0 auto;
+  border: black solid 1px;
+`;
+
 function Mypage({ userinfo, setUserinfo }) {
-  //   const [userInfo, setUserInfo] = useState({
-  //       name: "",
-  //       email: "",
-  //       desc: "",
-  //       alrm: "",
-
-  //   });
-  const [userName, setUserName] = useState(null); // 유저 이름
-  const [userEmail, setUserEmail] = useState(null); // 유저 이메일
-  const [userDesc, setUserDesc] = useState(null); // 유저 설명
-  const [alrm, setAlrm] = useState(null); // 유저 알림 설정
-  const [editBox, setEditBox] = useState(true);
-  const [editBox2, setEditBox2] = useState(true);
-  const [editBox3, setEditBox3] = useState(true);
-
-  const nameModal = (e) => {
-    if (e.target.value) {
-      console.log("noting");
-    } else {
-      console.log("something");
-    }
-    setEditBox(!editBox);
-    // console.log(e.target.value);
-    // axios({
-    //     method: 'put',
-    //     url: '',
-    //     data: {
-    //         "username":
-    //     }
-    // })
-  };
-  const emailModal = (e) => {
-    setEditBox2(!editBox2);
-  };
-  const descModal = (e) => {
-    setEditBox3(!editBox3);
-  };
-
-  const handleChangeName = (e) => {
-    setUserName(e.target.value);
-    console.log(userName);
-  };
-  const handleChangeEmail = (e) => {
-    setUserEmail(e.target.value);
-  };
-  const handleChangeDesc = (e) => {
-    setUserDesc(e.target.value);
-  };
-  const handleRadio = (e) => {
-    console.log(alrm);
-    setAlrm(e.target.value);
-  };
-
+  //<img src="shelp-logo.png" />;
   return (
     <div>
-      <navbar className="mainpage-navbar">
-        <nav></nav>
-        <logo className="shelfLogo">
-          <Link to="/">shelf</Link>
-        </logo>
-        <Link to="/mypage">mypage</Link>
-      </navbar>
-      <section>
-        <div>
-          <input
-            type="image"
-            src="https://www.freeiconspng.com/thumbs/pepe-png/pepe-png-free-download-16.png"
-          />
-        </div>
-        <div>
-          <div>
-            <input
-              placeholder={userinfo.name}
-              onChange={(e) => setUserinfo(e.target.value)}
-            ></input>
-          </div>
-          <div>
-            <input
-              placeholder={userinfo.email}
-              onChange={(e) => setUserinfo(e.target.value)}
-            ></input>
-          </div>
-          <div>
-            <input
-              placeholder={userinfo.desc}
-              onChange={(e) => setUserinfo(e.target.value)}
-            ></input>
-          </div>
-        </div>
-      </section>
-      <setting>
-        <div className="option1">
-          <button type="radio" name="setalrm" value="1d" onClick={handleRadio}>
-            1d
-          </button>
-          <button type="radio" name="setalrm" value="3d" onClick={handleRadio}>
-            3d
-          </button>
-          <button type="radio" name="setalrm" value="5d" onClick={handleRadio}>
-            5d
-          </button>
-        </div>
-        <div>option2</div>
-        <div>option3</div>
-      </setting>
-      <div>
-        <button>save</button>
-      </div>
+      <Navigator>
+        <Logo>
+          <img src="shelp-logo.png" />
+        </Logo>
+        <Blank>Blank</Blank>
+        <NavButton>NavButton</NavButton>
+        <NavButton>NavButton</NavButton>
+      </Navigator>
+      <input
+        type="image"
+        src="https://www.freeiconspng.com/thumbs/pepe-png/pepe-png-free-download-16.png"
+      />
+      <div>{userinfo.email}</div>
+      <div>{userinfo.name}</div>
+      <div>{userinfo.desc}</div>
+      <div>{userinfo.image}</div>
     </div>
   );
 }
