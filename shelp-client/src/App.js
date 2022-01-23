@@ -20,6 +20,7 @@ export default function App() {
     email: "pepe@gmail.com",
     desc: "hellp i am pepe",
   });
+
   const isAuthenticated = () => {
     if (userinfo !== null) {
       setIsLogin(true);
@@ -54,7 +55,7 @@ export default function App() {
                 handleResponseSuccess={handleResponseSuccess}
               />
             ) : (
-              <Main />
+              <Main/>
             )
           }
         />
