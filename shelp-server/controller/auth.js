@@ -2,6 +2,9 @@ const { users } = require('../models');
 const { generateAccessToken, sendAccessToken } = require('./token');
 const nodemailer = require('nodemailer');
 const bcrypt = require('bcrypt');
+const path = require('path');
+const ejs = require('ejs');
+const appDir = path.dirname(require.main.filename);
 
 module.exports = {
     signin: async (req, res) => {
@@ -113,6 +116,11 @@ module.exports = {
 
     mail: async (req, res) => {
         let authNum = Math.random().toString().substr(2, 6);
+        let emailTemplete;
+        ejs.renderFile(appDir + '/template/authMail.ejs', { authCode: authNum }, function (err, data) {
+            if (err) { console.log(err) }
+            emailTemplete = data;
+        });
 
         const transporter = nodemailer.createTransport({
             service: 'gmail',
@@ -129,7 +137,7 @@ module.exports = {
             from: `sHELP`,
             to: req.body.email,
             subject: '[sHELP]인증 관련 이메일 입니다',
-            text: "오른쪽 숫자 6자리를 입력해주세요 : " + authNum,
+            html: emailTemplete,
         });
         // return res.send(mailOptions)
         transporter.sendMail(mailOptions, function (error, info) {
