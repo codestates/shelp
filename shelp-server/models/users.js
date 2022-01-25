@@ -1,5 +1,7 @@
-"use strict";
-const { Model } = require("sequelize");
+'use strict';
+const {
+  Model
+} = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class users extends Model {
     /**
@@ -9,43 +11,43 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      this.hasMany(models.items, { foreignKey: "userId", sourceKey: "id" });
-      this.hasMany(models.settings, { foreignKey: "userId", sourceKey: "id" });
+      this.hasMany(models.items, { foreignKey: 'userId', sourceKey: 'id' });
     }
   }
-  users.init(
-    {
-      id: {
-        type: DataTypes.INTEGER,
-        primaryKey: true,
-        autoIncrement: true,
-        allowNull: false,
-      },
-      name: {
-        type: DataTypes.STRING,
-        allowNull: false,
-      },
-      email: {
-        type: DataTypes.STRING,
-        allowNull: false,
-      },
-      password: {
-        type: DataTypes.STRING,
-        allowNull: false,
-      },
-      image: {
-        type: DataTypes.BLOB,
-        allowNull: false,
-      },
-      desc: {
-        type: DataTypes.STRING,
-        allowNull: true,
-      },
+  users.init({
+    id: {
+      type: DataTypes.INTEGER,
+      primaryKey: true,
+      autoIncrement: true,
+      allowNull: false,
     },
-    {
-      sequelize,
-      modelName: "users",
+    name: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    email: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    password: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    image: {
+      type: DataTypes.BLOB,
+      allowNull: false,
+    },
+    period: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
+    desc: {
+      type: DataTypes.STRING,
+      allowNull: true,
     }
-  );
+  }, {
+    sequelize,
+    modelName: 'users',
+  });
   return users;
 };
