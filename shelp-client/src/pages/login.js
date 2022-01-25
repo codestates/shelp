@@ -1,8 +1,12 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
+<<<<<<< HEAD
 import axios from "axios";
 const serverUrl = "http://localhost:4000";
+=======
+import { LoginModal } from "./modals.js";
+>>>>>>> 81038ba29a41b6f683363ab26e3dcf1034e9ad01
 
 // font-family: adobe-clean-han-japanese,-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,sans-serif;
 
@@ -117,6 +121,7 @@ const TouchPoint = styled.div`
   }
 `;
 
+<<<<<<< HEAD
 export default function Login({ handleResponseSuccess }) {
   const [loginInfo, setLoginInfo] = useState({
     email: "",
@@ -151,6 +156,10 @@ export default function Login({ handleResponseSuccess }) {
         });
     }
   };
+=======
+export default function About({ handleResponseSuccess }) {
+  const [inputOn, setInputOn] = useState(false);
+>>>>>>> 81038ba29a41b6f683363ab26e3dcf1034e9ad01
 
   return (
     <div>

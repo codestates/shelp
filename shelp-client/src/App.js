@@ -10,6 +10,45 @@ const serverUrl = "http://localhost:4000";
 
 export default function App() {
   const [isLogin, setIsLogin] = useState(false);
+  // const [setting, setSetting] = useState();
+
+  // const modalHandler = () => {
+  //   SetIsModalOpen(!isModalOpen);
+  // };
+
+  const [userinfo, setUserinfo] = useState({
+    id: 0,
+    email: "new",
+    name: "hi",
+    desc: "",
+    // image: { type: "Buffer", data: [] },
+    image: "testImage",
+    password: "1234",
+    createdAt: "",
+    updatedAt: "",
+  });
+
+  const isAuthenticated = () => {
+    if (userinfo.name !== "") {
+      setIsLogin(true);
+    }
+  };
+
+  const handleResponseSuccess = (data) => {
+    setUserinfo(data);
+    isAuthenticated();
+  };
+
+  // const handleLogout = () => {
+  //   axios.post(`${serverUrl}/signout`).then((res) => {
+  //     setUserinfo(null);
+  //     setIsLogin(false);
+  //   });
+  // };
+
+  useEffect(() => {
+    handleResponseSuccess(userinfo);
+  });
 
   const [userinfo, setUserinfo] = useState(
     null
