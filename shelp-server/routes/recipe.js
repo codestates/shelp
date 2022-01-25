@@ -1,7 +1,7 @@
-const router = require("express").Router();
-const controller = require("../controller/recipe");
+const router = require('express').Router();
+const controller = require('../controller');
 
-router.get("/", controller.get);
-router.get("/:id", controller.getById);
+router.get('/', controller.recipe.get);
+router.get('/:id', controller.recipe.getById);
 
 module.exports = router;
