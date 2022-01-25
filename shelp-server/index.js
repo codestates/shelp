@@ -30,9 +30,6 @@ app.use(session({
   saveUninitialized: false,
 }));
 
-app.set('template engine', 'ejs');
-app.engine('html', require('ejs').renderFile);
-
 // router
 app.use('/', indexRouter);
 
