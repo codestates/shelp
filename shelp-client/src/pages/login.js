@@ -1,12 +1,8 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-<<<<<<< HEAD
 import axios from "axios";
 const serverUrl = "http://localhost:4000";
-=======
-import { LoginModal } from "./modals.js";
->>>>>>> 81038ba29a41b6f683363ab26e3dcf1034e9ad01
 
 // font-family: adobe-clean-han-japanese,-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,sans-serif;
 
@@ -121,8 +117,7 @@ const TouchPoint = styled.div`
   }
 `;
 
-<<<<<<< HEAD
-export default function Login({ handleResponseSuccess }) {
+export default function Login({ handleResponseSuccess, setUserinfo }) {
   const [loginInfo, setLoginInfo] = useState({
     email: "",
     password: "",
@@ -138,28 +133,24 @@ export default function Login({ handleResponseSuccess }) {
     if (loginInfo.email.length === 0 || loginInfo.password.length === 0) {
       setErrorMessage("이메일과 비밀번호를 입력하세요");
     } else {
-      // console.log(JSON.stringify(loginInfo))
       axios
         .post(`${serverUrl}/user/signin`, loginInfo, {
           "Content-Type": "application/json",
           withCredentials: true,
         })
         .then((res) => {
-          if (res.status === 200) {
-            console.log("userinfo: ", res.data.data);
-            // const { accessToken } = res.data;
-            // axios.defaults.headers.common['jwt'] = `Bearer ${accessToken}`;
-            handleResponseSuccess(res.data.data);
-          } else {
-            alert("falild!");
-          }
+          setUserinfo(res.data.data);
+          console.log("userInfoChanged!");
+        })
+        .then(() => {
+          handleResponseSuccess();
+          console.log("sent ResponseSuccess!");
+        })
+        .catch((err) => {
+          console.log(err);
         });
     }
   };
-=======
-export default function About({ handleResponseSuccess }) {
-  const [inputOn, setInputOn] = useState(false);
->>>>>>> 81038ba29a41b6f683363ab26e3dcf1034e9ad01
 
   return (
     <div>

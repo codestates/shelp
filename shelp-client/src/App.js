@@ -10,82 +10,17 @@ const serverUrl = "http://localhost:4000";
 
 export default function App() {
   const [isLogin, setIsLogin] = useState(false);
-  // const [setting, setSetting] = useState();
-
-  // const modalHandler = () => {
-  //   SetIsModalOpen(!isModalOpen);
-  // };
-
-  const [userinfo, setUserinfo] = useState({
-    id: 0,
-    email: "new",
-    name: "hi",
-    desc: "",
-    // image: { type: "Buffer", data: [] },
-    image: "testImage",
-    password: "1234",
-    createdAt: "",
-    updatedAt: "",
-  });
-
-  const isAuthenticated = () => {
-    if (userinfo.name !== "") {
-      setIsLogin(true);
-    }
-  };
-
-  const handleResponseSuccess = (data) => {
-    setUserinfo(data);
-    isAuthenticated();
-  };
-
-  // const handleLogout = () => {
-  //   axios.post(`${serverUrl}/signout`).then((res) => {
-  //     setUserinfo(null);
-  //     setIsLogin(false);
-  //   });
-  // };
-
-  useEffect(() => {
-    handleResponseSuccess(userinfo);
-  });
-
-  const [userinfo, setUserinfo] = useState(
-    null
-    // () =>
-    //   JSON.parse(window.localStorage.getItem("userinfo")) || {
-    //     id: 0,
-    //     email: "new",
-    //     name: "hi",
-    //     desc: "",
-    //     // image: { type: "Buffer", data: [] },
-    //     image:
-    //       "https://www.freeiconspng.com/thumbs/pepe-png/pepe-png-free-download-16.png",
-    //     password: "",
-    //     createdAt: "",
-    //     updatedAt: "",
-    //   }
-  );
+  const [userinfo, setUserinfo] = useState(null);
 
   const isAuthenticated = () => {
     if (userinfo !== null) {
       setIsLogin(true);
     }
-    // if (userinfo.password === "") {
-    //   setIsLogin(false);
-    // } else {
-    //   setIsLogin(true);
-    // }
   };
 
-  const handleResponseSuccess = (data) => {
-    setUserinfo(data);
+  const handleResponseSuccess = () => {
     isAuthenticated();
   };
-
-  // useEffect(() => {
-  //   window.localStorage.setItem("userinfo", JSON.stringify(userinfo)); //state에 저장되는 userinfo를 localStorage에 저장
-  // });
 
   // const handleLogout = () => {
   //   axios.post(`${serverUrl}/signout`).then((res) => {
@@ -96,14 +31,22 @@ export default function App() {
 
   // useEffect(() => {
   //   handleResponseSuccess(userinfo);
-  //   console.log("changed!", userinfo);
-  // }, [userinfo]);
-
+  // });
   useEffect(() => {
     isAuthenticated();
-    console.log("app.userinfo: ", userinfo);
-    console.log("app.islogin: ", typeof isLogin, isLogin);
-  });
+  }, [userinfo]);
+
+  // const handleLogout = () => {
+  //   axios.post(`${serverUrl}/user/signout`).then((res) => {
+  //     setUserinfo(null);
+  //     setIsLogin(false);
+  //   });
+  // };
+
+  // useEffect(() => {
+  //   handleResponseSuccess(userinfo);
+  //   console.log("changed!", userinfo);
+  // }, [userinfo]);
 
   return (
     <div>
@@ -118,7 +61,12 @@ export default function App() {
         /> */}
         <Route
           path="/login"
-          element={<Login handleResponseSuccess={handleResponseSuccess} />}
+          element={
+            <Login
+              handleResponseSuccess={handleResponseSuccess}
+              setUserinfo={setUserinfo}
+            />
+          }
         />
         <Route path="/signup" element={<Signup />} />
         <Route
