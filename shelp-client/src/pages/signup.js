@@ -56,7 +56,6 @@ const TouchPoint = styled.div`
   > button.submit {
     height: auto;
     margin-top: 3rem;
-    margin-left: 15rem;
     padding: 0.7rem 1rem;
     background-color: grey;
     color: white;
@@ -67,10 +66,10 @@ const TouchPoint = styled.div`
   }
 
   > button.oauth {
-    width: 15rem;
+    width: 14rem;
     height: auto;
     margin-top: 1rem;
-    margin-left: 10.5rem;
+    margin-left: 0.7rem;
     padding: 0.7rem 1rem;
     background-color: gold;
     color: black;
