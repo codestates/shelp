@@ -144,7 +144,7 @@ export default function Login({ handleResponseSuccess }) {
             console.log("userinfo: ", res.data.data);
             // const { accessToken } = res.data;
             // axios.defaults.headers.common['jwt'] = `Bearer ${accessToken}`;
-            return handleResponseSuccess(res.data.data);
+            handleResponseSuccess(res.data.data);
           } else {
             alert("falild!");
           }
@@ -172,7 +172,7 @@ export default function Login({ handleResponseSuccess }) {
             ></input>
             <div className="error">비밀번호를 입력해 주세요</div>
             <button className="submit" onClick={handleLogin}>
-              로그인
+              <Link to="/">로그인</Link>
             </button>
             <button className="oauth">카카오로 계속하기</button>
           </TouchPoint>
