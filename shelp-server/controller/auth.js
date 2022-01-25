@@ -6,6 +6,9 @@ const path = require('path');
 const ejs = require('ejs');
 const appDir = path.dirname(require.main.filename);
 
+app.set('template engine', 'ejs');
+app.engine('html', require('ejs').renderFile);
+
 module.exports = {
     signin: async (req, res) => {
         const { email, password } = req.body;
@@ -60,7 +63,7 @@ module.exports = {
     },
 
     signup: (req, res) => {
-        const { name, email, password, image, period, desc } = req.body
+        const { name, email, password, image, desc } = req.body
 
         if (!name || !email || !password || !image) {
             return res.status(422).json({ message: 'Insufficient parameters supplied' })
