@@ -4,6 +4,8 @@ import Intro from "./pages/intro";
 import Signup from "./pages/signup";
 import Main from "./pages/main";
 import Mypage from "./pages/mypage";
+import Login from "./pages/login";
+
 import axios from "axios";
 const serverUrl = "http://localhost:4000";
 
@@ -48,16 +50,12 @@ export default function App() {
   return (
     <div>
       <Routes>
+        <Route path="/" element={<Main />} />
         <Route
-          path="/"
-          element={
-            !isLogin ? (
-              <Intro handleResponseSuccess={handleResponseSuccess} />
-            ) : (
-              <Main />
-            )
-          }
+          path="/intro"
+          element={<Intro handleResponseSuccess={handleResponseSuccess} />}
         />
+        <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
         <Route
           path="/mypage"
