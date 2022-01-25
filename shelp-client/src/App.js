@@ -4,12 +4,18 @@ import Intro from "./pages/intro";
 import Signup from "./pages/signup";
 import Main from "./pages/main";
 import Mypage from "./pages/mypage";
+import Login from "./pages/login";
+
 import axios from "axios";
 const serverUrl = "http://localhost:4000";
 
 export default function App() {
   const [isLogin, setIsLogin] = useState(false);
   // const [setting, setSetting] = useState();
+
+  // const modalHandler = () => {
+  //   SetIsModalOpen(!isModalOpen);
+  // };
 
   const [userinfo, setUserinfo] = useState({
     id: 0,
@@ -48,16 +54,12 @@ export default function App() {
   return (
     <div>
       <Routes>
+        <Route path="/" element={<Main isLogin={isLogin} />} />
         <Route
-          path="/"
-          element={
-            !isLogin ? (
-              <Intro handleResponseSuccess={handleResponseSuccess} />
-            ) : (
-              <Main />
-            )
-          }
+          path="/intro"
+          element={<Intro handleResponseSuccess={handleResponseSuccess} />}
         />
+        <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
         <Route
           path="/mypage"
