@@ -30,16 +30,7 @@ app.use(session({
   saveUninitialized: false,
 }));
 
-app.set('view engine', 'ejs');
-app.engine('html', require('ejs').renderFile);
-
-app.set('view engine', 'ejs');
-app.engine('html', require('ejs').renderFile);
-
-app.set('view engine', 'ejs');
-app.engine('html', require('ejs').renderFile);
-
-app.set('view engine', 'ejs');
+app.set('template engine', 'ejs');
 app.engine('html', require('ejs').renderFile);
 
 // router
