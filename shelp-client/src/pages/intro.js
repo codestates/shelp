@@ -38,7 +38,7 @@ const TouchPoint = styled.div`
   border-radius: 0.3rem;
 `;
 
-export default function Intro({ handleResponseSuccess }) {
+export default function Intro({ handleResponseSuccess, setData }) {
   const [isModalOpen, SetIsModalOpen] = useState(false);
 
   const modalHandler = () => {

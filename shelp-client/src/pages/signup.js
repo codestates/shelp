@@ -1,7 +1,8 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import { LoginModal } from "./modals.js";
+import axios from "axios";
+const serverUrl = "http://localhost:4000";
 
 // font-family: adobe-clean-han-japanese,-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,sans-serif;
 const TouchPoint = styled.div`
@@ -80,8 +81,64 @@ const TouchPoint = styled.div`
   }
 `;
 
-export default function About({ handleResponseSuccess }) {
-  const [inputOn, setInputOn] = useState(false);
+export default function Signup({ handleResponseSuccess }) {
+  const [signupInfo, setSignupInfo] = useState({
+    email: null,
+    name: null,
+    password: null,
+    desc: null,
+    image:
+      "https://www.freeiconspng.com/thumbs/pepe-png/pepe-png-free-download-16.png",
+  });
+
+  const [errorMessage, setErrorMessage] = useState();
+
+  const [emailMessage, setEmailMessage] = useState("");
+
+  const handleInputValue = (e, key) => {
+    setSignupInfo({ ...signupInfo, [key]: e.target.value });
+  };
+
+  const handlePasswordError = (checkPassword) => {
+    if (checkPassword !== signupInfo.password) {
+      setErrorMessage("비밀번호를 확인해 주세요");
+    } else {
+      setErrorMessage("");
+    }
+  };
+
+  const handleSignup = () => {
+    if (signupInfo.email && signupInfo.name && signupInfo.password) {
+      console.log("handleSignup works");
+      console.log(signupInfo);
+      if (errorMessage === "") {
+        axios.post(`${serverUrl}/user/signup`, signupInfo).then((res) => {
+          console.log(res);
+        });
+      }
+      window.location.replace("/");
+    }
+  };
+
+  const checkEmail = (e) => {
+    axios
+      .post(`${serverUrl}/user/check`, { email: signupInfo.email })
+      .then((res) => {
+        console.log(res);
+        if (res.status === 200) {
+          setEmailMessage("사용가능한 이메일 입니다.");
+        }
+        if (res.status === 409) {
+          setEmailMessage("이미 사용중인 이메일 입니다.");
+        }
+      });
+  };
+
+  const oAuthHandler = () => {
+    axios.get(`${serverUrl}user/auth/kakao`).then((res) => {
+      console.log(res);
+    });
+  };
 
   return (
     <div>

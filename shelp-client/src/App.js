@@ -11,26 +11,31 @@ const serverUrl = "http://localhost:4000";
 
 export default function App() {
   const [isLogin, setIsLogin] = useState(false);
-  // const [setting, setSetting] = useState();
 
-  // const modalHandler = () => {
-  //   SetIsModalOpen(!isModalOpen);
-  // };
+  const [userinfo, setUserinfo] = useState(
+    () =>
+      JSON.parse(window.localStorage.getItem("userinfo")) || {
+        id: 0,
+        email: "new",
+        name: "hi",
+        desc: "",
+        // image: { type: "Buffer", data: [] },
+        image:
+          "https://www.freeiconspng.com/thumbs/pepe-png/pepe-png-free-download-16.png",
+        password: "",
+        createdAt: "",
+        updatedAt: "",
+      }
+  );
 
-  const [userinfo, setUserinfo] = useState({
-    id: 0,
-    email: "new",
-    name: "hi",
-    desc: "",
-    // image: { type: "Buffer", data: [] },
-    image: "testImage",
-    password: "1234",
-    createdAt: "",
-    updatedAt: "",
+  useEffect(() => {
+    window.localStorage.setItem("userinfo", JSON.stringify(userinfo)); //state에 저장되는 userinfo를 localStorage에 저장
   });
 
   const isAuthenticated = () => {
-    if (userinfo.name !== "") {
+    if (userinfo.password === "") {
+      setIsLogin(false);
+    } else {
       setIsLogin(true);
     }
   };
@@ -49,7 +54,7 @@ export default function App() {
 
   useEffect(() => {
     handleResponseSuccess(userinfo);
-  });
+  }, [userinfo]);
 
   return (
     <div>

@@ -1,9 +1,12 @@
-import { Link } from "react-router-dom";
+import { Route, Switch, Link, Routes } from "react-router-dom";
 import { useState, useRef, useEffect } from "react";
 import styled from "styled-components";
 import Mypage from "./mypage.js";
+import { AddItemModal, EditItemModal } from "./modals.js";
 import Navigationbar from "../components/navigationbar.js";
-import { AddItemModal } from "./modals.js";
+const axios = require("axios").default;
+const serverUrl = "http://localhost:4000";
+axios.defaults.withCredentials = true;
 
 const dummyCards = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16];
 
@@ -134,13 +137,59 @@ const RecipeCard = styled.div`
 
 // ===================================================================
 
-export function Main({ isLogin }) {
+export function Main({ isLogin, userinfo }) {
+  const [isModalOpen, setIsModalOpen] = useState("");
+  const [items, setItems] = useState([]);
+  const [index, setIndex] = useState(null);
+  const [recipes, setRecipes] = useState([]);
   const [isFrigerOpen, setisFrigerOpen] = useState(null);
+
+  const userItemInfo = async () => {
+    // 아이템을 가져오는 함수 쿠키를 못찾아서 못씀
+    console.log("hello");
+    axios
+      .get(`${serverUrl}/items`, {
+        "Content-Type": "application/json",
+        withCredentials: true,
+      })
+      .then((res) => {
+        console.log(res.data.data);
+        setItems(res.data.data);
+      });
+  };
 
   const frigerHandler = () => {
     setisFrigerOpen(!isFrigerOpen);
     console.log(isFrigerOpen);
   };
+
+  const modalHandler = (e, el) => {
+    if (e === "수정") {
+      setIsModalOpen("수정");
+    }
+    if (e === "추가") {
+      setIsModalOpen("추가");
+    }
+    if (e == "close") {
+      setIsModalOpen("");
+    }
+    if (el >= 0) {
+      setIndex(el);
+    }
+    // setIsModalOpen(!isModalOpen);
+  };
+
+  const searchRecipe = (e) => {
+    // 크롤링 함수(items[e].name)
+    axios.get(`${serverUrl}/${items[e].id}`).then((res) => {
+      console.log(`crawling data = ${res}`);
+    });
+  };
+
+  useEffect(() => {
+    // getItems();
+    userItemInfo();
+  }, []);
 
   return (
     <Container>
@@ -171,14 +220,27 @@ export function Main({ isLogin }) {
         <RecipeContainer>
           <RecipeCard>card1</RecipeCard>
           <RecipeCard>card2</RecipeCard>
-          <RecipeCard>card3</RecipeCard>
-          <RecipeCard>card4</RecipeCard>
-          <RecipeCard>card5</RecipeCard>
-          <RecipeCard>card6</RecipeCard>
-          <RecipeCard>card7</RecipeCard>
-          <RecipeCard>card8</RecipeCard>
         </RecipeContainer>
       </Section>
+      {isModalOpen === "추가" ? (
+        <AddItemModal
+          modalHandler={modalHandler}
+          items={items}
+          setItems={setItems}
+        />
+      ) : (
+        <div></div>
+      )}
+      {isModalOpen === "수정" ? (
+        <EditItemModal
+          index={index}
+          modalHandler={modalHandler}
+          items={items}
+          setItems={setItems}
+        />
+      ) : (
+        <div></div>
+      )}
     </Container>
   );
 }
