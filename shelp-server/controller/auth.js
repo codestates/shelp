@@ -1,5 +1,10 @@
-const { users, settings } = require('../models');
+const { users } = require('../models');
 const { generateAccessToken, sendAccessToken } = require('./token');
+const nodemailer = require('nodemailer');
+const bcrypt = require('bcrypt');
+const path = require('path');
+const ejs = require('ejs');
+const appDir = path.dirname(require.main.filename);
 
 module.exports = {
     signin: async (req, res) => {
@@ -11,17 +16,23 @@ module.exports = {
             try {
                 const userInfo = await users.findOne({
                     where: {
-                        email,
-                        password
+                        email: email,
                     },
                 });
                 // 로그인 실패
                 if (!userInfo) {
                     return res.status(404).json({ message: "Wrong information" });
                 }
+                else {
+                    let passwordCheck = await bcrypt.compare(password, userInfo.password);
+                    if (passwordCheck) {
+                        const accessToken = generateAccessToken({ dataValues: { userInfo } });
+                        sendAccessToken(res, accessToken, 200, { data: userInfo, message: 'Signin succeed' });
+                    } else {
+                        return res.json({ messgae: 'wrong password' })
+                    }
+                }
                 // 로그인이 성공하면 토큰이 생성되고 쿠기로 전송된다.
-                const accessToken = generateAccessToken({ dataValues: { userInfo } });
-                sendAccessToken(res, accessToken, 200, { data: userInfo, message: 'Signin succeed' });
             } catch (err) {
                 res.status(500).json({ message: "Internal server error" });
             }
@@ -49,27 +60,23 @@ module.exports = {
     },
 
     signup: (req, res) => {
-        const { name, email, password, image, desc } = req.body
+        const { name, email, password, image, period, desc } = req.body
 
         if (!name || !email || !password || !image) {
             return res.status(422).json({ message: 'Insufficient parameters supplied' })
         }
         users.findOrCreate({
             where: {
-                name, name,
+                name: name,
                 email: email,
-                password: password,
+                password: bcrypt.hashSync(password, 10),
                 image: image,
+                period: 1,
                 desc: desc
             },
         })
             .then(([userInfo, created]) => {
                 if (created) {
-                    // 회원가입에 성공하면 settings 테이블의 데이터도 생생한다.
-                    settings.create({
-                        userId: userInfo.id,
-                        period: 1,
-                    })
                     // 회원가입에 성공하면 토큰이 발행되므로 별로의 로그인 과정이 생략된다.
                     const accessToken = generateAccessToken({ dataValues: { userInfo } });
                     sendAccessToken(res, accessToken, 201, { data: userInfo, message: 'Create succeed' });
@@ -105,5 +112,40 @@ module.exports = {
         } catch {
             res.status(500).json({ message: "Internal server error" });
         }
+    },
+
+    mail: async (req, res) => {
+        let authNum = Math.random().toString().substr(2, 6);
+        let emailTemplete;
+        ejs.renderFile(appDir + '/template/authMail.ejs', { authCode: authNum }, function (err, data) {
+            if (err) { console.log(err) }
+            emailTemplete = data;
+        });
+
+        const transporter = nodemailer.createTransport({
+            service: 'gmail',
+            host: 'smtp.gmail.com',
+            port: 587,
+            secure: false,
+            auth: {
+                user: process.env.NODEMAILER_USER,
+                pass: process.env.NODEMAILER_PASS,
+            },
+        });
+
+        const mailOptions = await transporter.sendMail({
+            from: `sHELP`,
+            to: req.body.email,
+            subject: '[sHELP]인증 관련 이메일 입니다',
+            html: emailTemplete,
+        });
+        // return res.send(mailOptions)
+        transporter.sendMail(mailOptions, function (error, info) {
+            if (error) {
+                console.log(error);
+            }
+            res.json({ certCode: authNum });
+            transporter.close()
+        });
     }
 };

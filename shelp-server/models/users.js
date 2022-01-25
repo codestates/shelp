@@ -12,7 +12,6 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
       this.hasMany(models.items, { foreignKey: 'userId', sourceKey: 'id' });
-      this.hasMany(models.settings, { foreignKey: 'userId', sourceKey: 'id' });
     }
   }
   users.init({
@@ -36,6 +35,10 @@ module.exports = (sequelize, DataTypes) => {
     },
     image: {
       type: DataTypes.BLOB,
+      allowNull: false,
+    },
+    period: {
+      type: DataTypes.INTEGER,
       allowNull: false,
     },
     desc: {

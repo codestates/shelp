@@ -8,7 +8,7 @@ module.exports = {
         userId: 1,
         name: '사과',
         quantity: 3,
-        desc: '옆집에서 선물로 받음',
+        desc: '청과시장에서 구매함',
         storage: '냉장',
         expiration: "2022-02-21",
         createdAt: new Date(),
@@ -19,9 +19,9 @@ module.exports = {
         userId: 1,
         name: '냉동만두',
         quantity: 4,
-        desc: '청과시장에서 구매함',
+        desc: '편의점 1+1',
         storage: '냉동',
-        expiration: "2022-02-01",
+        expiration: "2022-05-12",
         createdAt: new Date(),
         updatedAt: new Date()
       }

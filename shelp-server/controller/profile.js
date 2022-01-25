@@ -1,5 +1,6 @@
-const { users, items, recipes, settings } = require('../models');
+const { users, items } = require('../models');
 const { isAuthorized } = require('./token');
+const bcrypt = require('bcrypt');
 
 module.exports = {
     get: async (req, res) => {
@@ -23,7 +24,7 @@ module.exports = {
     },
 
     put: async (req, res) => {
-        const { name, password, image, desc } = req.body;
+        const { name, password, image, period, desc } = req.body;
         const accessToken = req.cookies.jwt
 
         if (!name || !password || !image) {
@@ -37,8 +38,9 @@ module.exports = {
             if (verifyInfo) {
                 await users.update({
                     name: name,
-                    password: password,
+                    password: bcrypt.hashSync(password, 10),
                     image: image,
+                    period: period,
                     desc, desc
                 }, {
                     where: { email: verifyInfo.userInfo.email },
@@ -70,13 +72,6 @@ module.exports = {
                     })
                     await items.destroy({
                         where: { userId: verifyInfo.userInfo.id },
-                    })
-                    await settings.destroy({
-                        where: { userId: verifyInfo.userInfo.id },
-                    })
-                    await recipes.destroy({
-                        attributes: ['itemId'],
-                        where: { itemId: itemInfo.id },
                     })
                     // 테이블을 삭제해도 토큰이 존재하므로 쿠기 삭제 과정이 필요
                     res.clearCookie('jwt', {

@@ -24,6 +24,10 @@ module.exports = {
         allowNull: false,
         type: Sequelize.BLOB
       },
+      period: {
+        allowNull: false,
+        type: Sequelize.INTEGER
+      },
       desc: {
         type: Sequelize.STRING
       },

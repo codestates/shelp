@@ -3,21 +3,16 @@ const { sign, verify } = require('jsonwebtoken');
 
 module.exports = {
   generateAccessToken: (data) => {
-    return sign(data.dataValues, process.env.ACCESS_SECRET, { expiresIn: "10m" });
-  },
-  generateRefreshToken: (data) => {
-    return sign(data.dataValues, process.env.REFRESH_SECRET, { expiresIn: "15d" });
+    return sign(data.dataValues, process.env.ACCESS_SECRET, { expiresIn: "1h" });
   },
   sendAccessToken: (res, accessToken, statusCode, data) => {
-    res
+    return res
       .cookie('jwt', accessToken,
         {
           domain: 'localhost',
           path: '/',
           maxAge: 24 * 6 * 60 * 10000,
-          sameSite: 'none',
           httpOnly: true,
-          // secure: true,
         })
       .status(statusCode)
       .json(data);
@@ -26,6 +21,4 @@ module.exports = {
     const userInfo = verify(req.cookies.jwt, process.env.ACCESS_SECRET);
     return userInfo;
   },
-  renewToken: (accessToken, refreshToken) => {
-  }
 };
