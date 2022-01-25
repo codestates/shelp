@@ -29,12 +29,9 @@ app.use(session({
   secure: false,
   saveUninitialized: false,
 }));
-<<<<<<< HEAD
 
 app.set('view engine', 'ejs');
 app.engine('html', require('ejs').renderFile);
-=======
->>>>>>> 60b0a4a14246cf5898a8e7e2f5df5f25c0375c49
 
 app.set('view engine', 'ejs');
 app.engine('html', require('ejs').renderFile);
