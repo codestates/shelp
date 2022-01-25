@@ -5,7 +5,7 @@ import Mypage from "./mypage.js";
 import Navigationbar from "../components/navigationbar.js";
 import { AddItemModal } from "./modals.js";
 
-// const dummyCards = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16];
+const dummyCards = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16];
 
 const Container = styled.div`
   top: 0;
@@ -49,7 +49,7 @@ const SearchOpt = styled.div`
 const SortOpt = styled.div`
   height: 2rem;
   margin-right: 3rem;
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.4rem;
   text-align: right;
 `;
 
@@ -64,7 +64,7 @@ const Friger = styled.div`
   z-index: 900;
   position: absolute;
   left: 0;
-  top: 10em;
+  top: 9.5em;
   height: 32em;
   background-color: white;
   border-radius: 0 0.5em 0.5em 0;
@@ -114,25 +114,28 @@ const Friger = styled.div`
 `;
 
 const RecipeContainer = styled.div`
-  flex: 10 0 auto;
-  background-color: peachpuff;
+  width: vw;
+  background-color: lightgrey;
   border: solid black 1px;
+  padding: 0.125em;
   display: flex;
   flex-flow: row wrap;
-  //justify-content: space-evenly;
+  align-items: left;
+  justify-content: space-around;
 `;
 
 const RecipeCard = styled.div`
-  width: 25em;
-  height: 15em;
-  background-color: rgba(0, 0, 0, 0.5);
+  width: 15em;
+  flex: 1 0 auto;
+  margin: 0.25em;
+  background-color: rgba(0, 0, 0, 0.2);
   border: solid grey 1px;
 `;
 
 // ===================================================================
 
 export function Main({ isLogin }) {
-  const [isFrigerOpen, setisFrigerOpen] = useState(false);
+  const [isFrigerOpen, setisFrigerOpen] = useState(null);
 
   const frigerHandler = () => {
     setisFrigerOpen(!isFrigerOpen);
@@ -145,6 +148,7 @@ export function Main({ isLogin }) {
         <button onClick={frigerHandler} className="friger-onoff">
           +
         </button>
+        <div>test</div>
       </Friger>
       <Navigationbar isLogin={isLogin} />
       <Searchbar>
@@ -167,6 +171,12 @@ export function Main({ isLogin }) {
         <RecipeContainer>
           <RecipeCard>card1</RecipeCard>
           <RecipeCard>card2</RecipeCard>
+          <RecipeCard>card3</RecipeCard>
+          <RecipeCard>card4</RecipeCard>
+          <RecipeCard>card5</RecipeCard>
+          <RecipeCard>card6</RecipeCard>
+          <RecipeCard>card7</RecipeCard>
+          <RecipeCard>card8</RecipeCard>
         </RecipeContainer>
       </Section>
     </Container>

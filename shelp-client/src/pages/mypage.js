@@ -31,17 +31,16 @@ const Profile = styled.div`
   box-shadow: 0em 0em 1em rgba(0, 0, 0, 0.3);
   border-radius: 0.5rem;
   display: flex;
+  align-items: center;
 
   > div.profile-image {
     flex: 1 0 auto;
     position: absolute;
-    left: 10rem;
-    top: 2rem;
-    width: 12rem;
-    height: 12rem;
+    width: 10rem;
+    height: 10rem;
+    margin-left: 2rem;
     border-radius: 50%;
     overflow: hidden;
-    /* margin: 3em 3em 3em 10em; */
     color: grey;
   }
 
@@ -51,8 +50,8 @@ const Profile = styled.div`
     top: 3rem;
     flex: 1 0 auto;
     display: flex;
-
     flex-direction: column;
+    justify-items: center;
 
     > div.profile-email {
       flex: 1 0 auto;
@@ -68,11 +67,19 @@ const Profile = styled.div`
 
 const Setting = styled.div`
   flex: 1 0 auto;
+  background-color: grey;
+  border: sold black 1px;
+`;
+
+const Collection = styled.div`
+  flex: 2 0 auto;
   background-color: white;
   margin: 0.5rem 1rem 1rem 1rem;
   box-shadow: 0em 0em 1em rgba(0, 0, 0, 0.3);
   border-radius: 0.5rem;
 `;
+
+const AlarmSet = styled.div``;
 
 function Mypage({ profile, setProfile }) {
   const [tempProfile, setTempProfile] = useState(Profile);
@@ -84,15 +91,16 @@ function Mypage({ profile, setProfile }) {
       <Section>
         <Profile>
           <div className="profile-image">
-            <img src="https://picsum.photos/300/300?random=2" />
+            <img src="https://picsum.photos/300/300?random=1" />
           </div>
           <div className="profile-container">
             <div className="profile-name">김철수</div>
             <span>님 환영합니다.</span>
             <div className="profile-email">myshelp@gmail.com</div>
           </div>
+          <Setting />
         </Profile>
-        <Setting></Setting>
+        <Collection></Collection>
       </Section>
     </Container>
   );
