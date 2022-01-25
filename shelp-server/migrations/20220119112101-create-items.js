@@ -23,13 +23,13 @@ module.exports = {
       desc: {
         type: Sequelize.STRING
       },
-      group: {
+      storage: {
         allowNull: false,
         type: Sequelize.STRING
       },
       expiration: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: Sequelize.DATEONLY
       },
       createdAt: {
         allowNull: false,

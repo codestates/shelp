@@ -1,27 +1,71 @@
-import "./App.css";
-
-import { Routes, Route, Link } from "react-router-dom";
-// react-router-dom이 버전 6로 업그레이드되면서 (여기선 v6.2.1 사용중) Switch를 더이상 지원하지 않는다.
-// Switch -> routes로 변경, Component -> element={<Component />}로 변경.
-// https://velog.io/@kcdoggo/Switch-is-not-exported-from-react-router-dom-%EC%97%90%EB%9F%AC
-
+import { useState, useEffect } from "react";
+import { Routes, Route } from "react-router-dom";
 import Intro from "./pages/intro";
+import Signup from "./pages/signup";
 import Main from "./pages/main";
-// import Mypage from "./pages/mypage";
-// import Signup from "./pages/signup";
+import Mypage from "./pages/mypage";
+import Login from "./pages/login";
 
-import { useState } from "react";
+import axios from "axios";
+const serverUrl = "http://localhost:4000";
 
 export default function App() {
   const [isLogin, setIsLogin] = useState(false);
+  // const [setting, setSetting] = useState();
+
+  // const modalHandler = () => {
+  //   SetIsModalOpen(!isModalOpen);
+  // };
+
+  const [userinfo, setUserinfo] = useState({
+    id: 0,
+    email: "new",
+    name: "hi",
+    desc: "",
+    // image: { type: "Buffer", data: [] },
+    image: "testImage",
+    password: "1234",
+    createdAt: "",
+    updatedAt: "",
+  });
+
+  const isAuthenticated = () => {
+    if (userinfo.name !== "") {
+      setIsLogin(true);
+    }
+  };
+
+  const handleResponseSuccess = (data) => {
+    setUserinfo(data);
+    isAuthenticated();
+  };
+
+  // const handleLogout = () => {
+  //   axios.post(`${serverUrl}/signout`).then((res) => {
+  //     setUserinfo(null);
+  //     setIsLogin(false);
+  //   });
+  // };
+
+  useEffect(() => {
+    handleResponseSuccess(userinfo);
+  });
 
   return (
-    // <Routes>
-    //   <Route
-    //     path="/"
-    //     element={!isLogin ? <Intro setIsLogin={setIsLogin} /> : <Main />}
-    //   />
-    // </Routes>
-    <div>{!isLogin ? <Intro setIsLogin={setIsLogin} /> : <Main />}</div>
+    <div>
+      <Routes>
+        <Route path="/" element={<Main isLogin={isLogin} />} />
+        <Route
+          path="/intro"
+          element={<Intro handleResponseSuccess={handleResponseSuccess} />}
+        />
+        <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<Signup />} />
+        <Route
+          path="/mypage"
+          element={<Mypage userinfo={userinfo} setUserinfo={setUserinfo} />}
+        />
+      </Routes>
+    </div>
   );
 }
