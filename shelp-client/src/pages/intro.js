@@ -8,8 +8,8 @@ const Wallpaper = styled.div`
   position: absolute;
   top: 0;
   left: 0;
-  width: 100%;
-  height: 300%;
+  width: 100vw;
+  height: 100vh;
   background: linear-gradient(
       to bottom,
       rgba(232, 232, 232, 0.3),
@@ -21,13 +21,15 @@ const Wallpaper = styled.div`
 `;
 
 const TouchPoint = styled.div`
-  display: inline-block;
-  position: sticky; // sticky  absolute
+  bottom: 3rem;
+  right: 3rem;
+  width: 26rem;
+  height: 5rem;
+  position: absolute; // sticky  absolute?
   z-index: 999;
-  bottom: 200px;
-  right: 200px;
-  background-color: cyan;
-  padding: 100px;
+  background-color: rgba(255, 255, 255, 1);
+  padding: 4rem 3rem;
+  border-radius: 0.3rem;
 `;
 
 export default function Intro({ handleResponseSuccess }) {

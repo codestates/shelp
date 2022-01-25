@@ -13,6 +13,10 @@ export default function App() {
   const [isLogin, setIsLogin] = useState(false);
   // const [setting, setSetting] = useState();
 
+  // const modalHandler = () => {
+  //   SetIsModalOpen(!isModalOpen);
+  // };
+
   const [userinfo, setUserinfo] = useState({
     id: 0,
     email: "new",
@@ -50,7 +54,7 @@ export default function App() {
   return (
     <div>
       <Routes>
-        <Route path="/" element={<Main />} />
+        <Route path="/" element={<Main isLogin={isLogin} />} />
         <Route
           path="/intro"
           element={<Intro handleResponseSuccess={handleResponseSuccess} />}

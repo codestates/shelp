@@ -1,12 +1,11 @@
-import { Route, Switch, Link, Routes } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useState, useRef, useEffect } from "react";
 import styled from "styled-components";
 import Mypage from "./mypage.js";
+import Navigationbar from "../components/navigationbar.js";
 import { AddItemModal } from "./modals.js";
-const axios = require("axios").default;
-const serverUrl = "https://randomdomain:4000";
 
-// 조건에 따라 변하는 스타일만 styled component로 만들기
+// const dummyCards = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16];
 
 const Container = styled.div`
   top: 0;
@@ -16,42 +15,7 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   min-height: 50rem;
-  background-color: lightgrey;
-  border: solid black 1px;
-`;
-
-const Navigator = styled.div`
-  height: 3rem;
-  display: flex;
-  flex-direction: row;
-  min-height: 0.5rem;
-  background-color: salmon;
-  border: solid black 1px;
-
-  > div.logo {
-    flex: 2 0 auto;
-    border: solid black 1px;
-  }
-
-  > div.about {
-    flex: 1 0 auto;
-    border: solid black 1px;
-    text-align: center;
-  }
-
-  > div.blank {
-    flex: 20 0 auto;
-    border: solid black 1px;
-    text-align: center;
-    display: table-cell;
-    vertical-align: middle;
-  }
-
-  > div.nav-button {
-    flex: 1 0 auto;
-    border: solid black 1px;
-    text-align: center;
-  }
+  background-color: white;
 `;
 
 const Searchbar = styled.div`
@@ -59,28 +23,34 @@ const Searchbar = styled.div`
   display: flex;
   flex-direction: row;
   margin: 1.5rem;
-  border: solid black 1px;
+  border: solid lightgrey 1px;
   border-radius: 2rem;
   text-align: justify;
 
   > input.text-area {
+    border: none;
+    border-radius: 2rem 0 0 2rem;
+    padding-left: 1.5rem;
     flex: 8 0 auto;
-    background-color: rgba(0, 0, 0, 0.1);
-    border: solid black 1px;
+    background-color: rgba(0, 0, 0, 0.05);
   }
   > div.tabs {
     flex: 2 0 auto;
     display: flex;
-    border: solid black 1px;
   }
 `;
 
-const Option = styled.div`
+const SearchOpt = styled.div`
   flex: 1 0 auto;
-  background-color: rgba(0, 0, 0, 0.3);
-  border: solid red 1px;
   padding-top: 0.9rem;
   text-align: center;
+`;
+
+const SortOpt = styled.div`
+  height: 2rem;
+  margin-right: 3rem;
+  margin-bottom: 0.5rem;
+  text-align: right;
 `;
 
 const Section = styled.div`
@@ -91,10 +61,14 @@ const Section = styled.div`
 `;
 
 const Friger = styled.div`
-  background-color: whitesmoke;
-  border: solid black 1px;
-  border-radius: 0 2em 2em 0;
-  margin: 1em 1em 1em 0;
+  z-index: 900;
+  position: absolute;
+  left: 0;
+  top: 10em;
+  height: 32em;
+  background-color: white;
+  border-radius: 0 0.5em 0.5em 0;
+  box-shadow: 10px 5px 20px rgba(0, 0, 0, 0.5);
 
   animation-name: ${(props) =>
     props.isFrigerOpen === true ? "slideout" : "slidein"};
@@ -105,37 +79,59 @@ const Friger = styled.div`
 
   @keyframes slidein {
     from {
-      flex: 0.1 0 auto;
+      width: 2em;
     }
 
     to {
-      flex: 1 0 auto;
+      width: 30em;
     }
   }
 
   @keyframes slideout {
     from {
-      flex: 1 0 auto;
+      width: 30em;
     }
 
     to {
-      flex: 0.1 0 auto;
+      width: 2em;
     }
   }
 
-  > div.friger-onoff {
+  > button.friger-onoff {
+    position: relative;
+    right: 0rem;
+    width: 3em;
+    height: 3em;
+    margin: 1em;
+    background-color: white;
+    box-shadow: 0rem 0.5rem 1.5rem rgba(0, 0, 0, 0.5);
+    border-style: hidden;
+    border-radius: 1.5em;
+    cursor: pointer;
   }
   > div.friger-view {
   }
 `;
 
 const RecipeContainer = styled.div`
-  flex: 2 0 auto;
-  background-color: whitesmoke;
+  flex: 10 0 auto;
+  background-color: peachpuff;
   border: solid black 1px;
+  display: flex;
+  flex-flow: row wrap;
+  //justify-content: space-evenly;
 `;
 
-export function Main() {
+const RecipeCard = styled.div`
+  width: 25em;
+  height: 15em;
+  background-color: rgba(0, 0, 0, 0.5);
+  border: solid grey 1px;
+`;
+
+// ===================================================================
+
+export function Main({ isLogin }) {
   const [isFrigerOpen, setisFrigerOpen] = useState(false);
 
   const frigerHandler = () => {
@@ -144,34 +140,36 @@ export function Main() {
   };
 
   return (
-    <div>
-      <Container>
-        <Navigator>
-          <div className="logo">Logo</div>
-          <div className="about">About</div>
-          <div className="blank">--Blank--</div>
-          <div className="nav-button">로그인</div>
-          <div className="nav-button">회원가입</div>
-        </Navigator>
-        <Searchbar>
-          <input
-            className="text-area"
-            placeholder="지금 바로 가능한 레시피 검색"
-          />
-          <div className="tabs">
-            <Option>재료</Option>
-            <Option>레시피</Option>
-          </div>
-        </Searchbar>
-        <Section>
-          <Friger isFrigerOpen={isFrigerOpen}>
-            <div>ok</div>
-            <button onClick={frigerHandler}>+</button>
-          </Friger>
-          <RecipeContainer></RecipeContainer>
-        </Section>
-      </Container>
-    </div>
+    <Container>
+      <Friger isFrigerOpen={isFrigerOpen}>
+        <button onClick={frigerHandler} className="friger-onoff">
+          +
+        </button>
+      </Friger>
+      <Navigationbar isLogin={isLogin} />
+      <Searchbar>
+        <input
+          className="text-area"
+          placeholder="지금 바로 가능한 레시피 검색"
+        />
+        <div className="tabs">
+          <SearchOpt>재료</SearchOpt>
+          <SearchOpt>레시피</SearchOpt>
+        </div>
+      </Searchbar>
+      <SortOpt>추천순</SortOpt>
+      <Section>
+        {/* <Friger isFrigerOpen={isFrigerOpen}>
+          <button onClick={frigerHandler} className="friger-onoff">
+            +
+          </button>
+        </Friger> */}
+        <RecipeContainer>
+          <RecipeCard>card1</RecipeCard>
+          <RecipeCard>card2</RecipeCard>
+        </RecipeContainer>
+      </Section>
+    </Container>
   );
 }
 
