@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import { LoginModal } from "./modals.js";
+import axios from "axios";
+const serverUrl = "http://localhost:4000";
 
 // font-family: adobe-clean-han-japanese,-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,sans-serif;
 
@@ -116,8 +117,40 @@ const TouchPoint = styled.div`
   }
 `;
 
-export default function About({ handleResponseSuccess }) {
-  const [inputOn, setInputOn] = useState(false);
+export default function Login({ handleResponseSuccess }) {
+  const [loginInfo, setLoginInfo] = useState({
+    email: "",
+    password: "",
+  });
+
+  const [errorMessage, setErrorMessage] = useState("");
+
+  const handleInputValue = (e, key) => {
+    setLoginInfo({ ...loginInfo, [key]: e.target.value });
+  };
+
+  const handleLogin = () => {
+    if (loginInfo.email.length === 0 || loginInfo.password.length === 0) {
+      setErrorMessage("이메일과 비밀번호를 입력하세요");
+    } else {
+      // console.log(JSON.stringify(loginInfo))
+      axios
+        .post(`${serverUrl}/user/signin`, loginInfo, {
+          "Content-Type": "application/json",
+          withCredentials: true,
+        })
+        .then((res) => {
+          if (res.status === 200) {
+            console.log("userinfo: ", res.data.data);
+            // const { accessToken } = res.data;
+            // axios.defaults.headers.common['jwt'] = `Bearer ${accessToken}`;
+            return handleResponseSuccess(res.data.data);
+          } else {
+            alert("falild!");
+          }
+        });
+    }
+  };
 
   return (
     <div>
@@ -130,12 +163,17 @@ export default function About({ handleResponseSuccess }) {
               <Link to="/signup">회원가입</Link>
             </span>
             <div className="email-req">이메일 주소</div>
-            <input></input>
+            <input onChange={(e) => handleInputValue(e, "email")}></input>
             <div className="error">이메일 주소를 입력해 주세요</div>
             <div className="email-req">비밀번호</div>
-            <input type="password"></input>
+            <input
+              onChange={(e) => handleInputValue(e, "password")}
+              type="password"
+            ></input>
             <div className="error">비밀번호를 입력해 주세요</div>
-            <button className="submit">로그인</button>
+            <button className="submit" onClick={handleLogin}>
+              로그인
+            </button>
             <button className="oauth">카카오로 계속하기</button>
           </TouchPoint>
         </Wraper>

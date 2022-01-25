@@ -186,10 +186,10 @@ export function Main({ isLogin, userinfo }) {
     });
   };
 
-  useEffect(() => {
-    // getItems();
-    userItemInfo();
-  }, []);
+  // useEffect(() => {
+  //   // getItems();
+  //   userItemInfo();
+  // }, []);
 
   return (
     <Container>

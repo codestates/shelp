@@ -5,7 +5,6 @@ import Signup from "./pages/signup";
 import Main from "./pages/main";
 import Mypage from "./pages/mypage";
 import Login from "./pages/login";
-
 import axios from "axios";
 const serverUrl = "http://localhost:4000";
 
@@ -28,10 +27,6 @@ export default function App() {
       }
   );
 
-  useEffect(() => {
-    window.localStorage.setItem("userinfo", JSON.stringify(userinfo)); //state에 저장되는 userinfo를 localStorage에 저장
-  });
-
   const isAuthenticated = () => {
     if (userinfo.password === "") {
       setIsLogin(false);
@@ -45,6 +40,10 @@ export default function App() {
     isAuthenticated();
   };
 
+  // useEffect(() => {
+  //   window.localStorage.setItem("userinfo", JSON.stringify(userinfo)); //state에 저장되는 userinfo를 localStorage에 저장
+  // });
+
   // const handleLogout = () => {
   //   axios.post(`${serverUrl}/signout`).then((res) => {
   //     setUserinfo(null);
@@ -54,17 +53,21 @@ export default function App() {
 
   useEffect(() => {
     handleResponseSuccess(userinfo);
+    console.log("changed!", userinfo);
   }, [userinfo]);
 
   return (
     <div>
       <Routes>
-        <Route path="/" element={<Main isLogin={isLogin} />} />
-        <Route
-          path="/intro"
+        <Route path="/" element={isLogin ? <Main /> : <Intro />} />
+        {/* <Route
+          path="/intro" // 새 컴포넌트 touchpoint 없는 intro
           element={<Intro handleResponseSuccess={handleResponseSuccess} />}
+        /> */}
+        <Route
+          path="/login"
+          element={<Login handleResponseSuccess={handleResponseSuccess} />}
         />
-        <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
         <Route
           path="/mypage"
