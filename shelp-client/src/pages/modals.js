@@ -4,8 +4,6 @@ import { useState } from "react";
 import styled from "styled-components";
 const serverUrl = "http://localhost:4000";
 
-axios.defaults.withCredentials = true;
-
 const ModalContainer = styled.div`
   height: 15rem;
   text-align: center;

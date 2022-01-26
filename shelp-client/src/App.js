@@ -10,7 +10,10 @@ const serverUrl = "http://localhost:4000";
 
 export default function App() {
   const [isLogin, setIsLogin] = useState(false);
-  const [userinfo, setUserinfo] = useState(null);
+  const [userinfo, setUserinfo] = useState(
+    () => JSON.parse(window.localStorage.getItem('userinfo')) ||
+      null
+  );
   const [items, setItems] = useState([]);
 
   const isAuthenticated = () => {
