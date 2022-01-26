@@ -172,21 +172,13 @@ const Friger = styled.div`
     }
 
     to {
-<<<<<<< HEAD
-      width: 2em;
-=======
       left: 0em;
->>>>>>> c6f1a5110de0c2f84986ea5bcc75329bc9e3f9f0
     }
   }
 
   > button.friger-onoff {
     position: relative;
-<<<<<<< HEAD
-    right: 0rem;
-=======
     right: -26rem;
->>>>>>> c6f1a5110de0c2f84986ea5bcc75329bc9e3f9f0
     width: 3em;
     height: 3em;
     margin: 1em;
@@ -222,21 +214,13 @@ const RecipeCard = styled.div`
 // ===================================================================
 
 export function Main({ isLogin, userinfo }) {
-<<<<<<< HEAD
-  console.log(userinfo)
-=======
->>>>>>> c6f1a5110de0c2f84986ea5bcc75329bc9e3f9f0
   const [isModalOpen, setIsModalOpen] = useState("");
   const [items, setItems] = useState([]);
   const [index, setIndex] = useState(null);
   const [recipes, setRecipes] = useState([]);
   const [isFrigerOpen, setisFrigerOpen] = useState(null);
 
-<<<<<<< HEAD
-  const userItemInfo = async () => {
-=======
   const getItems = async () => {
->>>>>>> c6f1a5110de0c2f84986ea5bcc75329bc9e3f9f0
     axios
       .get(`${serverUrl}/items`, {
         "Content-Type": "application/json",
