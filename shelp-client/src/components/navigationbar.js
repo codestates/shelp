@@ -39,6 +39,7 @@ const Navigator = styled.div`
 `;
 
 export default function Navigationbar() {
+  //const expireDate = new Date();/////////////////////////////////////////////////////////////
   const handleLogOut = () => {
     axios
       .get(`${serverUrl}/user/signout`, {
@@ -48,6 +49,8 @@ export default function Navigationbar() {
       .then((res) => {
         console.log(res);
         window.localStorage.clear();
+        //expireDate.setDate( expireDate.getDate() - 1 );/////////////////////////////////////////////////////////////////////////////////////////////
+        //document.cookie = 'jwt' + "= " + "; expires=" + expireDate.toGMTString() + "; domain=.segye.com; path=/";//////////////////////////////////////////////////////////////////////////////////
         window.location.replace("/");
         //인트로 페이지로 돌아가기
       });

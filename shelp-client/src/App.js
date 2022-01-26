@@ -59,7 +59,7 @@ export default function App() {
       <Routes>
         <Route
           path="/"
-          element={isLogin ? <Main isLogin={isLogin} /> : <Intro />}
+          element={isLogin ? <Main isLogin={isLogin}/> : <Intro />}
         />
         {/* <Route
           path="/intro" // 새 컴포넌트 touchpoint 없는 intro

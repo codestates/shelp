@@ -130,23 +130,24 @@ export default function Login({ handleResponseSuccess }) {
   };
 
   const handleLogin = () => {
-      // console.log(JSON.stringify(loginInfo));
       axios.post(`${serverUrl}/user/signin`, loginInfo, {
         "Content-Type": "application/json",
         withCredentials: true,
       })
       .then((res) => {
-          if (res.status === 200) {
-            console.log("userinfo: ", res);
-            // const { accessToken } = res.data;
-            // axios.defaults.headers.common['jwt'] = `Bearer ${accessToken}`;
-            handleResponseSuccess(res.data.data);
-            window.location.replace("/");
-          }
-          if(res.status === 400) {
+          if(res.status === 200){
+            if(res.data.message === "Signin succeed"){
+              handleResponseSuccess(res.data.data);
+              window.location.replace("/");
+            }
+            if(res.data.messgae === "wrong password"){
+              alert("wrong password");
+            }
+          else if(res.status === 400){
             setErrorMessage("이메일과 비밀번호를 입력하세요");
           }
-        })
+        }
+      })
         .catch((err)=>{
           alert("falild!");
         })

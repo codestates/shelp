@@ -93,6 +93,7 @@ const Collection = styled.div`
 const AlarmSet = styled.div``;
 
 function Mypage({ isLogin, userinfo, setUserinfo }) {
+  console.log(userinfo)
   const [button, setButton] = useState(true);
   const [per, setPer] = useState(1);
   const [img, setImg] = useState();
@@ -106,14 +107,12 @@ function Mypage({ isLogin, userinfo, setUserinfo }) {
   };
 
   const handleButtonSave = () => {
-    const formData = new FormData();
-    formData.append("img", img);
-    // const { name, password, image, desc } = userinfo;
-    setUserinfo({ ...userinfo, image: formData });
+    setUserinfo({ ...userinfo });
     axios.put(`${serverUrl}/profile`, userinfo).then((res) => {
-      console.log(res);
-    });
-
+      if(res.status === 200){
+        alert ("저장되었습니다.")
+      }
+    })
     setButton(!button);
   };
 
@@ -121,27 +120,44 @@ function Mypage({ isLogin, userinfo, setUserinfo }) {
     axios.delete(`${serverUrl}/profile`).then((res) => {
       console.log(res);
       window.localStorage.clear();
-      window.location.replace("/");
+      console.log('word')
+      window.location.replace("/login");//////////////////////////////////////////////////////////////////////////////////////////////////
     });
   };
 
-  const loadFile = (e) => {
-    // setUserinfo({...userinfo, image: e.target.files[0]});
-    setImg(e.target.files[0]);
-  };
 
   return (
     <Container>
       <Navigationbar isLogin={isLogin} />
       <Section>
         <Profile>
-          <div className="profile-image">
-            <img src="https://picsum.photos/300/300?random=1" />
+          <div className="profile-image" onClick={()=>{setImgButton(!imgButton)}}>
+            <img src={userinfo.image.data} />
           </div>
           <div className="profile-container">
-            <div className="profile-name">{userinfo.name}</div>
-            <span>님 환영합니다.</span>
-            <div className="profile-email">{userinfo.email}</div>
+            {button?
+            <div>
+              <div className="profile-name">{userinfo.name}</div>
+              <span>님 환영합니다.</span>
+              <div className="profile-email">{userinfo.email}</div>
+              <div>{userinfo.period}</div>
+              <div>{userinfo.desc}</div>
+            </div>:
+            <div>
+              <div>
+                <input type='text' placeholder={'name'} onChange={(e) => handleChange(e, "name")}/>로 변경
+              </div>
+              <div>
+                <input type='text' placeholder={'password'} onChange={(e) => handleChange(e, "password")}/>로 변경
+              </div>
+              <div>
+                <input type='number' onChange={(e) => handleChange(e, "period")}/>로 변경
+              </div>
+              <div>
+                <input type='text' placeholder={'desc'} onChange={(e) => handleChange(e, "desc")}/>로 변경
+              </div>
+            </div>
+            }
           </div>
         </Profile>
         {/* <Collection> */}

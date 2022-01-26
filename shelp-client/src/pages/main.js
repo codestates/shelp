@@ -213,7 +213,7 @@ const RecipeCard = styled.div`
 
 // ===================================================================
 
-export function Main({ isLogin, userinfo }) {
+export function Main({ isLogin }) {
   const [isModalOpen, setIsModalOpen] = useState("");
   const [items, setItems] = useState([]);
   const [index, setIndex] = useState(null);
@@ -227,7 +227,7 @@ export function Main({ isLogin, userinfo }) {
         withCredentials: true,
       })
       .then((res) => {
-        console.log(res.data.data);
+        console.log(res);
         setItems(res.data.data);
       });
   };
