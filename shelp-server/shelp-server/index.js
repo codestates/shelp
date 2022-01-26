@@ -35,7 +35,7 @@ app.use('/', indexRouter);
 
 // test용
 app.get('/', (req, res) => {
-  res.send('Hi');
+  res.render('index');
 });
 
 app.listen(port, () => {

@@ -1,5 +1,7 @@
 import { Link } from "react-router-dom";
 import styled from "styled-components";
+import axios from "axios";
+const serverUrl = "http://localhost:4000";
 
 const Navigator = styled.div`
   height: 3rem;
@@ -36,7 +38,21 @@ const Navigator = styled.div`
   }
 `;
 
-export default function Navigationbar({ isLogin }) {
+export default function Navigationbar() {
+
+  const handleLogOut = () => {
+    axios.get(`${serverUrl}/user/signout`, {
+      "Content-Type": "application/json",
+      withCredentials: true,
+    })
+    .then((res)=>{
+      console.log(res);
+      window.localStorage.clear();
+      window.location.replace("/");
+      //인트로 페이지로 돌아가기
+    })
+  }
+
   return (
     <div>
       <Navigator>
@@ -44,13 +60,16 @@ export default function Navigationbar({ isLogin }) {
           <Link to="/">Shelp</Link>
         </div>
         <div className="about">
-          <Link to="/intro">{isLogin}</Link>
+          <Link to="/intro">About</Link>
         </div>
         <div className="blank">--Blank--</div>
-        {isLogin ? (
-          <button className="nav-button">
-            <Link to="/mypage">마이페이지</Link>
-          </button>
+        {window.localStorage.userinfo? (
+          <div>
+            <button className="nav-button">
+              <Link to="/mypage">마이페이지</Link>
+            </button>
+            <button onClick={handleLogOut}>로그아웃</button>
+          </div>
         ) : (
           <div>
             <Link to="/login">

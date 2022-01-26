@@ -135,11 +135,27 @@ const Friger = styled.div`
 
   @keyframes slideout {
     from {
-      left: -26em;
+      width: 30em;
     }
+
     to {
-      left: 0;
+      width: 2em;
     }
+  }
+
+  > button.friger-onoff {
+    position: relative;
+    right: 0rem;
+    width: 3em;
+    height: 3em;
+    margin: 1em;
+    background-color: white;
+    box-shadow: 0rem 0.5rem 1.5rem rgba(0, 0, 0, 0.5);
+    border-style: hidden;
+    border-radius: 1.5em;
+    cursor: pointer;
+  }
+  > div.friger-view {
   }
 `;
 
@@ -164,17 +180,29 @@ const RecipeCard = styled.div`
 
 // ===================================================================
 
-export function Main({ isLogin, items, setItems }) {
+export function Main({ isLogin, userinfo }) {
   const [isModalOpen, setIsModalOpen] = useState("");
+  const [items, setItems] = useState([]);
   const [index, setIndex] = useState(null);
   const [recipes, setRecipes] = useState([]);
   const [isFrigerOpen, setisFrigerOpen] = useState(null);
 
-  const frigerHandler = () => {
-    setisFrigerOpen(!isFrigerOpen);
+  const userItemInfo = async () => {
+    axios
+      .get(`${serverUrl}/items`, {
+        "Content-Type": "application/json",
+        withCredentials: true,
+      })
+      .then((res) => {
+        console.log(res.data.data);
+        setItems(res.data.data);
+      });
   };
 
-  console.log(isFrigerOpen);
+  const frigerHandler = () => {
+    setisFrigerOpen(!isFrigerOpen);
+    console.log(isFrigerOpen);
+  };
 
   const modalHandler = (e, el) => {
     if (e === "수정") {
@@ -183,7 +211,7 @@ export function Main({ isLogin, items, setItems }) {
     if (e === "추가") {
       setIsModalOpen("추가");
     }
-    if (e === "close") {
+    if (e == "close") {
       setIsModalOpen("");
     }
     if (el >= 0) {
@@ -192,17 +220,17 @@ export function Main({ isLogin, items, setItems }) {
     // setIsModalOpen(!isModalOpen);
   };
 
-  // 크롤링 함수(items[e].name)
-  // const searchRecipe = (e) => {
-  //   axios.get(`${serverUrl}/${items[e].id}`).then((res) => {
-  //     console.log(`crawling data = ${res}`);
-  //   });
-  // };
+  const searchRecipe = (e) => {
+    // 크롤링 함수(items[e].name)
+    axios.get(`${serverUrl}/${items[e].id}`).then((res) => {
+      console.log(`crawling data = ${res}`);
+    });
+  };
 
-  // useEffect(() => {
-  //   // getItems();
-  //   userItemInfo();
-  // }, []);
+  useEffect(() => {
+    // getItems();
+    userItemInfo();
+  }, []);
 
   return (
     <Container>
@@ -258,129 +286,3 @@ export function Main({ isLogin, items, setItems }) {
 }
 
 export default Main;
-
-// export function Main() {
-//   const [isModalOpen, setIsModalOpen] = useState(false);
-//   const [items, setItems] = useState({
-//     data: [
-//       {
-//         id: 0,
-//         userId: 0,
-//         name: "mountainDew",
-//         desc: "어제 편의점에서 사옴",
-//         quantity: 1,
-//         expiration: "2022-9-23",
-//         storage: "냉장",
-//         createdAt: "2022-1-24",
-//         updatedAt: "2022-1-24",
-//       },
-//       {
-//         id: 1,
-//         userId: 0,
-//         name: "curstardSeaweedSoup",
-//         desc: "어제 편의점에서 사옴",
-//         quantity: 1,
-//         expiration: "2022-6-12",
-//         storage: "냉장",
-//         createdAt: "2022-1-24",
-//         updatedAt: "2022-1-24",
-//       },
-//     ],
-//   });
-
-//   const modalHandler = () => {
-//     setIsModalOpen(!isModalOpen);
-//   };
-
-//   const getItems = () => {
-//     axios.get(`${serverUrl}/items`).then((res) => {
-//       setItems(res.body.data);
-//     });
-//   };
-
-//   useEffect(() => {
-//     //getItems();
-//   }, []);
-
-//   return (
-//     <div>
-//       <mainpage
-//         className="mainpage"
-//         onClick={isModalOpen ? modalHandler : null}
-//       >
-//         {/* ////////////////////  NAVBAR  /////////////////////////////// */}
-//         <navbar className="mainpage-navbar">
-//           <nav></nav>
-//           <logo className="shelpLogo">
-//             <Link to="/">shelp</Link>
-//           </logo>
-//           <Link to="/mypage">mypage</Link>
-//         </navbar>
-//         {/* ////////////////////  NAVBAR  /////////////////////////////// */}
-
-//         {/* ////////////////////  MAINCONTENT  ////////////////////////// */}
-//         <content className="mainpage-content">
-//           <shelf className="mainpage-shelf">
-//             <div className="searchArea">
-//               <input className="searchBar" />
-//               <input className="searchButton" type="button" />
-//             </div>
-//             <scrollbox className="mainpage-scrollbox">
-//               <ul className="grocery">
-//                 {items.data.map((item, index) => {
-//                   return (
-//                     <li>
-//                       <iteminfo>
-//                         <itemname>{item.name}</itemname>
-//                         <itemexp>{item.expiration}</itemexp>
-//                         <itemquant>{item.quantity}</itemquant>
-//                         <itemstorage>{item.storage}</itemstorage>
-//                       </iteminfo>
-//                       <input
-//                         className="editButton"
-//                         type="button"
-//                         value="수정"
-//                         onClick={modalHandler}
-//                       />
-//                     </li>
-//                   );
-//                 })}
-//               </ul>
-//             </scrollbox>
-//             <input
-//               className="addButton"
-//               type="button"
-//               value="add item"
-//               onClick={modalHandler}
-//             />
-//           </shelf>
-//           <recipes className="mainpage-recipes">
-//             <ul>
-//               <li>
-//                 <recipeimg></recipeimg>
-//                 <recipename>우유김치찌개</recipename>
-//                 <a href="https://www.dispatch.co.kr/2034029">
-//                   delicious kimchichigae recipe
-//                 </a>
-//               </li>
-//             </ul>
-//           </recipes>
-//         </content>
-//         {/* ////////////////////  MAINCONTENT  ////////////////////////// */}
-//       </mainpage>
-
-//       {/* 아래부터는 모달창 입니다 */}
-//       {isModalOpen ? (
-//         <AddItemModal
-//           modalHandler={modalHandler}
-//           items={items}
-//           setItems={setItems}
-//         />
-//       ) : (
-//         <div></div>
-//       )}
-//     </div>
-//   );
-// }
-
-// export default Main;

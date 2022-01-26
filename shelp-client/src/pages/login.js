@@ -117,7 +117,7 @@ const TouchPoint = styled.div`
   }
 `;
 
-export default function Login({ handleResponseSuccess, setUserinfo }) {
+export default function Login({ handleResponseSuccess }) {
   const [loginInfo, setLoginInfo] = useState({
     email: "",
     password: "",
@@ -130,26 +130,26 @@ export default function Login({ handleResponseSuccess, setUserinfo }) {
   };
 
   const handleLogin = () => {
-    if (loginInfo.email.length === 0 || loginInfo.password.length === 0) {
-      setErrorMessage("이메일과 비밀번호를 입력하세요");
-    } else {
-      axios
-        .post(`${serverUrl}/user/signin`, loginInfo, {
-          "Content-Type": "application/json",
-          withCredentials: true,
+      // console.log(JSON.stringify(loginInfo));
+      axios.post(`${serverUrl}/user/signin`, loginInfo, {
+        "Content-Type": "application/json",
+        withCredentials: true,
+      })
+      .then((res) => {
+          if (res.status === 200) {
+            console.log("userinfo: ", res);
+            // const { accessToken } = res.data;
+            // axios.defaults.headers.common['jwt'] = `Bearer ${accessToken}`;
+            handleResponseSuccess(res.data.data);
+            window.location.replace("/");
+          }
+          if(res.status === 400) {
+            setErrorMessage("이메일과 비밀번호를 입력하세요");
+          }
         })
-        .then((res) => {
-          setUserinfo(() => {
-            return res.data.data;
-          });
+        .catch((err)=>{
+          alert("falild!");
         })
-        .then(() => {
-          handleResponseSuccess();
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    }
   };
 
   return (
@@ -165,14 +165,16 @@ export default function Login({ handleResponseSuccess, setUserinfo }) {
             <div className="email-req">이메일 주소</div>
             <input onChange={(e) => handleInputValue(e, "email")}></input>
             <div className="error">이메일 주소를 입력해 주세요</div>
-            <div className="email-req">비밀번호</div>
+            <div className="email-req" onKeyPress={(e) => { if (e.key === 'Enter') { handleLogin() }}}>비밀번호</div>
             <input
+              onKeyPress={(e) => { if (e.key === 'Enter') { handleLogin() } }} // {/* 엔터누르면 로그인 */}
               onChange={(e) => handleInputValue(e, "password")}
               type="password"
             ></input>
             <div className="error">비밀번호를 입력해 주세요</div>
-            <button className="submit" onClick={handleLogin}>
-              <Link to="/">로그인</Link>
+            <button className="submit">
+              {/* <Link to="/">로그인</Link> */}
+              <button onClick={handleLogin}>로그인</button>
             </button>
             <button className="oauth">카카오로 계속하기</button>
           </TouchPoint>

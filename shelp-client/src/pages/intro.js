@@ -76,7 +76,7 @@ const TouchPoint = styled.div`
   }
 `;
 
-export default function Intro() {
+export default function Intro({ handleResponseSuccess }) {
   const [isModalOpen, SetIsModalOpen] = useState(false);
 
   const modalHandler = () => {
@@ -85,6 +85,12 @@ export default function Intro() {
 
   return (
     <div>
+      {isModalOpen ? (
+        <LoginModal
+          modalHandler={modalHandler}
+          handleResponseSuccess={handleResponseSuccess}
+        />
+      ) : null}
       <Wallpaper>
         <Wraper>
           <TouchPoint>
