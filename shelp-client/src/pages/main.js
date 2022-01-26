@@ -88,25 +88,58 @@ const Friger = styled.div`
     box-shadow: 10px 5px 20px rgba(0, 0, 0, 0.5);
     cursor: pointer;
   }
-  > div.friger-item {
+  > button.add-item {
     height: 15%;
-    background-color: green;
     margin: 0 0.7rem 0.7rem 0.7rem;
     border-radius: 0.5rem;
-    overflow: hidden;
-    display: flex;
+    background-color: rgba(0, 0, 0, 0.3);
+    border: none;
+    position: relative;
+    bottom: 0;
+  }
 
-    > div.item-sec-1 {
-      flex: 1 0 auto;
-      background-color: cyan;
+  > div.friger-item {
+    height: 15%;
+    margin: 0 0.7rem 0.7rem 0.7rem;
+    border-radius: 0.5rem;
+    display: flex;
+    flex-direction: column;
+
+    > div.item-sec-upper {
+      flex: 3 0 auto;
+      display: flex;
+
+      > div.item-name {
+        border: solid black 1px;
+        margin-top: auto;
+        margin-bottom: auto;
+        padding: 0 2em 0 1em;
+        border: solid black 1px;
+        font-size: 1.3em;
+      }
+      > div.item-quant {
+        border: solid black 1px;
+        flex: 1 0 auto;
+      }
+      > button.item-edit {
+        border: solid black 1px;
+        flex: 1 0 auto;
+      }
+      > div.item-expir {
+        padding-right: 1em;
+        border: solid black 1px;
+      }
     }
-    > div.item-sec-2 {
-      flex: 1 0 auto;
-      background-color: magenta;
-    }
-    > div.item-sec-3 {
-      flex: 1 0 auto;
-      background-color: goldenrod;
+    > div.item-sec-lower {
+      flex: 2 0 auto;
+      display: flex;
+      > div.item-desc {
+        flex: 1 0 auto;
+        border: solid black 1px;
+      }
+      > div.item-storage {
+        border: solid black 1px;
+      }
     }
   }
 
@@ -139,13 +172,21 @@ const Friger = styled.div`
     }
 
     to {
+<<<<<<< HEAD
       width: 2em;
+=======
+      left: 0em;
+>>>>>>> c6f1a5110de0c2f84986ea5bcc75329bc9e3f9f0
     }
   }
 
   > button.friger-onoff {
     position: relative;
+<<<<<<< HEAD
     right: 0rem;
+=======
+    right: -26rem;
+>>>>>>> c6f1a5110de0c2f84986ea5bcc75329bc9e3f9f0
     width: 3em;
     height: 3em;
     margin: 1em;
@@ -181,14 +222,21 @@ const RecipeCard = styled.div`
 // ===================================================================
 
 export function Main({ isLogin, userinfo }) {
+<<<<<<< HEAD
   console.log(userinfo)
+=======
+>>>>>>> c6f1a5110de0c2f84986ea5bcc75329bc9e3f9f0
   const [isModalOpen, setIsModalOpen] = useState("");
   const [items, setItems] = useState([]);
   const [index, setIndex] = useState(null);
   const [recipes, setRecipes] = useState([]);
   const [isFrigerOpen, setisFrigerOpen] = useState(null);
 
+<<<<<<< HEAD
   const userItemInfo = async () => {
+=======
+  const getItems = async () => {
+>>>>>>> c6f1a5110de0c2f84986ea5bcc75329bc9e3f9f0
     axios
       .get(`${serverUrl}/items`, {
         "Content-Type": "application/json",
@@ -206,11 +254,11 @@ export function Main({ isLogin, userinfo }) {
   };
 
   const modalHandler = (e, el) => {
-    if (e === "수정") {
-      setIsModalOpen("수정");
+    if (e === "edit") {
+      setIsModalOpen("edit");
     }
-    if (e === "추가") {
-      setIsModalOpen("추가");
+    if (e === "add") {
+      setIsModalOpen("add");
     }
     if (e == "close") {
       setIsModalOpen("");
@@ -221,29 +269,62 @@ export function Main({ isLogin, userinfo }) {
     // setIsModalOpen(!isModalOpen);
   };
 
-  const searchRecipe = (e) => {
+  const searchRecipe = (index) => {
     // 크롤링 함수(items[e].name)
-    axios.get(`${serverUrl}/${items[e].id}`).then((res) => {
-      console.log(`crawling data = ${res}`);
-    });
+    if (index !== undefined) {
+      axios.get(`${serverUrl}/recipe/${items[index].id}`).then((res) => {
+        //console.log(`crawling data = ${res.data.data}`);
+        setRecipes(res.data.data);
+      });
+    } else {
+      axios.get(`${serverUrl}/recipe`).then((res) => {
+        setRecipes(res.data.data);
+      });
+    }
   };
 
   useEffect(() => {
-    // getItems();
-    userItemInfo();
+    getItems();
+    searchRecipe();
   }, []);
 
   return (
     <Container>
       <Friger isFrigerOpen={isFrigerOpen}>
         <button onClick={frigerHandler} className="friger-onoff">
-          +
+          {isFrigerOpen ? (
+            <i class="fas fa-angle-right"></i>
+          ) : (
+            <i class="fas fa-angle-left"></i>
+          )}
         </button>
-        <div className="friger-item">
-          <div className="item-sec-1">storage, expiration</div>
-          <div className="item-sec-2">name, quantity</div>
-          <div className="item-sec-3">desc</div>
-        </div>
+        {items.map((item, index) => {
+          return (
+            <div className="friger-item">
+              <div className="item-sec-upper">
+                <button
+                  className="item-name"
+                  onClick={() => searchRecipe(index)}
+                >
+                  {item.name}
+                </button>
+                <div className="item-quant">{item.quantity}</div>
+                <button
+                  className="item-edit"
+                  onClick={() => modalHandler("edit", index)}
+                />
+                <div className="item-expir">~ {item.expiration}</div>
+              </div>
+              <div className="item-sec-lower">
+                <div className="item-desc">{item.desc}</div>
+                <div className="item-storage">{item.storage}</div>
+              </div>
+            </div>
+          );
+        })}
+        <button className="add-item" onClick={() => modalHandler("add")}>
+          ADD
+        </button>
       </Friger>
       <Navigationbar isLogin={isLogin} />
       <Searchbar>
@@ -259,15 +340,20 @@ export function Main({ isLogin, userinfo }) {
       <SortOpt>추천순</SortOpt>
       <Section>
         <RecipeContainer>
-          <RecipeCard>card1</RecipeCard>
-          <RecipeCard>card2</RecipeCard>
+          {recipes.map((recp) => {
+            return (
+              <RecipeCard>
+                <img src={recp.image} />
+              </RecipeCard>
+            );
+          })}
         </RecipeContainer>
         <div>
           <button onClick={() => modalHandler("추가", 1)}>추가</button>
           <button onClick={() => modalHandler("수정", 0)}>수정</button>
         </div>
       </Section>
-      {isModalOpen === "추가" ? (
+      {isModalOpen === "add" ? (
         <AddItemModal
           modalHandler={modalHandler}
           items={items}
@@ -276,7 +362,7 @@ export function Main({ isLogin, userinfo }) {
       ) : (
         <div></div>
       )}
-      {isModalOpen === "수정" ? (
+      {isModalOpen === "edit" ? (
         <EditItemModal
           index={index}
           modalHandler={modalHandler}

@@ -34,6 +34,7 @@ const Profile = styled.div`
 
   > img.profile-left {
     position: relative;
+    width: auto;
     height: 70%;
     margin-left: 10vh;
     border-radius: 50%;
@@ -117,13 +118,12 @@ function Mypage({ isLogin, userinfo, setUserinfo }) {
   };
 
   const deleteUser = () => {
-    axios.delete(`${serverUrl}/profile`)
-    .then((res)=>{
-      console.log(res)
+    axios.delete(`${serverUrl}/profile`).then((res) => {
+      console.log(res);
       window.localStorage.clear();
-      window.location.replace("/")
-    })
-  }
+      window.location.replace("/");
+    });
+  };
 
   const loadFile = (e) => {
     // setUserinfo({...userinfo, image: e.target.files[0]});
@@ -132,7 +132,7 @@ function Mypage({ isLogin, userinfo, setUserinfo }) {
 
   return (
     <Container>
-      <Navigationbar isLogin={isLogin}/>
+      <Navigationbar isLogin={isLogin} />
       <Section>
         <Profile>
           <div className="profile-image">
@@ -144,18 +144,18 @@ function Mypage({ isLogin, userinfo, setUserinfo }) {
             <div className="profile-email">{userinfo.email}</div>
           </div>
         </Profile>
+        {/* <Collection> */}
         <Collection>
-          {/* <Setting>
-            <div>
-              {button ? (
-                <button onClick={handleButtonEdit}>edit</button>
-              ) : (
-                <button onClick={handleButtonSave}>save</button>
-              )}
-              <button onClick={deleteUser}>회원탈퇴</button> 
-            </div>
-          </Setting> */}
+          <div>
+            {button ? (
+              <button onClick={handleButtonEdit}>edit</button>
+            ) : (
+              <button onClick={handleButtonSave}>save</button>
+            )}
+            <button onClick={deleteUser}>회원탈퇴</button>
+          </div>
         </Collection>
+        {/* </Collection> */}
       </Section>
     </Container>
   );

@@ -17,19 +17,13 @@ export default function App() {
   // };
 
   const [userinfo, setUserinfo] = useState(
-    ()=> JSON.parse(window.localStorage.getItem('userinfo')) 
-    ||
-    null
+    () => JSON.parse(window.localStorage.getItem("userinfo")) || null
   );
-
-  useEffect(()=>{
-    window.localStorage.setItem("userinfo", JSON.stringify(userinfo)); //state에 저장되는 userinfo를 localStorage에 저장
-  })
 
   const isAuthenticated = () => {
     if (userinfo) {
       setIsLogin(true);
-    }else{
+    } else {
       setIsLogin(false);
     }
   };
@@ -47,6 +41,10 @@ export default function App() {
   // };
 
   useEffect(() => {
+    window.localStorage.setItem("userinfo", JSON.stringify(userinfo)); //state에 저장되는 userinfo를 localStorage에 저장
+  });
+
+  useEffect(() => {
     handleResponseSuccess(userinfo);
   }, [userinfo]);
 
@@ -61,7 +59,7 @@ export default function App() {
       <Routes>
         <Route
           path="/"
-          element={isLogin ? <Main isLogin={isLogin}/> : <Intro/>}
+          element={isLogin ? <Main isLogin={isLogin} /> : <Intro />}
         />
         {/* <Route
           path="/intro" // 새 컴포넌트 touchpoint 없는 intro
@@ -74,7 +72,13 @@ export default function App() {
         <Route path="/signup" element={<Signup />} />
         <Route
           path="/mypage"
-          element={<Mypage isLogin={isLogin} userinfo={userinfo} setUserinfo={setUserinfo} />}
+          element={
+            <Mypage
+              isLogin={isLogin}
+              userinfo={userinfo}
+              setUserinfo={setUserinfo}
+            />
+          }
         />
       </Routes>
     </div>
