@@ -44,7 +44,7 @@ export default function Navigationbar({ isLogin }) {
           <Link to="/">Shelp</Link>
         </div>
         <div className="about">
-          <Link to="/intro">About</Link>
+          <Link to="/intro">{isLogin}</Link>
         </div>
         <div className="blank">--Blank--</div>
         {isLogin ? (
