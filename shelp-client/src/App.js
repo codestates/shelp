@@ -7,7 +7,6 @@ import Mypage from "./pages/mypage";
 import Login from "./pages/login";
 // import axios from "axios";
 const serverUrl = "http://localhost:4000";
-const ret = 2;
 
 export default function App() {
   const [isLogin, setIsLogin] = useState(true);
@@ -20,10 +19,6 @@ export default function App() {
   const [userinfo, setUserinfo] = useState(
     () => JSON.parse(window.localStorage.getItem("userinfo")) || null
   );
-
-  useEffect(() => {
-    window.localStorage.setItem("userinfo", JSON.stringify(userinfo)); //state에 저장되는 userinfo를 localStorage에 저장
-  });
 
   const isAuthenticated = () => {
     if (userinfo) {
@@ -44,6 +39,10 @@ export default function App() {
   //     setIsLogin(false);
   //   });
   // };
+
+  useEffect(() => {
+    window.localStorage.setItem("userinfo", JSON.stringify(userinfo)); //state에 저장되는 userinfo를 localStorage에 저장
+  });
 
   useEffect(() => {
     handleResponseSuccess(userinfo);

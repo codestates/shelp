@@ -114,15 +114,15 @@ export function LoginModal({ modalHandler, handleResponseSuccess }) {
   );
 }
 
-export function AddItemModal({ modalHandler, items, setItems }) {
+export function AddItemModal({ index, modalHandler, items, setItems }) {
   // item: app.js에서 받아온 전체 목록, items: 모달에서 추가하는 품목 한 개의 속성
   const [item, setItem] = useState({
-    userId: items[0].userId,
-    name: "",
-    desc: "",
-    quantity: "",
-    expiration: "",
-    storage: "",
+    userId: items[index].userId,
+    name: items[index].name,
+    desc: items[index].desc,
+    quantity: items[index].quantity,
+    expiration: items[index].expiration,
+    storage: items[index].storage,
   });
   const [errorMessage, setErrorMessage] = useState("");
 

@@ -121,6 +121,10 @@ const Friger = styled.div`
         border: solid black 1px;
         flex: 1 0 auto;
       }
+      > button.item-edit {
+        border: solid black 1px;
+        flex: 1 0 auto;
+      }
       > div.item-expir {
         padding-right: 1em;
         border: solid black 1px;
@@ -248,15 +252,23 @@ export function Main({ isLogin, userinfo }) {
     // setIsModalOpen(!isModalOpen);
   };
 
-  const searchRecipe = (e) => {
+  const searchRecipe = (index) => {
     // 크롤링 함수(items[e].name)
-    axios.get(`${serverUrl}/${items[e].id}`).then((res) => {
-      console.log(`crawling data = ${res}`);
-    });
+    if (index !== undefined) {
+      axios.get(`${serverUrl}/recipe/${items[index].id}`).then((res) => {
+        //console.log(`crawling data = ${res.data.data}`);
+        setRecipes(res.data.data);
+      });
+    } else {
+      axios.get(`${serverUrl}/recipe`).then((res) => {
+        setRecipes(res.data.data);
+      });
+    }
   };
 
   useEffect(() => {
     getItems();
+    searchRecipe();
   }, []);
 
   return (
@@ -269,12 +281,21 @@ export function Main({ isLogin, userinfo }) {
             <i class="fas fa-angle-left"></i>
           )}
         </button>
-        {items.map((item) => {
+        {items.map((item, index) => {
           return (
             <div className="friger-item">
               <div className="item-sec-upper">
-                <div className="item-name">{item.name}</div>
+                <button
+                  className="item-name"
+                  onClick={() => searchRecipe(index)}
+                >
+                  {item.name}
+                </button>
                 <div className="item-quant">{item.quantity}</div>
+                <button
+                  className="item-edit"
+                  onClick={() => modalHandler("edit", index)}
+                />
                 <div className="item-expir">~ {item.expiration}</div>
               </div>
               <div className="item-sec-lower">
@@ -302,8 +323,13 @@ export function Main({ isLogin, userinfo }) {
       <SortOpt>추천순</SortOpt>
       <Section>
         <RecipeContainer>
-          <RecipeCard>card1</RecipeCard>
-          <RecipeCard>card2</RecipeCard>
+          {recipes.map((recp) => {
+            return (
+              <RecipeCard>
+                <img src={recp.image} />
+              </RecipeCard>
+            );
+          })}
         </RecipeContainer>
       </Section>
       {isModalOpen === "add" ? (
