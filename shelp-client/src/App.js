@@ -7,6 +7,7 @@ import Mypage from "./pages/mypage";
 import Login from "./pages/login";
 // import axios from "axios";
 const serverUrl = "http://localhost:4000";
+const ret = 2;
 
 export default function App() {
   const [isLogin, setIsLogin] = useState(true);
