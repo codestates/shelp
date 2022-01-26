@@ -12,7 +12,6 @@ const ret = 2;
 export default function App() {
   const [isLogin, setIsLogin] = useState(true);
   // const [setting, setSetting] = useState();
-  const [items, setItems] = useState([]);
 
   // const modalHandler = () => {
   //   SetIsModalOpen(!isModalOpen);

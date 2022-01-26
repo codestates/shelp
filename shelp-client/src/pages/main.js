@@ -88,25 +88,54 @@ const Friger = styled.div`
     box-shadow: 10px 5px 20px rgba(0, 0, 0, 0.5);
     cursor: pointer;
   }
-  > div.friger-item {
+  > button.add-item {
     height: 15%;
-    background-color: green;
     margin: 0 0.7rem 0.7rem 0.7rem;
     border-radius: 0.5rem;
-    overflow: hidden;
-    display: flex;
+    background-color: rgba(0, 0, 0, 0.3);
+    border: none;
+    position: relative;
+    bottom: 0;
+  }
 
-    > div.item-sec-1 {
-      flex: 1 0 auto;
-      background-color: cyan;
+  > div.friger-item {
+    height: 15%;
+    margin: 0 0.7rem 0.7rem 0.7rem;
+    border-radius: 0.5rem;
+    display: flex;
+    flex-direction: column;
+
+    > div.item-sec-upper {
+      flex: 3 0 auto;
+      display: flex;
+
+      > div.item-name {
+        border: solid black 1px;
+        margin-top: auto;
+        margin-bottom: auto;
+        padding: 0 2em 0 1em;
+        border: solid black 1px;
+        font-size: 1.3em;
+      }
+      > div.item-quant {
+        border: solid black 1px;
+        flex: 1 0 auto;
+      }
+      > div.item-expir {
+        padding-right: 1em;
+        border: solid black 1px;
+      }
     }
-    > div.item-sec-2 {
-      flex: 1 0 auto;
-      background-color: magenta;
-    }
-    > div.item-sec-3 {
-      flex: 1 0 auto;
-      background-color: goldenrod;
+    > div.item-sec-lower {
+      flex: 2 0 auto;
+      display: flex;
+      > div.item-desc {
+        flex: 1 0 auto;
+        border: solid black 1px;
+      }
+      > div.item-storage {
+        border: solid black 1px;
+      }
     }
   }
 
@@ -135,17 +164,17 @@ const Friger = styled.div`
 
   @keyframes slideout {
     from {
-      width: 30em;
+      left: -26em;
     }
 
     to {
-      width: 2em;
+      left: 0em;
     }
   }
 
   > button.friger-onoff {
     position: relative;
-    right: 0rem;
+    right: -26rem;
     width: 3em;
     height: 3em;
     margin: 1em;
@@ -187,7 +216,7 @@ export function Main({ isLogin, userinfo }) {
   const [recipes, setRecipes] = useState([]);
   const [isFrigerOpen, setisFrigerOpen] = useState(null);
 
-  const userItemInfo = async () => {
+  const getItems = async () => {
     axios
       .get(`${serverUrl}/items`, {
         "Content-Type": "application/json",
@@ -201,15 +230,14 @@ export function Main({ isLogin, userinfo }) {
 
   const frigerHandler = () => {
     setisFrigerOpen(!isFrigerOpen);
-    console.log(isFrigerOpen);
   };
 
   const modalHandler = (e, el) => {
-    if (e === "수정") {
-      setIsModalOpen("수정");
+    if (e === "edit") {
+      setIsModalOpen("edit");
     }
-    if (e === "추가") {
-      setIsModalOpen("추가");
+    if (e === "add") {
+      setIsModalOpen("add");
     }
     if (e == "close") {
       setIsModalOpen("");
@@ -228,21 +256,37 @@ export function Main({ isLogin, userinfo }) {
   };
 
   useEffect(() => {
-    // getItems();
-    userItemInfo();
+    getItems();
   }, []);
 
   return (
     <Container>
       <Friger isFrigerOpen={isFrigerOpen}>
         <button onClick={frigerHandler} className="friger-onoff">
-          +
+          {isFrigerOpen ? (
+            <i class="fas fa-angle-right"></i>
+          ) : (
+            <i class="fas fa-angle-left"></i>
+          )}
         </button>
-        <div className="friger-item">
-          <div className="item-sec-1">storage, expiration</div>
-          <div className="item-sec-2">name, quantity</div>
-          <div className="item-sec-3">desc</div>
-        </div>
+        {items.map((item) => {
+          return (
+            <div className="friger-item">
+              <div className="item-sec-upper">
+                <div className="item-name">{item.name}</div>
+                <div className="item-quant">{item.quantity}</div>
+                <div className="item-expir">~ {item.expiration}</div>
+              </div>
+              <div className="item-sec-lower">
+                <div className="item-desc">{item.desc}</div>
+                <div className="item-storage">{item.storage}</div>
+              </div>
+            </div>
+          );
+        })}
+        <button className="add-item" onClick={() => modalHandler("add")}>
+          ADD
+        </button>
       </Friger>
       <Navigationbar isLogin={isLogin} />
       <Searchbar>
@@ -262,7 +306,7 @@ export function Main({ isLogin, userinfo }) {
           <RecipeCard>card2</RecipeCard>
         </RecipeContainer>
       </Section>
-      {isModalOpen === "추가" ? (
+      {isModalOpen === "add" ? (
         <AddItemModal
           modalHandler={modalHandler}
           items={items}
@@ -271,7 +315,7 @@ export function Main({ isLogin, userinfo }) {
       ) : (
         <div></div>
       )}
-      {isModalOpen === "수정" ? (
+      {isModalOpen === "edit" ? (
         <EditItemModal
           index={index}
           modalHandler={modalHandler}

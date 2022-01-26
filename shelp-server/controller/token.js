@@ -1,15 +1,17 @@
-require('dotenv').config();
-const { sign, verify } = require('jsonwebtoken');
+require("dotenv").config();
+const { sign, verify } = require("jsonwebtoken");
 
 module.exports = {
   generateAccessToken: (data) => {
-    return sign(data.dataValues, process.env.ACCESS_SECRET, { expiresIn: "1h" });
+    return sign(data.dataValues, process.env.ACCESS_SECRET, {
+      expiresIn: "3h",
+    });
   },
   sendAccessToken: (res, accessToken, statusCode, data) => {
     return res
       .cookie("jwt", accessToken, {
-        domain: 'localhost',
-        path: '/',
+        domain: "localhost",
+        path: "/",
         maxAge: 24 * 6 * 60 * 10000,
         sameSite: "None",
         httpOnly: true,

@@ -144,18 +144,18 @@ function Mypage({ isLogin, userinfo, setUserinfo }) {
             <div className="profile-email">{userinfo.email}</div>
           </div>
         </Profile>
+        {/* <Collection> */}
         <Collection>
-          {/* <Setting>
-            <div>
-              {button ? (
-                <button onClick={handleButtonEdit}>edit</button>
-              ) : (
-                <button onClick={handleButtonSave}>save</button>
-              )}
-              <button onClick={deleteUser}>회원탈퇴</button> 
-            </div>
-          </Setting> */}
+          <div>
+            {button ? (
+              <button onClick={handleButtonEdit}>edit</button>
+            ) : (
+              <button onClick={handleButtonSave}>save</button>
+            )}
+            <button onClick={deleteUser}>회원탈퇴</button>
+          </div>
         </Collection>
+        {/* </Collection> */}
       </Section>
     </Container>
   );

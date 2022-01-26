@@ -39,19 +39,19 @@ const Navigator = styled.div`
 `;
 
 export default function Navigationbar() {
-
   const handleLogOut = () => {
-    axios.get(`${serverUrl}/user/signout`, {
-      "Content-Type": "application/json",
-      withCredentials: true,
-    })
-    .then((res)=>{
-      console.log(res);
-      window.localStorage.clear();
-      window.location.replace("/");
-      //인트로 페이지로 돌아가기
-    })
-  }
+    axios
+      .get(`${serverUrl}/user/signout`, {
+        "Content-Type": "application/json",
+        withCredentials: true,
+      })
+      .then((res) => {
+        console.log(res);
+        window.localStorage.clear();
+        window.location.replace("/");
+        //인트로 페이지로 돌아가기
+      });
+  };
 
   return (
     <div>
@@ -59,11 +59,8 @@ export default function Navigationbar() {
         <div className="logo">
           <Link to="/">Shelp</Link>
         </div>
-        <div className="about">
-          <Link to="/intro">About</Link>
-        </div>
-        <div className="blank">--Blank--</div>
-        {window.localStorage.userinfo? (
+        <div className="blank"></div>
+        {window.localStorage.userinfo ? (
           <div>
             <button className="nav-button">
               <Link to="/mypage">마이페이지</Link>
