@@ -8,7 +8,7 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      username: {
+      name: {
         allowNull: false,
         type: Sequelize.STRING
       },
@@ -23,6 +23,10 @@ module.exports = {
       image: {
         allowNull: false,
         type: Sequelize.BLOB
+      },
+      period: {
+        allowNull: false,
+        type: Sequelize.INTEGER
       },
       desc: {
         type: Sequelize.STRING

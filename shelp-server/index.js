@@ -1,15 +1,12 @@
+require('dotenv').config();
+
 const express = require("express");
 const cookieParser = require('cookie-parser');
-const dotenv = require('dotenv');
+const session = require('express-session');
 const morgan = require('morgan');
 const cors = require('cors');
 const app = express();
-
-const config = require('./config/config.js');
-const { SERVER_PORT } = config;
-const port = SERVER_PORT || 4000;
-
-dotenv.config();
+const port = 4000;
 
 // Routes
 const indexRouter = require('./routes');
@@ -26,13 +23,19 @@ app.use(
     credentials: true,
   }),
 );
+app.use(session({
+  secret: 'ras',
+  resave: true,
+  secure: false,
+  saveUninitialized: false,
+}));
 
 // router
 app.use('/', indexRouter);
 
 // test용
 app.get('/', (req, res) => {
-  res.send('HELLO');
+  res.send('Hi');
 });
 
 app.listen(port, () => {

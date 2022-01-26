@@ -27,56 +27,64 @@ const Section = styled.div`
 `;
 
 const Profile = styled.div`
-  flex: 1 0 auto;
+  flex: 0.1 0 auto;
   background-color: white;
-  margin: 1rem 1rem 0.5rem 1rem;
-  box-shadow: 0em 0em 1em rgba(0, 0, 0, 0.3);
-  border-radius: 0.5rem;
   display: flex;
   align-items: center;
 
-  > div.profile-image {
-    flex: 1 0 auto;
-    position: absolute;
-    width: 10rem;
-    height: 10rem;
-    margin-left: 2rem;
+  > img.profile-left {
+    position: relative;
+    height: 70%;
+    margin-left: 10vh;
     border-radius: 50%;
+    padding-top: 1rem;
     overflow: hidden;
-    color: grey;
+    background-color: white;
   }
 
-  > div.profile-container {
-    position: absolute;
-    left: 30rem;
-    top: 3rem;
+  > div.profile-right {
     flex: 1 0 auto;
+    top: 50%;
+    height: 70%;
+    margin: 10vh;
     display: flex;
     flex-direction: column;
-    justify-items: center;
 
     > div.profile-email {
-      flex: 1 0 auto;
-      color: rgba(0, 0, 0, 0.4);
-    }
+      height: auto;
 
+      font-size: 1.5em;
+    }
     > div.profile-name {
-      flex: 1 0 auto;
-      font-size: 3rem;
+      height: auto;
+      display: flex;
+      padding: 1em 0;
+
+      > div.name {
+        width: auto;
+        padding-right: 0.5em;
+        margin-top: auto;
+        margin-bottom: auto;
+        font-size: 4em;
+      }
+      > div.welcome-message {
+        margin-top: auto;
+        margin-bottom: auto;
+        font-size: 2em;
+      }
+    }
+    > div.profile-desc {
+      color: rgba(0, 0, 0, 0.4);
+      height: auto;
+      font-size: 1.5em;
     }
   }
-`;
-
-const Setting = styled.div`
-  flex: 1 0 auto;
-  background-color: grey;
-  border: sold black 1px;
 `;
 
 const Collection = styled.div`
-  flex: 2 0 auto;
+  flex: 10 0 auto;
   background-color: white;
-  margin: 0.5rem 1rem 1rem 1rem;
+  margin: 0 2rem 2rem 2rem;
   box-shadow: 0em 0em 1em rgba(0, 0, 0, 0.3);
   border-radius: 0.5rem;
 `;

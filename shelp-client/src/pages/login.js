@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 import axios from "axios";
 const serverUrl = "http://localhost:4000";
-// import { LoginModal } from "./modals.js";
 
 // font-family: adobe-clean-han-japanese,-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,sans-serif;
 
@@ -95,7 +94,7 @@ const TouchPoint = styled.div`
     height: auto;
     margin-top: 1rem;
     padding: 0.7rem 1rem;
-    background-color: grey;
+    background-color: lightgrey;
     color: white;
     font-weight: bold;
     border-style: hidden;
