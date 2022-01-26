@@ -114,15 +114,15 @@ export function LoginModal({ modalHandler, handleResponseSuccess }) {
   );
 }
 
-export function AddItemModal({ index, modalHandler, items, setItems }) {
+export function AddItemModal({ userinfo, modalHandler, items, setItems }) {
   // item: app.js에서 받아온 전체 목록, items: 모달에서 추가하는 품목 한 개의 속성
   const [item, setItem] = useState({
-    userId: items[index].userId,
-    name: items[index].name,
-    desc: items[index].desc,
-    quantity: items[index].quantity,
-    expiration: items[index].expiration,
-    storage: items[index].storage,
+    userId: userinfo.id,
+    name: "",
+    desc: "",
+    quantity: "",
+    expiration: "",
+    storage: "",
   });
   const [errorMessage, setErrorMessage] = useState("");
 
@@ -186,13 +186,11 @@ export function AddItemModal({ index, modalHandler, items, setItems }) {
   );
 }
 
-export function EditItemModal({ modalHandler, items, index }) {
+export function EditItemModal({ index, modalHandler, items, setItems }) {
   // item: app.js에서 받아온 전체 목록, items: 모달에서 추가하는 품목 한 개의 속성
-  // console.log(items)
-  console.log(index);
   const [item, setItem] = useState({
-    itemId: items[index].id,
     // userId: items[0].userId,
+    itemId: items[index].id,
     userId: items[index].userId,
     name: "",
     quantity: "",

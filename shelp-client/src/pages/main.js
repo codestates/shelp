@@ -236,7 +236,7 @@ export function Main({ isLogin, userinfo }) {
     setisFrigerOpen(!isFrigerOpen);
   };
 
-  const modalHandler = (e, el) => {
+  const modalHandler = (e, index) => {
     if (e === "edit") {
       setIsModalOpen("edit");
     }
@@ -246,8 +246,8 @@ export function Main({ isLogin, userinfo }) {
     if (e == "close") {
       setIsModalOpen("");
     }
-    if (el >= 0) {
-      setIndex(el);
+    if (index >= 0) {
+      setIndex(index);
     }
     // setIsModalOpen(!isModalOpen);
   };
@@ -255,7 +255,7 @@ export function Main({ isLogin, userinfo }) {
   const searchRecipe = (index) => {
     // 크롤링 함수(items[e].name)
     if (index !== undefined) {
-      axios.get(`${serverUrl}/recipe/${items[index].id}`).then((res) => {
+      axios.get(`${serverUrl}/recipe/${items[index].name}`).then((res) => {
         //console.log(`crawling data = ${res.data.data}`);
         setRecipes(res.data.data);
       });
@@ -334,6 +334,7 @@ export function Main({ isLogin, userinfo }) {
       </Section>
       {isModalOpen === "add" ? (
         <AddItemModal
+          userinfo={userinfo}
           modalHandler={modalHandler}
           items={items}
           setItems={setItems}
