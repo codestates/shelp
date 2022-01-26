@@ -59,22 +59,66 @@ const SortOpt = styled.div`
 const Section = styled.div`
   flex: 1 0 auto;
   display: flex;
-  background-color: skyblue;
-  border: solid black 1px;
+  background-color: white;
+  border-top: solid lightgrey 1px;
 `;
 
 const Friger = styled.div`
   z-index: 900;
   position: absolute;
+  width: 30em;
   left: 0;
   top: 9.5em;
   height: 32em;
   background-color: white;
   border-radius: 0 0.5em 0.5em 0;
   box-shadow: 10px 5px 20px rgba(0, 0, 0, 0.5);
+  display: flex;
+  flex-direction: column;
 
-  animation-name: ${(props) =>
-    props.isFrigerOpen === true ? "slideout" : "slidein"};
+  > button.friger-onoff {
+    position: relative;
+    right: -31em;
+    width: 3em;
+    height: 3em;
+    margin: 1em;
+    background-color: white;
+    border-style: hidden;
+    border-radius: 1.5em;
+    box-shadow: 10px 5px 20px rgba(0, 0, 0, 0.5);
+    cursor: pointer;
+  }
+  > div.friger-item {
+    height: 15%;
+    background-color: green;
+    margin: 0 0.7rem 0.7rem 0.7rem;
+    border-radius: 0.5rem;
+    overflow: hidden;
+    display: flex;
+
+    > div.item-sec-1 {
+      flex: 1 0 auto;
+      background-color: cyan;
+    }
+    > div.item-sec-2 {
+      flex: 1 0 auto;
+      background-color: magenta;
+    }
+    > div.item-sec-3 {
+      flex: 1 0 auto;
+      background-color: goldenrod;
+    }
+  }
+
+  /* animation-name: ${(props) =>
+    props.isFrigerOpen ? "slideout" : "slidein"}; */
+  animation-name: ${(props) => {
+    if (props.isFrigerOpen !== null && props.isFrigerOpen === true) {
+      return "slidein";
+    } else if (props.isFrigerOpen !== null && props.isFrigerOpen === false) {
+      return "slideout";
+    }
+  }};
   animation-duration: 1s;
   animation-iteration-count: 1;
   animation-fill-mode: forwards;
@@ -82,37 +126,20 @@ const Friger = styled.div`
 
   @keyframes slidein {
     from {
-      width: 2em;
+      left: 0;
     }
-
     to {
-      width: 30em;
+      left: -26em;
     }
   }
 
   @keyframes slideout {
     from {
-      width: 30em;
+      left: -26em;
     }
-
     to {
-      width: 2em;
+      left: 0;
     }
-  }
-
-  > button.friger-onoff {
-    position: relative;
-    right: 0rem;
-    width: 3em;
-    height: 3em;
-    margin: 1em;
-    background-color: white;
-    box-shadow: 0rem 0.5rem 1.5rem rgba(0, 0, 0, 0.5);
-    border-style: hidden;
-    border-radius: 1.5em;
-    cursor: pointer;
-  }
-  > div.friger-view {
   }
 `;
 
@@ -137,31 +164,17 @@ const RecipeCard = styled.div`
 
 // ===================================================================
 
-export function Main({ isLogin, userinfo }) {
+export function Main({ isLogin, items, setItems }) {
   const [isModalOpen, setIsModalOpen] = useState("");
-  const [items, setItems] = useState([]);
   const [index, setIndex] = useState(null);
   const [recipes, setRecipes] = useState([]);
   const [isFrigerOpen, setisFrigerOpen] = useState(null);
 
-  const userItemInfo = async () => {
-    // 아이템을 가져오는 함수 쿠키를 못찾아서 못씀
-    console.log("hello");
-    axios
-      .get(`${serverUrl}/items`, {
-        "Content-Type": "application/json",
-        withCredentials: true,
-      })
-      .then((res) => {
-        console.log(res.data.data);
-        setItems(res.data.data);
-      });
-  };
-
   const frigerHandler = () => {
     setisFrigerOpen(!isFrigerOpen);
-    console.log(isFrigerOpen);
   };
+
+  console.log(isFrigerOpen);
 
   const modalHandler = (e, el) => {
     if (e === "수정") {
@@ -170,7 +183,7 @@ export function Main({ isLogin, userinfo }) {
     if (e === "추가") {
       setIsModalOpen("추가");
     }
-    if (e == "close") {
+    if (e === "close") {
       setIsModalOpen("");
     }
     if (el >= 0) {
@@ -179,12 +192,12 @@ export function Main({ isLogin, userinfo }) {
     // setIsModalOpen(!isModalOpen);
   };
 
-  const searchRecipe = (e) => {
-    // 크롤링 함수(items[e].name)
-    axios.get(`${serverUrl}/${items[e].id}`).then((res) => {
-      console.log(`crawling data = ${res}`);
-    });
-  };
+  // 크롤링 함수(items[e].name)
+  // const searchRecipe = (e) => {
+  //   axios.get(`${serverUrl}/${items[e].id}`).then((res) => {
+  //     console.log(`crawling data = ${res}`);
+  //   });
+  // };
 
   // useEffect(() => {
   //   // getItems();
@@ -197,7 +210,11 @@ export function Main({ isLogin, userinfo }) {
         <button onClick={frigerHandler} className="friger-onoff">
           +
         </button>
-        <div>test</div>
+        <div className="friger-item">
+          <div className="item-sec-1">storage, expiration</div>
+          <div className="item-sec-2">name, quantity</div>
+          <div className="item-sec-3">desc</div>
+        </div>
       </Friger>
       <Navigationbar isLogin={isLogin} />
       <Searchbar>
@@ -212,11 +229,6 @@ export function Main({ isLogin, userinfo }) {
       </Searchbar>
       <SortOpt>추천순</SortOpt>
       <Section>
-        {/* <Friger isFrigerOpen={isFrigerOpen}>
-          <button onClick={frigerHandler} className="friger-onoff">
-            +
-          </button>
-        </Friger> */}
         <RecipeContainer>
           <RecipeCard>card1</RecipeCard>
           <RecipeCard>card2</RecipeCard>

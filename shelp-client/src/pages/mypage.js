@@ -27,56 +27,64 @@ const Section = styled.div`
 `;
 
 const Profile = styled.div`
-  flex: 1 0 auto;
+  flex: 0.1 0 auto;
   background-color: white;
-  margin: 1rem 1rem 0.5rem 1rem;
-  box-shadow: 0em 0em 1em rgba(0, 0, 0, 0.3);
-  border-radius: 0.5rem;
   display: flex;
   align-items: center;
 
-  > div.profile-image {
-    flex: 1 0 auto;
-    position: absolute;
-    width: 10rem;
-    height: 10rem;
-    margin-left: 2rem;
+  > img.profile-left {
+    position: relative;
+    height: 70%;
+    margin-left: 10vh;
     border-radius: 50%;
+    padding-top: 1rem;
     overflow: hidden;
-    color: grey;
+    background-color: white;
   }
 
-  > div.profile-container {
-    position: absolute;
-    left: 30rem;
-    top: 3rem;
+  > div.profile-right {
     flex: 1 0 auto;
+    top: 50%;
+    height: 70%;
+    margin: 10vh;
     display: flex;
     flex-direction: column;
-    justify-items: center;
 
     > div.profile-email {
-      flex: 1 0 auto;
-      color: rgba(0, 0, 0, 0.4);
-    }
+      height: auto;
 
+      font-size: 1.5em;
+    }
     > div.profile-name {
-      flex: 1 0 auto;
-      font-size: 3rem;
+      height: auto;
+      display: flex;
+      padding: 1em 0;
+
+      > div.name {
+        width: auto;
+        padding-right: 0.5em;
+        margin-top: auto;
+        margin-bottom: auto;
+        font-size: 4em;
+      }
+      > div.welcome-message {
+        margin-top: auto;
+        margin-bottom: auto;
+        font-size: 2em;
+      }
+    }
+    > div.profile-desc {
+      color: rgba(0, 0, 0, 0.4);
+      height: auto;
+      font-size: 1.5em;
     }
   }
-`;
-
-const Setting = styled.div`
-  flex: 1 0 auto;
-  background-color: grey;
-  border: sold black 1px;
 `;
 
 const Collection = styled.div`
-  flex: 2 0 auto;
+  flex: 10 0 auto;
   background-color: white;
-  margin: 0.5rem 1rem 1rem 1rem;
+  margin: 0 2rem 2rem 2rem;
   box-shadow: 0em 0em 1em rgba(0, 0, 0, 0.3);
   border-radius: 0.5rem;
 `;
@@ -87,6 +95,8 @@ function Mypage({ userinfo, setUserinfo }) {
   const [button, setButton] = useState(true);
   const [per, setPer] = useState(1);
   const [img, setImg] = useState();
+
+  console.log("userinfo: ", userinfo);
 
   const handleChange = (e, key) => {
     setUserinfo({ ...userinfo, [key]: e.target.value });
@@ -131,23 +141,15 @@ function Mypage({ userinfo, setUserinfo }) {
       <Navigationbar />
       <Section>
         <Profile>
-          <div className="profile-image">
-            <img src="https://picsum.photos/300/300?random=1" />
-          </div>
-          <div className="profile-container">
-            <div className="profile-name">김철수</div>
-            <span>님 환영합니다.</span>
-            <div className="profile-email">myshelp@gmail.com</div>
-          </div>
-          <Setting>
-            <div>
-              {button ? (
-                <button onClick={handleButtonEdit}>edit</button>
-              ) : (
-                <button onClick={handleButtonSave}>save</button>
-              )}
+          <img className="profile-left" src="https://picsum.photos/200/200" />
+          <div className="profile-right">
+            <div className="profile-email">{userinfo.email}</div>
+            <div className="profile-name">
+              <div className="name">{userinfo.name}</div>
+              <div className="welcome-message">님, 환영합니다!</div>
             </div>
-          </Setting>
+            <div className="profile-desc">{userinfo.desc}</div>
+          </div>
         </Profile>
         <Collection></Collection>
       </Section>

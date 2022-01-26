@@ -94,7 +94,7 @@ const TouchPoint = styled.div`
     height: auto;
     margin-top: 1rem;
     padding: 0.7rem 1rem;
-    background-color: grey;
+    background-color: lightgrey;
     color: white;
     font-weight: bold;
     border-style: hidden;
@@ -139,12 +139,12 @@ export default function Login({ handleResponseSuccess, setUserinfo }) {
           withCredentials: true,
         })
         .then((res) => {
-          setUserinfo(res.data.data);
-          console.log("userInfoChanged!");
+          setUserinfo(() => {
+            return res.data.data;
+          });
         })
         .then(() => {
           handleResponseSuccess();
-          console.log("sent ResponseSuccess!");
         })
         .catch((err) => {
           console.log(err);

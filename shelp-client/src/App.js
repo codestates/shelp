@@ -11,6 +11,7 @@ const serverUrl = "http://localhost:4000";
 export default function App() {
   const [isLogin, setIsLogin] = useState(false);
   const [userinfo, setUserinfo] = useState(null);
+  const [items, setItems] = useState([]);
 
   const isAuthenticated = () => {
     if (userinfo !== null) {
@@ -23,37 +24,43 @@ export default function App() {
   };
 
   // const handleLogout = () => {
-  //   axios.post(`${serverUrl}/signout`).then((res) => {
-  //     setUserinfo(null);
-  //     setIsLogin(false);
-  //   });
-  // };
-
-  // useEffect(() => {
-  //   handleResponseSuccess(userinfo);
-  // });
-  useEffect(() => {
-    isAuthenticated();
-  }, [userinfo]);
-
-  // const handleLogout = () => {
   //   axios.post(`${serverUrl}/user/signout`).then((res) => {
   //     setUserinfo(null);
   //     setIsLogin(false);
   //   });
   // };
 
-  // useEffect(() => {
-  //   handleResponseSuccess(userinfo);
-  //   console.log("changed!", userinfo);
-  // }, [userinfo]);
+  const getItems = () => {
+    axios
+      .get(`${serverUrl}/items`, {
+        "Content-Type": "application/json",
+        withCredentials: true,
+      })
+      .then((res) => {
+        setItems(res.data.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  useEffect(() => {
+    isAuthenticated();
+    getItems();
+  }, [userinfo]);
 
   return (
     <div>
       <Routes>
         <Route
           path="/"
-          element={isLogin ? <Main isLogin={isLogin} /> : <Intro />}
+          element={
+            isLogin ? (
+              <Main isLogin={isLogin} items={items} setItems={setItems} />
+            ) : (
+              <Intro />
+            )
+          }
         />
         {/* <Route
           path="/intro" // 새 컴포넌트 touchpoint 없는 intro
