@@ -1,4 +1,4 @@
-import { Route, Switch, Link, Routes } from "react-router-dom";
+import { Route, Switch, Link, Routes, useNavigate } from "react-router-dom";
 import { useState, useRef, useEffect } from "react";
 import styled from "styled-components";
 import Mypage from "./mypage.js";
@@ -251,7 +251,8 @@ export function Main({ isLogin, userinfo }) {
   const [index, setIndex] = useState(null);
   const [recipes, setRecipes] = useState([]);
   const [isFrigerOpen, setisFrigerOpen] = useState(null);
-  const [] = useState("");
+  const [queryText, setQueryText] = useState("");
+  const navigator = useNavigate();
 
   const getItems = async () => {
     axios
@@ -285,21 +286,48 @@ export function Main({ isLogin, userinfo }) {
     // setIsModalOpen(!isModalOpen);
   };
 
-  const searchRecipe = (index) => {
-    // 크롤링 함수(items[e].name)
-    if (index !== undefined) {
-      axios.get(`${serverUrl}/recipe/${items[index].name}`).then((res) => {
-        //console.log(`crawling data = ${res.data.data}`);
+  const searchRecipe = (name) => {
+    // 크롤링 함수
+    if (name === undefined || name === "") {
+      axios.get(`${serverUrl}/recipe`).then((res) => {
         setRecipes(res.data.data);
       });
     } else {
-      axios.get(`${serverUrl}/recipe`).then((res) => {
+      axios.get(`${serverUrl}/recipe/${name}`).then((res) => {
         setRecipes(res.data.data);
       });
     }
   };
 
-  const handleSearchInput = () => {};
+  const handleSearchInput = (e) => {
+    setQueryText(e.target.value);
+  };
+
+  const sortRecipes = () => {
+    const result = recipes.sort((a, b) => {
+      let aHits = 0;
+      let bHits = 0;
+      if (a.hits.includes("만")) {
+        aHits = Number(a.hits.slice(0, -1)) * 10000;
+      } else if (a.hits.includes(",")) {
+        aHits = Number(a.hits.split(",").join(""));
+      } else {
+        aHits = Number(a.hits);
+      }
+
+      if (b.hits.includes("만")) {
+        bHits = Number(b.hits.slice(0, -1)) * 10000;
+      } else if (b.hits.includes(",")) {
+        bHits = Number(b.hits.split(",").join(""));
+      } else {
+        bHits = Number(b.hits);
+      }
+
+      return bHits - aHits;
+    });
+    setRecipes(result);
+    navigator("/");
+  };
 
   useEffect(() => {
     getItems();
@@ -323,7 +351,7 @@ export function Main({ isLogin, userinfo }) {
               <div className="item-sec-upper">
                 <button
                   className="item-name"
-                  onClick={() => searchRecipe(index)}
+                  onClick={() => searchRecipe(item.name)}
                 >
                   {item.name}
                 </button>
@@ -350,13 +378,19 @@ export function Main({ isLogin, userinfo }) {
         <input
           className="text-area"
           placeholder="지금 바로 가능한 레시피 검색"
-          onChange={handleSearchInput}
+          onChange={(e) => handleSearchInput(e)}
         />
         <div className="tabs">
-          <SearchButton>검색</SearchButton>
+          <SearchButton
+            onClick={() => {
+              searchRecipe(queryText);
+            }}
+          >
+            검색
+          </SearchButton>
         </div>
       </Searchbar>
-      <SortOpt>추천순</SortOpt>
+      <SortOpt onClick={sortRecipes}>추천순</SortOpt>
       <Section>
         <RecipeContainer>
           {recipes.map((recp) => {
