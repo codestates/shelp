@@ -136,7 +136,7 @@ module.exports = {
         const mailOptions = await transporter.sendMail({
             from: `sHELP`,
             to: req.body.email,
-            subject: '[sHELP]인증 관련 이메일 입니다',
+            subject: '[sHELP]인증 확인 이메일입니다',
             html: emailTemplete,
         });
         // return res.send(mailOptions)
