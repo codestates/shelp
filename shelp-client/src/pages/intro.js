@@ -38,7 +38,7 @@ const TouchPoint = styled.div`
   border-radius: 0.3rem;
 `;
 
-export default function Intro() {
+export default function Intro({ handleResponseSuccess }) {
   const [isModalOpen, SetIsModalOpen] = useState(false);
 
   const modalHandler = () => {
@@ -47,6 +47,12 @@ export default function Intro() {
 
   return (
     <div>
+      {isModalOpen ? (
+        <LoginModal
+          modalHandler={modalHandler}
+          handleResponseSuccess={handleResponseSuccess}
+        />
+      ) : null}
       <Wallpaper>
         <Wraper>
           <TouchPoint>

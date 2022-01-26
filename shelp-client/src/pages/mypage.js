@@ -91,12 +91,10 @@ const Collection = styled.div`
 
 const AlarmSet = styled.div``;
 
-function Mypage({ userinfo, setUserinfo }) {
+function Mypage({ isLogin, userinfo, setUserinfo }) {
   const [button, setButton] = useState(true);
   const [per, setPer] = useState(1);
   const [img, setImg] = useState();
-
-  console.log("userinfo: ", userinfo);
 
   const handleChange = (e, key) => {
     setUserinfo({ ...userinfo, [key]: e.target.value });
@@ -118,18 +116,14 @@ function Mypage({ userinfo, setUserinfo }) {
     setButton(!button);
   };
 
-  const handleLogOut = () => {
-    axios
-      .get(`${serverUrl}/user/signout`, {
-        /* accesstoken첨부 */
-      })
-      .then((res) => {
-        console.log(res);
-      });
-    localStorage.clear();
-    window.location.replace("/");
-    //인트로 페이지로 돌아가기
-  };
+  const deleteUser = () => {
+    axios.delete(`${serverUrl}/profile`)
+    .then((res)=>{
+      console.log(res)
+      window.localStorage.clear();
+      window.location.replace("/")
+    })
+  }
 
   const loadFile = (e) => {
     // setUserinfo({...userinfo, image: e.target.files[0]});
@@ -138,20 +132,30 @@ function Mypage({ userinfo, setUserinfo }) {
 
   return (
     <Container>
-      <Navigationbar />
+      <Navigationbar isLogin={isLogin}/>
       <Section>
         <Profile>
-          <img className="profile-left" src="https://picsum.photos/200/200" />
-          <div className="profile-right">
+          <div className="profile-image">
+            <img src="https://picsum.photos/300/300?random=1" />
+          </div>
+          <div className="profile-container">
+            <div className="profile-name">{userinfo.name}</div>
+            <span>님 환영합니다.</span>
             <div className="profile-email">{userinfo.email}</div>
-            <div className="profile-name">
-              <div className="name">{userinfo.name}</div>
-              <div className="welcome-message">님, 환영합니다!</div>
-            </div>
-            <div className="profile-desc">{userinfo.desc}</div>
           </div>
         </Profile>
-        <Collection></Collection>
+        <Collection>
+          <Setting>
+            <div>
+              {button ? (
+                <button onClick={handleButtonEdit}>edit</button>
+              ) : (
+                <button onClick={handleButtonSave}>save</button>
+              )}
+              <button onClick={deleteUser}>회원탈퇴</button> 
+            </div>
+          </Setting>
+        </Collection>
       </Section>
     </Container>
   );

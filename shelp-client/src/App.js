@@ -5,65 +5,63 @@ import Signup from "./pages/signup";
 import Main from "./pages/main";
 import Mypage from "./pages/mypage";
 import Login from "./pages/login";
-import axios from "axios";
+// import axios from "axios";
 const serverUrl = "http://localhost:4000";
 
 export default function App() {
-  const [isLogin, setIsLogin] = useState(false);
+  const [isLogin, setIsLogin] = useState(true);
+  // const [setting, setSetting] = useState();
+
+  // const modalHandler = () => {
+  //   SetIsModalOpen(!isModalOpen);
+  // };
+
   const [userinfo, setUserinfo] = useState(
-    () => JSON.parse(window.localStorage.getItem('userinfo')) ||
-      null
+    ()=> JSON.parse(window.localStorage.getItem('userinfo')) 
+    ||
+    null
   );
-  const [items, setItems] = useState([]);
+
+  useEffect(()=>{
+    window.localStorage.setItem("userinfo", JSON.stringify(userinfo)); //state에 저장되는 userinfo를 localStorage에 저장
+  })
 
   const isAuthenticated = () => {
-    if (userinfo !== null) {
+    if (userinfo) {
       setIsLogin(true);
+    }else{
+      setIsLogin(false);
     }
   };
 
-  const handleResponseSuccess = () => {
+  const handleResponseSuccess = (data) => {
+    setUserinfo(data);
     isAuthenticated();
   };
 
   // const handleLogout = () => {
-  //   axios.post(`${serverUrl}/user/signout`).then((res) => {
+  //   axios.post(`${serverUrl}/signout`).then((res) => {
   //     setUserinfo(null);
   //     setIsLogin(false);
   //   });
   // };
 
-  const getItems = () => {
-    axios
-      .get(`${serverUrl}/items`, {
-        "Content-Type": "application/json",
-        withCredentials: true,
-      })
-      .then((res) => {
-        setItems(res.data.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
-
   useEffect(() => {
-    isAuthenticated();
-    getItems();
+    handleResponseSuccess(userinfo);
   }, [userinfo]);
+
+  // useEffect(() => {
+  //   isAuthenticated();
+  //   console.log("app.userinfo: ", userinfo);
+  //   console.log("app.islogin: ", typeof isLogin, isLogin);
+  // });
 
   return (
     <div>
       <Routes>
         <Route
           path="/"
-          element={
-            isLogin ? (
-              <Main isLogin={isLogin} items={items} setItems={setItems} />
-            ) : (
-              <Intro />
-            )
-          }
+          element={isLogin ? <Main isLogin={isLogin}/> : <Intro/>}
         />
         {/* <Route
           path="/intro" // 새 컴포넌트 touchpoint 없는 intro
@@ -71,17 +69,12 @@ export default function App() {
         /> */}
         <Route
           path="/login"
-          element={
-            <Login
-              handleResponseSuccess={handleResponseSuccess}
-              setUserinfo={setUserinfo}
-            />
-          }
+          element={<Login handleResponseSuccess={handleResponseSuccess} />}
         />
         <Route path="/signup" element={<Signup />} />
         <Route
           path="/mypage"
-          element={<Mypage userinfo={userinfo} setUserinfo={setUserinfo} />}
+          element={<Mypage isLogin={isLogin} userinfo={userinfo} setUserinfo={setUserinfo} />}
         />
       </Routes>
     </div>

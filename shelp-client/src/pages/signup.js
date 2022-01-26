@@ -81,18 +81,16 @@ const TouchPoint = styled.div`
   }
 `;
 
-export default function Signup({ handleResponseSuccess }) {
+export default function Signup () {
   const [signupInfo, setSignupInfo] = useState({
     email: null,
     name: null,
     password: null,
-    desc: null,
-    image:
-      "https://www.freeiconspng.com/thumbs/pepe-png/pepe-png-free-download-16.png",
+    image: "https://www.freeiconspng.com/thumbs/pepe-png/pepe-png-free-download-16.png",
+    desc: null
   });
 
-  const [errorMessage, setErrorMessage] = useState();
-
+  const [errorMessage, setErrorMessage] = useState("");
   const [emailMessage, setEmailMessage] = useState("");
 
   const handleInputValue = (e, key) => {
@@ -118,20 +116,28 @@ export default function Signup({ handleResponseSuccess }) {
       }
       window.location.replace("/");
     }
+    else{
+      setErrorMessage("정보를 모두 입력해주세요");
+    }
   };
 
-  const checkEmail = (e) => {
-    axios
-      .post(`${serverUrl}/user/check`, { email: signupInfo.email })
-      .then((res) => {
-        console.log(res);
-        if (res.status === 200) {
-          setEmailMessage("사용가능한 이메일 입니다.");
-        }
-        if (res.status === 409) {
-          setEmailMessage("이미 사용중인 이메일 입니다.");
-        }
-      });
+  const checkEmail = () => {
+    axios.post(`${serverUrl}/user/check`, { "email": signupInfo.email })
+    .then((res) => {
+      if (res.data.available === true) {
+        setEmailMessage("사용가능한 이메일 입니다.");
+        handleSignup();
+      }
+      if (res.data.available === false) {
+        setEmailMessage("이미 사용중인 이메일 입니다.");
+      }
+    })
+    // .then(()=>{
+    //   console.log(emailMessage);
+    //   if(emailMessage === "사용가능한 이메일 입니다."){
+    //     handleSignup();
+    //   }
+    // });
   };
 
   const oAuthHandler = () => {
@@ -145,19 +151,20 @@ export default function Signup({ handleResponseSuccess }) {
       <TouchPoint>
         <div className="title">회원가입</div>
         <div className="requirment">이메일 주소</div>
-        <input placeholder="사용하실 이메일 주소를 입력해 주세요"></input>
-        <div className="message">이메일 안내</div>
+        <input placeholder="사용하실 이메일 주소를 입력해 주세요" onChange={(e) => handleInputValue(e, "email")}></input>
+        <div className="message">{emailMessage}</div>
         <div className="requirment">비밀번호</div>
         <input
           type="password"
           placeholder="사용하실 비밀번호를 입력해 주세요"
+          onChange={(e) => handleInputValue(e, "password")}
         ></input>
-        <div className="message">비밀번호 에러</div>
+        <div className="message">{errorMessage===""? '비밀번호를 입력해주세요': errorMessage}</div>
         <div className="requirment">닉네임</div>
-        <input placeholder="사용하실 닉네임을 입력해 주세요"></input>
-        <div className="message">사용하실 닉네임을 입력해 주세요</div>
-        <button className="submit">이메일 인증하고 회원가입</button>
-        <button className="oauth">카카오 계정으로 계속하기</button>
+        <input placeholder="사용하실 닉네임을 입력해 주세요" onChange={(e) => handleInputValue(e, "name")}></input>
+        <div className="message">{errorMessage===""? '사용하실 닉네임을 입력해 주세요': errorMessage}</div>
+        <button className="submit" onClick={checkEmail}>이메일 인증하고 회원가입</button>
+        <button className="oauth" onClick={oAuthHandler}>카카오 계정으로 계속하기</button>
       </TouchPoint>
     </div>
   );
