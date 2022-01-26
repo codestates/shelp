@@ -31,11 +31,49 @@ const TouchPoint = styled.div`
   right: 3rem;
   width: 26rem;
   height: 5rem;
-  position: absolute; // sticky  absolute?
+  position: absolute;
   z-index: 999;
-  background-color: rgba(255, 255, 255, 1);
-  padding: 4rem 3rem;
+  background-color: white;
+  padding: 2.5rem 3rem 4rem 3rem;
   border-radius: 0.3rem;
+  display: flex;
+  flex-direction: column;
+
+  > div.hello {
+    flex: 1 0 auto;
+    font-size: 1.5em;
+    font-weight: bold;
+    color: rgba(0, 0, 0, 0.7);
+    padding-bottom: 1rem;
+    text-align: center;
+  }
+  > button.login {
+    flex: 1 0 auto;
+    margin: 0 9%;
+    padding: 0.3em;
+    border: none;
+    border-radius: 50vh;
+    font-size: 1.3em;
+    font-weight: bold;
+    > a {
+      color: grey;
+      padding: 0 40%;
+    }
+    > a:hover {
+      color: black;
+    }
+  }
+  > div.signup {
+    margin-top: 0.5em;
+    text-align: center;
+    font-size: 1em;
+    > a {
+      color: grey;
+    }
+    > a:hover {
+      color: black;
+    }
+  }
 `;
 
 export default function Intro() {
@@ -50,11 +88,13 @@ export default function Intro() {
       <Wallpaper>
         <Wraper>
           <TouchPoint>
-            <div>오늘의 상차림, Shelp 와 함께하세요</div>
-            <button>
+            <div className="hello">오늘의 상차림, Shelp 와 함께하세요</div>
+            <button className="login">
               <Link to="/login">로그인</Link>
             </button>
-            <Link to="/signup">회원가입</Link>
+            <div className="signup">
+              <Link to="/signup">회원가입</Link>
+            </div>
           </TouchPoint>
         </Wraper>
       </Wallpaper>

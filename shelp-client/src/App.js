@@ -12,6 +12,29 @@ export default function App() {
   const [isLogin, setIsLogin] = useState(false);
   const [userinfo, setUserinfo] = useState(null);
   const [items, setItems] = useState([]);
+  const [backgroundImage, setBackgroundImage] = useState(null);
+
+  const acceesKey = "uxmm1xvDu4mSm0HHtTye0IqpuDDRXXxg90oagPde1XA";
+
+  const getBackgroundImage = () => {
+    axios
+      .get(`https://unsplash.com/oauth/authorize`, {
+        params: {
+          client_id: acceesKey,
+          redirect_uri: "localhost:3000",
+          response_type: "json",
+          scope: "public+read_user",
+        },
+      })
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  getBackgroundImage();
 
   const isAuthenticated = () => {
     if (userinfo !== null) {

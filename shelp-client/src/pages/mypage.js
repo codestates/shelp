@@ -34,6 +34,7 @@ const Profile = styled.div`
 
   > img.profile-left {
     position: relative;
+    width: auto;
     height: 70%;
     margin-left: 10vh;
     border-radius: 50%;
