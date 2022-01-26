@@ -95,7 +95,7 @@ const TouchPoint = styled.div`
     margin-top: 1rem;
     padding: 0.7rem 1rem;
     background-color: lightgrey;
-    color: white;
+    color: black;
     font-weight: bold;
     border-style: hidden;
     border-radius: 2rem;
@@ -166,16 +166,28 @@ export default function Login({ handleResponseSuccess }) {
             <div className="email-req">이메일 주소</div>
             <input onChange={(e) => handleInputValue(e, "email")}></input>
             <div className="error">이메일 주소를 입력해 주세요</div>
-            <div className="email-req" onKeyPress={(e) => { if (e.key === 'Enter') { handleLogin() }}}>비밀번호</div>
+            <div
+              className="email-req"
+              onKeyPress={(e) => {
+                if (e.key === "Enter") {
+                  handleLogin();
+                }
+              }}
+            >
+              비밀번호
+            </div>
             <input
-              onKeyPress={(e) => { if (e.key === 'Enter') { handleLogin() } }} // {/* 엔터누르면 로그인 */}
+              onKeyPress={(e) => {
+                if (e.key === "Enter") {
+                  handleLogin();
+                }
+              }} // {/* 엔터누르면 로그인 */}
               onChange={(e) => handleInputValue(e, "password")}
               type="password"
             ></input>
             <div className="error">비밀번호를 입력해 주세요</div>
-            <button className="submit">
-              {/* <Link to="/">로그인</Link> */}
-              <button onClick={handleLogin}>로그인</button>
+            <button className="submit" onClick={handleLogin}>
+              로그인
             </button>
             <button className="oauth">카카오로 계속하기</button>
           </TouchPoint>

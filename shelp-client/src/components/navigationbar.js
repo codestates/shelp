@@ -7,21 +7,17 @@ const Navigator = styled.div`
   height: 3rem;
   display: flex;
   align-items: center;
-  flex-direction: row;
   min-height: 0.5rem;
   border-bottom: solid lightgrey 1px;
   background-color: ${(props) => (props.mypageColor ? "grey" : "white")};
 
-  > div.logo {
+  > a.logo {
     flex: 2 0 auto;
-    text-align: center;
-    text-decoration-line: none;
-  }
-
-  > div.about {
-    flex: 1 0 auto;
-    text-align: center;
-    text-decoration-line: none;
+    margin-left: 2rem;
+    > img {
+      height: 2.4rem;
+      width: auto;
+    }
   }
 
   > div.blank {
@@ -59,16 +55,17 @@ export default function Navigationbar() {
   return (
     <div>
       <Navigator>
-        <div className="logo">
-          <Link to="/">Shelp</Link>
-        </div>
+        <a href="/" className="logo">
+          <img src="shelp-logo.png" />
+        </a>
+
         <div className="blank"></div>
         {window.localStorage.userinfo ? (
           <div>
-            <button className="nav-button">
-              <Link to="/mypage">마이페이지</Link>
-            </button>
-            <button onClick={handleLogOut}>로그아웃</button>
+            <div href="/mypage">
+              <i class="far fa-user"></i>
+            </div>
+            <span onClick={handleLogOut}>로그아웃</span>
           </div>
         ) : (
           <div>

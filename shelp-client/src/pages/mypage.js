@@ -135,29 +135,49 @@ function Mypage({ isLogin, userinfo, setUserinfo }) {
             <img src={userinfo.image.data} />
           </div>
           <div className="profile-container">
-            {button?
-            <div>
-              <div className="profile-name">{userinfo.name}</div>
-              <span>님 환영합니다.</span>
-              <div className="profile-email">{userinfo.email}</div>
-              <div>{userinfo.period}</div>
-              <div>{userinfo.desc}</div>
-            </div>:
-            <div>
+            {button ? (
               <div>
-                <input type='text' placeholder={'name'} onChange={(e) => handleChange(e, "name")}/>로 변경
+                <div className="profile-name">{userinfo.name}</div>
+                <span>님 환영합니다.</span>
+                <div className="profile-email">{userinfo.email}</div>
+                <div>{userinfo.period}</div>
+                <div>{userinfo.desc}</div>
               </div>
+            ) : (
               <div>
-                <input type='text' placeholder={'password'} onChange={(e) => handleChange(e, "password")}/>로 변경
+                <div>
+                  <input
+                    type="text"
+                    placeholder={"name"}
+                    onChange={(e) => handleChange(e, "name")}
+                  />
+                  로 변경
+                </div>
+                <div>
+                  <input
+                    type="text"
+                    placeholder={"password"}
+                    onChange={(e) => handleChange(e, "password")}
+                  />
+                  로 변경
+                </div>
+                <div>
+                  <input
+                    type="number"
+                    onChange={(e) => handleChange(e, "period")}
+                  />
+                  로 변경
+                </div>
+                <div>
+                  <input
+                    type="text"
+                    placeholder={"desc"}
+                    onChange={(e) => handleChange(e, "desc")}
+                  />
+                  로 변경
+                </div>
               </div>
-              <div>
-                <input type='number' onChange={(e) => handleChange(e, "period")}/>로 변경
-              </div>
-              <div>
-                <input type='text' placeholder={'desc'} onChange={(e) => handleChange(e, "desc")}/>로 변경
-              </div>
-            </div>
-            }
+            )}
           </div>
         </Profile>
         {/* <Collection> */}
