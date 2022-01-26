@@ -181,6 +181,7 @@ const RecipeCard = styled.div`
 // ===================================================================
 
 export function Main({ isLogin, userinfo }) {
+  console.log(userinfo)
   const [isModalOpen, setIsModalOpen] = useState("");
   const [items, setItems] = useState([]);
   const [index, setIndex] = useState(null);
@@ -261,6 +262,10 @@ export function Main({ isLogin, userinfo }) {
           <RecipeCard>card1</RecipeCard>
           <RecipeCard>card2</RecipeCard>
         </RecipeContainer>
+        <div>
+          <button onClick={() => modalHandler("추가", 1)}>추가</button>
+          <button onClick={() => modalHandler("수정", 0)}>수정</button>
+        </div>
       </Section>
       {isModalOpen === "추가" ? (
         <AddItemModal

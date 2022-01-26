@@ -145,7 +145,7 @@ function Mypage({ isLogin, userinfo, setUserinfo }) {
           </div>
         </Profile>
         <Collection>
-          <Setting>
+          {/* <Setting>
             <div>
               {button ? (
                 <button onClick={handleButtonEdit}>edit</button>
@@ -154,7 +154,7 @@ function Mypage({ isLogin, userinfo, setUserinfo }) {
               )}
               <button onClick={deleteUser}>회원탈퇴</button> 
             </div>
-          </Setting>
+          </Setting> */}
         </Collection>
       </Section>
     </Container>
