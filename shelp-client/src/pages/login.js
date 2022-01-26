@@ -130,26 +130,27 @@ export default function Login({ handleResponseSuccess }) {
   };
 
   const handleLogin = () => {
-      // console.log(JSON.stringify(loginInfo));
-      axios.post(`${serverUrl}/user/signin`, loginInfo, {
+    axios
+      .post(`${serverUrl}/user/signin`, loginInfo, {
         "Content-Type": "application/json",
         withCredentials: true,
       })
       .then((res) => {
-          if (res.status === 200) {
-            console.log("userinfo: ", res);
-            // const { accessToken } = res.data;
-            // axios.defaults.headers.common['jwt'] = `Bearer ${accessToken}`;
+        if (res.status === 200) {
+          if (res.data.message === "Signin succeed") {
             handleResponseSuccess(res.data.data);
             window.location.replace("/");
           }
-          if(res.status === 400) {
+          if (res.data.messgae === "wrong password") {
+            alert("wrong password");
+          } else if (res.status === 400) {
             setErrorMessage("이메일과 비밀번호를 입력하세요");
           }
-        })
-        .catch((err)=>{
-          alert("falild!");
-        })
+        }
+      })
+      .catch((err) => {
+        alert(err);
+      });
   };
 
   return (
@@ -165,9 +166,22 @@ export default function Login({ handleResponseSuccess }) {
             <div className="email-req">이메일 주소</div>
             <input onChange={(e) => handleInputValue(e, "email")}></input>
             <div className="error">이메일 주소를 입력해 주세요</div>
-            <div className="email-req" onKeyPress={(e) => { if (e.key === 'Enter') { handleLogin() }}}>비밀번호</div>
+            <div
+              className="email-req"
+              onKeyPress={(e) => {
+                if (e.key === "Enter") {
+                  handleLogin();
+                }
+              }}
+            >
+              비밀번호
+            </div>
             <input
-              onKeyPress={(e) => { if (e.key === 'Enter') { handleLogin() } }} // {/* 엔터누르면 로그인 */}
+              onKeyPress={(e) => {
+                if (e.key === "Enter") {
+                  handleLogin();
+                }
+              }} // {/* 엔터누르면 로그인 */}
               onChange={(e) => handleInputValue(e, "password")}
               type="password"
             ></input>

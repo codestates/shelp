@@ -139,9 +139,49 @@ function Mypage({ isLogin, userinfo, setUserinfo }) {
             <img src="https://picsum.photos/300/300?random=1" />
           </div>
           <div className="profile-container">
-            <div className="profile-name">{userinfo.name}</div>
-            <span>님 환영합니다.</span>
-            <div className="profile-email">{userinfo.email}</div>
+            {button ? (
+              <div>
+                <div className="profile-name">{userinfo.name}</div>
+                <span>님 환영합니다.</span>
+                <div className="profile-email">{userinfo.email}</div>
+                <div>{userinfo.period}</div>
+                <div>{userinfo.desc}</div>
+              </div>
+            ) : (
+              <div>
+                <div>
+                  <input
+                    type="text"
+                    placeholder={"name"}
+                    onChange={(e) => handleChange(e, "name")}
+                  />
+                  로 변경
+                </div>
+                <div>
+                  <input
+                    type="text"
+                    placeholder={"password"}
+                    onChange={(e) => handleChange(e, "password")}
+                  />
+                  로 변경
+                </div>
+                <div>
+                  <input
+                    type="number"
+                    onChange={(e) => handleChange(e, "period")}
+                  />
+                  로 변경
+                </div>
+                <div>
+                  <input
+                    type="text"
+                    placeholder={"desc"}
+                    onChange={(e) => handleChange(e, "desc")}
+                  />
+                  로 변경
+                </div>
+              </div>
+            )}
           </div>
         </Profile>
         {/* <Collection> */}

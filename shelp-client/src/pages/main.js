@@ -38,15 +38,16 @@ const Searchbar = styled.div`
     background-color: rgba(0, 0, 0, 0.05);
   }
   > div.tabs {
-    flex: 2 0 auto;
+    flex: 1 0 auto;
     display: flex;
   }
 `;
 
-const SearchOpt = styled.div`
+const SearchButton = styled.div`
   flex: 1 0 auto;
-  padding-top: 0.9rem;
+  padding: 1rem 0;
   text-align: center;
+  font-weight: bold;
 `;
 
 const SortOpt = styled.div`
@@ -68,13 +69,38 @@ const Friger = styled.div`
   position: absolute;
   width: 30em;
   left: 0;
-  top: 9.5em;
+  top: 8.5em;
   height: 32em;
   background-color: white;
   border-radius: 0 0.5em 0.5em 0;
   box-shadow: 10px 5px 20px rgba(0, 0, 0, 0.5);
   display: flex;
   flex-direction: column;
+  overflow: auto;
+
+  > div.friger-search {
+    z-index: 999;
+    position: absolute;
+    right: 4.5em;
+    top: 1em;
+    width: 22.5rem;
+    padding: 1em;
+    border-radius: 2em;
+    background: rgba(0, 0, 0, 0.05);
+    border: solid lightgrey 1px;
+
+    > input.text-area {
+      border: none;
+      border-radius: 2rem 0 0 2rem;
+      padding-left: 1.5rem;
+      flex: 8 0 auto;
+    }
+    > div.tabs {
+      flex: 1 0 auto;
+      display: flex;
+      background: white;
+    }
+  }
 
   > button.friger-onoff {
     position: relative;
@@ -194,21 +220,27 @@ const Friger = styled.div`
 
 const RecipeContainer = styled.div`
   width: vw;
-  background-color: lightgrey;
-  border: solid black 1px;
-  padding: 0.125em;
+  background-color: white;
+  padding: 1.25em;
   display: flex;
   flex-flow: row wrap;
-  align-items: left;
+  align-items: center;
   justify-content: space-around;
 `;
 
 const RecipeCard = styled.div`
-  width: 15em;
+  position: relative;
+  height: 30vh;
+  width: auto;
   flex: 1 0 auto;
   margin: 0.25em;
-  background-color: rgba(0, 0, 0, 0.2);
-  border: solid grey 1px;
+  background-color: blue;
+
+  > a {
+    position: relative;
+    width: 100%;
+    background-color: red;
+  }
 `;
 
 // ===================================================================
@@ -219,6 +251,7 @@ export function Main({ isLogin, userinfo }) {
   const [index, setIndex] = useState(null);
   const [recipes, setRecipes] = useState([]);
   const [isFrigerOpen, setisFrigerOpen] = useState(null);
+  const [] = useState("");
 
   const getItems = async () => {
     axios
@@ -266,6 +299,8 @@ export function Main({ isLogin, userinfo }) {
     }
   };
 
+  const handleSearchInput = () => {};
+
   useEffect(() => {
     getItems();
     searchRecipe();
@@ -274,6 +309,7 @@ export function Main({ isLogin, userinfo }) {
   return (
     <Container>
       <Friger isFrigerOpen={isFrigerOpen}>
+        <div className="friger-search"></div>
         <button onClick={frigerHandler} className="friger-onoff">
           {isFrigerOpen ? (
             <i class="fas fa-angle-right"></i>
@@ -314,19 +350,22 @@ export function Main({ isLogin, userinfo }) {
         <input
           className="text-area"
           placeholder="지금 바로 가능한 레시피 검색"
+          onChange={handleSearchInput}
         />
         <div className="tabs">
-          <SearchOpt>재료</SearchOpt>
-          <SearchOpt>레시피</SearchOpt>
+          <SearchButton>검색</SearchButton>
         </div>
       </Searchbar>
       <SortOpt>추천순</SortOpt>
       <Section>
         <RecipeContainer>
           {recipes.map((recp) => {
+            console.log(recp);
             return (
               <RecipeCard>
-                <img src={recp.image} />
+                <a href={recp.url}>
+                  <img src={recp.image} />
+                </a>
               </RecipeCard>
             );
           })}
