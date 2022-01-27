@@ -51,44 +51,43 @@ const Profile = styled.div`
     margin: 10vh;
     display: flex;
     flex-direction: column; */
-    > div.profile-image {
-      border-radius: 70%;
-      overflow: hidden;
-      height: 300px;
-      margin-top: 30px;
-      box-shadow: 0em 0em 1em rgba(0, 0, 0, 3);
-    }
-    > div.profile-container {
-      margin-top: 30px;
-    }
-    > div.profile-email {
-      height: auto;
+  > div.profile-image {
+    border-radius: 70%;
+    overflow: hidden;
+    height: 300px;
+    margin-top: 30px;
+    box-shadow: 0em 0em 1em rgba(0, 0, 0, 3);
+  }
+  > div.profile-container {
+    margin-top: 30px;
+  }
+  > div.profile-email {
+    height: auto;
 
-      font-size: 1.5em;
-    }
-    > div.profile-name {
-      height: auto;
-      display: flex;
-      padding: 1em 0;
-    }
-    > div.name {
-      width: auto;
-      padding-right: 0.5em;
-      margin-top: auto;
-      margin-bottom: auto;
-      font-size: 4em;
-    }
-    > div.welcome-message {
-      margin-top: auto;
-      margin-bottom: auto;
-      font-size: 2em;
-    }
-    > div.profile-desc {
-      color: rgba(0, 0, 0, 0.4);
-      height: auto;
-      font-size: 1.5em;
-    }
-  
+    font-size: 1.5em;
+  }
+  > div.profile-name {
+    height: auto;
+    display: flex;
+    padding: 1em 0;
+  }
+  > div.name {
+    width: auto;
+    padding-right: 0.5em;
+    margin-top: auto;
+    margin-bottom: auto;
+    font-size: 4em;
+  }
+  > div.welcome-message {
+    margin-top: auto;
+    margin-bottom: auto;
+    font-size: 2em;
+  }
+  > div.profile-desc {
+    color: rgba(0, 0, 0, 0.4);
+    height: auto;
+    font-size: 1.5em;
+  }
 `;
 const User = styled.div`
   height: 150px;
@@ -102,17 +101,17 @@ const User = styled.div`
     flex-direction: row;
     justify-content: space-between;
     width: 200px;
-    
+
     button {
       border: 3px solid gray;
       border-radius: 10px;
     }
-    > button.alerm{
+    > button.alerm {
       border-style: solid;
       border-color: red;
     }
-  } 
-`
+  }
+`;
 const EditComp = styled.div`
   height: 150px;
   display: flex;
@@ -145,7 +144,7 @@ const EditComp = styled.div`
       border-color: red;
     }
   }
-`
+`;
 const Collection = styled.div`
   display: flex;
   text-align: center;
@@ -180,9 +179,8 @@ function Mypage({ isLogin, userinfo, setUserinfo }) {
   const [per, setPer] = useState(1);
   const [img, setImg] = useState();
 
-
   const handleChange = (e, key) => {
-    console.log(e.target.value)
+    console.log(e.target.value);
     setUserinfo({ ...userinfo, [key]: e.target.value });
   };
 
@@ -193,34 +191,33 @@ function Mypage({ isLogin, userinfo, setUserinfo }) {
   const handleButtonSave = () => {
     setUserinfo({ ...userinfo });
     axios.put(`${serverUrl}/profile`, userinfo).then((res) => {
-      if(res.status === 200){
-        alert ("저장되었습니다.")
+      if (res.status === 200) {
+        alert("저장되었습니다.");
       }
-    })
+    });
     setButton(!button);
   };
 
   const deleteUser = () => {
-    const message = window.confirm('정말 탈퇴하시겠습니까?');
-    if(message){
+    const message = window.confirm("정말 탈퇴하시겠습니까?");
+    if (message) {
       axios.delete(`${serverUrl}/profile`).then((res) => {
         console.log(res);
         window.localStorage.clear();
-        console.log('word')
-        window.location.replace("/login");//////////////////////////////////////////////////////////////////////////////////////////////////
+        console.log("word");
+        window.location.replace("/login"); //////////////////////////////////////////////////////////////////////////////////////////////////
       });
-    }else{
-
+    } else {
     }
   };
 
   const temp = () => {
-    console.log('hellof')
-    console.log(userinfo.period)
-    if(userinfo.period === '5'){
-      console.log('clicked')
+    console.log("hellof");
+    console.log(userinfo.period);
+    if (userinfo.period === "5") {
+      console.log("clicked");
     }
-  }
+  };
 
   return (
     <Container>
@@ -233,14 +230,22 @@ function Mypage({ isLogin, userinfo, setUserinfo }) {
           <div className="profile-container">
             {button ? (
               <User>
-                <div className="profile-name">{userinfo.name}님 환영합니다.</div>
+                <div className="profile-name">
+                  {userinfo.name}님 환영합니다.
+                </div>
                 {/* <span>님 환영합니다.</span> */}
                 <div className="profile-email">{userinfo.email}</div>
                 {/* <div>{userinfo.period}</div> */}
-                <div className='periodButton'>
-                  <button onClick={(e)=>{handleChange(e, "period")}} value='1' className={userinfo.period==='1'? 'alerm': ''}>1d</button>
-                  <button onClick={(e)=>{handleChange(e, "period")}} value='3' className={userinfo.period==='3'? 'alerm': ''}>3d</button>
-                  <button onClick={(e)=>{handleChange(e, "period")}} value='5' className={userinfo.period==='5'? 'alerm': ''}>5d</button>
+                <div className="periodButton">
+                  <button className={userinfo.period === "1" ? "alerm" : ""}>
+                    1d
+                  </button>
+                  <button className={userinfo.period === "3" ? "alerm" : ""}>
+                    3d
+                  </button>
+                  <button className={userinfo.period === "5" ? "alerm" : ""}>
+                    5d
+                  </button>
                   {/* <div></div> */}
                 </div>
                 <div>{userinfo.desc}</div>
@@ -263,10 +268,31 @@ function Mypage({ isLogin, userinfo, setUserinfo }) {
                   />
                   로 변경
                 </div>
-                <div className='periodButton'>
-                  <button onClick={(e)=>{handleChange(e, "period")}} value='1'>1d</button>
-                  <button onClick={(e)=>{handleChange(e, "period")}} value='3'>3d</button>
-                  <button onClick={(e)=>{handleChange(e, "period")}} value='5'>5d</button>
+                <div className="periodButton">
+                  <button
+                    onClick={(e) => {
+                      handleChange(e, "period");
+                    }}
+                    value="1"
+                  >
+                    1d
+                  </button>
+                  <button
+                    onClick={(e) => {
+                      handleChange(e, "period");
+                    }}
+                    value="3"
+                  >
+                    3d
+                  </button>
+                  <button
+                    onClick={(e) => {
+                      handleChange(e, "period");
+                    }}
+                    value="5"
+                  >
+                    5d
+                  </button>
                   <div></div>
                 </div>
                 <div>

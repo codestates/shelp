@@ -13,11 +13,12 @@ const dummyCards = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16];
 const Container = styled.div`
   top: 0;
   left: 0;
-  width: 100vw;
+  width: 98vw;
   height: 100vh;
   display: flex;
   flex-direction: column;
   min-height: 50rem;
+  margin-top: 5px;
   background-color: white;
 `;
 
@@ -73,18 +74,16 @@ const Friger = styled.div`
   height: 45em;
   background-color: white;
   border-radius: 0 0.5em 0.5em 0;
-  box-shadow: 10px 5px 20px rgba(0, 0, 0, 0.5);
+  box-shadow: 10px 5px 20px rgba(0, 0, 0, 0.4);
   display: flex;
   flex-direction: column;
 
-
-  >div.friger-search-container{
+  > div.friger-search-container {
     min-height: 100px;
     flex: row wrap;
     margin-bottom: 20px;
 
-    > div.friger-search {
-      z-index: 999;
+    > input.friger-search {
       position: absolute;
       right: 9.5em;
       top: 1.5em;
@@ -96,24 +95,19 @@ const Friger = styled.div`
       min-height: 35px;
       display: block;
 
-      > input.text-area {
+      /* > input.text-area {
         border: none;
         border-radius: 2rem 0 0 2rem;
         padding-left: 1.5rem;
         flex: 8 0 auto;
-      }
-      > div.tabs {
-        flex: 1 0 auto;
-        display: flex;
-        background: white;
-      }
+      } */
     }
 
     > button.friger-onoff {
       position: relative;
       right: -42.5rem;
       top: 1.5em;
-      width: 65px;;
+      width: 65px;
       min-height: 69px;
       margin: 3px;
       background-color: white;
@@ -122,9 +116,9 @@ const Friger = styled.div`
       border-radius: 1.5em;
       cursor: pointer;
     }
-  } 
+  }
 
-  >div.add-item-container {
+  > div.add-item-container {
     min-height: 79px;
     padding: 5px;
     display: grid;
@@ -149,79 +143,91 @@ const Friger = styled.div`
     flex-direction: column;
     overflow: auto;
     padding-left: 30px;
+    padding-right: 10px;
+    > div.friger-items {
+      height: auto;
+      display: flex;
+      flex-direction: column;
 
-    > div.friger-item {
-      display: grid;
-      grid-template-columns: 70px 200px 380px 30px;
-      grid-template-rows: 30px 30px;
-      row-gap: 10px;
-      column-gap: 10px;
-      height: 15%;
-      margin: 0 0.7rem 0.7rem 0.7rem;
-      border-radius: 0.5rem;
+      > div.friger-item {
+        display: grid;
+        grid-template-columns: 80px 200px 360px 30px;
+        grid-template-rows: 1fr 1fr;
+        row-gap: 10px;
+        column-gap: 10px;
+        height: 80px;
+        margin: 0.7rem 0.7rem 0 0.7rem;
+        padding: 5px;
+        //border-radius: 0.5rem;
+        border: solid black 0.1em;
 
-      > div.item-name {
-        border: solid black 1px;
-        margin-top: auto;
-        margin-bottom: auto;
-        padding: 0 2em 0 1em;
-        border: solid black 1px;
-        font-size: 1.3em;
-        grid-column-start: 2;
-        grid-column-end: 3;
-        grid-row-start: 1;
-        grid-row-end: 2;
-        place-content: center;
-        display: grid;
-      }
-      > div.item-quant {
-        border: solid black 1px;
-        flex: 1 0 auto;
-        grid-column-start: 2;
-        grid-column-end: 3;
-        grid-row-start: 2;
-        grid-row-end: 3;
-        place-content: center;
-        display: grid;
-      }
-      > button.item-edit {
-        border: solid black 1px;
-        flex: 1 0 auto;
-        grid-column-start: 4;
-        grid-column-end: 5;
-        grid-row-start: 1;
-        grid-row-end: 2;
-        place-content: center;
-        display: grid;
-      }
-      > div.item-expir {
-        padding-right: 1em;
-        border: solid black 1px;
-        grid-column-start: 3;
-        grid-column-end: 4;
-        grid-row-start: 1;
-        grid-row-end: 2;
-      }
-      > div.item-remain {
-        border: solid black 1px;
-        grid-column-start: 3;
-        grid-column-end: 4;
-        grid-row-start: 2;
-        grid-row-end: 3;
-      }
-      > div.item-storage {
-        border: solid black 1px;
-        grid-column-start: 1;
-        grid-column-end: 2;
-        grid-row-start: 1;
-        grid-row-end: 3;
-        place-content: center;
-        display: grid;
+        > div.item-name {
+          //border: solid black 1px;
+          //margin-top: auto;
+          //margin-bottom: auto;
+          //padding: 0 2em 0 1em;
+          //border: solid black 1px;
+          font-size: 1.3em;
+          grid-column-start: 2;
+          grid-column-end: 3;
+          grid-row-start: 1;
+          grid-row-end: 2;
+          place-content: center;
+          display: grid;
+        }
+        > div.item-quant {
+          //border: solid black 1px;
+          //flex: 1 0 auto;
+          grid-column-start: 2;
+          grid-column-end: 3;
+          grid-row-start: 2;
+          grid-row-end: 3;
+          place-content: center;
+          display: grid;
+        }
+        > button.item-edit {
+          //border: solid black 1px;
+          //flex: 1 0 auto;
+          grid-column-start: 4;
+          grid-column-end: 5;
+          grid-row-start: 1;
+          grid-row-end: 2;
+          place-content: center;
+          display: grid;
+        }
+        > div.item-expir {
+          padding-right: 1em;
+          //border: solid black 1px;
+          text-align: right;
+          grid-column-start: 3;
+          grid-column-end: 4;
+          grid-row-start: 1;
+          grid-row-end: 2;
+        }
+        > div.item-remain {
+          padding-right: 1em;
+          //border: solid black 1px;
+          text-align: right;
+          grid-column-start: 3;
+          grid-column-end: 4;
+          grid-row-start: 2;
+          grid-row-end: 3;
+        }
+        > div.item-storage {
+          border: solid black 1px;
+          border-radius: 5%;
+          grid-column-start: 1;
+          grid-column-end: 2;
+          grid-row-start: 1;
+          grid-row-end: 3;
+          place-content: center;
+          display: grid;
+          margin: 5px;
+        }
       }
     }
-  } 
-  /* animation-name: ${(props) =>
-    props.isFrigerOpen ? "slideout" : "slidein"}; */
+  }
+
   animation-name: ${(props) => {
     if (props.isFrigerOpen !== null && props.isFrigerOpen === true) {
       return "slidein";
@@ -245,11 +251,7 @@ const Friger = styled.div`
 
   @keyframes slideout {
     from {
-<<<<<<< HEAD
       left: -40em;
-=======
-      width: 30em;
->>>>>>> 8e1cdb8f9acc9ccf1c1c73c4a2d3e6889b4578a3
     }
     to {
       left: 0em;
@@ -265,7 +267,8 @@ const RecipeContainer = styled.div`
   padding: 1.25em;
   display: flex;
   flex-flow: row wrap;
-  justify-content: space-around;
+  align-content: start;
+  //justify-content: space-around;
 `;
 
 const RecipeCard = styled.div`
@@ -277,15 +280,8 @@ const RecipeCard = styled.div`
   background-color: white;
   min-width: 300px;
   max-height: 300px;
-  border: solid 0.25em white;
-  border-radius: 0.5em;
-  //padding: 0.2em;
-  //margin-bottom: 0.5em;
-  //position: absolute;
-  //flex: 4 0 auto;
-  //border-width: 0.5em;
 
-  > a { 
+  > a {
     width: auto;
     height: 75%;
     background-color: white;
@@ -295,35 +291,49 @@ const RecipeCard = styled.div`
     > img {
       width: 100%;
       height: 100%;
+      border: solid 1px white;
+      border-radius: 0.5em;
     }
   }
 
-  > div.title{
-    width: 100%;
-    height: 16%;
-    text-overflow: ellipsis;
+  > div.typecontent {
+    display: flex;
 
-    > text {
-      max-height: 16%
+    > span.title {
+      flex: 2.5 0 auto;
+      margin-top: 0.5em;
+      font-size: 1.2em;
+      font-weight: bold;
+      text-overflow: ellipsis;
+
+      > text {
+        max-height: 16%;
+      }
     }
-  }
 
-  > div.hits{
-    height: 9%;
-    width: 100%;
-    //text-align: right;
+    > i {
+      flex: 0.5 0 auto;
+      color: grey;
+      margin: 0.5em;
+    }
+
+    > span.hits {
+      margin-top: 0.5em;
+      text-align: right;
+      color: grey;
+    }
   }
 `;
 
 // ===================================================================
 
-export function Main({ isLogin }) {
+export function Main({ isLogin, userinfo }) {
   const [isModalOpen, setIsModalOpen] = useState("");
   const [items, setItems] = useState([]);
   const [index, setIndex] = useState(null);
   const [recipes, setRecipes] = useState([]);
   const [isFrigerOpen, setisFrigerOpen] = useState(null);
-  const [queryText, setQueryText] = useState("");
+  const [queryRecipe, setQueryRecipe] = useState("");
   const navigator = useNavigate();
 
   const getItems = async () => {
@@ -333,7 +343,7 @@ export function Main({ isLogin }) {
         withCredentials: true,
       })
       .then((res) => {
-        console.log(res);
+        //console.log(res);
         setItems(res.data.data);
       });
   };
@@ -341,6 +351,28 @@ export function Main({ isLogin }) {
   const frigerHandler = () => {
     setisFrigerOpen(!isFrigerOpen);
     console.log(isFrigerOpen);
+  };
+
+  const getFilteredItems = (qry) => {
+    console.log("1", qry);
+    setItems(items.filter((itm) => itm.name.includes(qry) === true));
+    console.log("2", qry);
+    navigator("/");
+    console.log("3", qry);
+  };
+
+  const getDday = (expirationDate) => {
+    let today = new Date();
+    let dday = new Date(expirationDate);
+    const gap = dday.getTime() - today.getTime();
+    let left = Math.ceil(gap / (1000 * 60 * 60 * 24));
+    if (left < 0) {
+      return [left, "일 지남"];
+    } else if (left === 0) {
+      return ["", `오늘까지`];
+    } else {
+      return [left, "일 남음"];
+    }
   };
 
   const modalHandler = (e, index) => {
@@ -373,7 +405,7 @@ export function Main({ isLogin }) {
   };
 
   const handleSearchInput = (e) => {
-    setQueryText(e.target.value);
+    setQueryRecipe(e.target.value);
   };
 
   const sortRecipes = () => {
@@ -411,19 +443,23 @@ export function Main({ isLogin }) {
     <Container>
       <Friger isFrigerOpen={isFrigerOpen}>
         <div className="friger-search-container">
-          <div className="friger-search"></div>
-            <button onClick={frigerHandler} className="friger-onoff">
-              {isFrigerOpen ? (
-                <i class="fas fa-angle-right"></i>
-              ) : (
-                <i class="fas fa-angle-left"></i>
-              )}
-            </button>
-          </div>
-        <div className="friger-item-container">1
-          {items.map((item, index) => {
-            return (
-              <div className="friger-item">
+          <input
+            className="friger-search"
+            onChange={(e) => getFilteredItems(e.target.value)}
+          ></input>
+          <button onClick={frigerHandler} className="friger-onoff">
+            {isFrigerOpen ? (
+              <i class="fas fa-angle-right"></i>
+            ) : (
+              <i class="fas fa-angle-left"></i>
+            )}
+          </button>
+        </div>
+        <div className="friger-item-container">
+          <div className="friger-items">
+            {items.map((item, index) => {
+              return (
+                <div className="friger-item">
                   <button
                     className="item-name"
                     onClick={() => searchRecipe(item.name)}
@@ -436,11 +472,15 @@ export function Main({ isLogin }) {
                     onClick={() => modalHandler("edit", index)}
                   />
                   <div className="item-expir">~ {item.expiration}</div>
-                  <div calssName="item-remain">{Date.now()}</div>
+                  <div className="item-remain" date={getDday(item.expiration)}>
+                    {getDday(item.expiration)[0]}
+                    {getDday(item.expiration)[1]}
+                  </div>
                   <div className="item-storage">{item.storage}</div>
-              </div>
-            );
-          })}
+                </div>
+              );
+            })}
+          </div>
         </div>
         <div className="add-item-container">
           <button className="add-item" onClick={() => modalHandler("add")}>
@@ -458,7 +498,7 @@ export function Main({ isLogin }) {
         <div className="tabs">
           <SearchButton
             onClick={() => {
-              searchRecipe(queryText);
+              searchRecipe(queryRecipe);
             }}
           >
             검색
@@ -469,30 +509,33 @@ export function Main({ isLogin }) {
       <Section>
         <RecipeContainer>
           {recipes.map((recp) => {
-            console.log(recp);
+            //console.log(recp);
             return (
               <RecipeCard>
-                <a href={recp.url}>
+                <a href={recp.url} target="_blank">
                   <img src={recp.image} />
                 </a>
-                <div className="title">
-                  {recp.name.length > 35? recp.name.slice(0, 35) + " ..." :  recp.name}
-                </div>
-                <div className="hits">
-                  {recp.hits}
+                <div className="typecontent">
+                  <span className="title">
+                    {recp.name.length > 14
+                      ? recp.name.slice(0, 14) + " ..."
+                      : recp.name}
+                  </span>
+                  <i class="fas fa-thumbs-up"></i>
+                  <span className="hits">{recp.hits}</span>
                 </div>
               </RecipeCard>
             );
           })}
         </RecipeContainer>
-        <div>
+        {/* <div>
           <button onClick={() => modalHandler("추가", 1)}>추가</button>
           <button onClick={() => modalHandler("수정", 0)}>수정</button>
-        </div>
+        </div> */}
       </Section>
       {isModalOpen === "add" ? (
         <AddItemModal
-          // userinfo={userinfo}
+          userinfo={userinfo}
           modalHandler={modalHandler}
           items={items}
           setItems={setItems}
