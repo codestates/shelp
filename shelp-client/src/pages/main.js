@@ -67,73 +67,98 @@ const Section = styled.div`
 const Friger = styled.div`
   z-index: 900;
   position: absolute;
-  width: 30em;
+  width: 50em;
   left: 0;
   top: 8.5em;
-  height: 32em;
+  height: 45em;
   background-color: white;
   border-radius: 0 0.5em 0.5em 0;
   box-shadow: 10px 5px 20px rgba(0, 0, 0, 0.5);
   display: flex;
   flex-direction: column;
-  overflow: auto;
 
-  > div.friger-search {
-    z-index: 999;
-    position: absolute;
-    right: 4.5em;
-    top: 1em;
-    width: 22.5rem;
-    padding: 1em;
-    border-radius: 2em;
-    background: rgba(0, 0, 0, 0.05);
-    border: solid lightgrey 1px;
 
-    > input.text-area {
+  >div.friger-search-container{
+    min-height: 100px;
+    flex: row wrap;
+    margin-bottom: 20px;
+
+    > div.friger-search {
+      z-index: 999;
+      position: absolute;
+      right: 9.5em;
+      top: 1.5em;
+      width: 35.5rem;
+      padding: 1em;
+      border-radius: 2em;
+      background: rgba(0, 0, 0, 0.05);
+      border: solid lightgrey 1px;
+      min-height: 35px;
+      display: block;
+
+      > input.text-area {
+        border: none;
+        border-radius: 2rem 0 0 2rem;
+        padding-left: 1.5rem;
+        flex: 8 0 auto;
+      }
+      > div.tabs {
+        flex: 1 0 auto;
+        display: flex;
+        background: white;
+      }
+    }
+
+    > button.friger-onoff {
+      position: relative;
+      right: -42.5rem;
+      top: 1.5em;
+      width: 65px;;
+      min-height: 69px;
+      margin: 3px;
+      background-color: white;
+      box-shadow: 0rem 0.5rem 1.5rem rgba(0, 0, 0, 0.5);
+      border-style: hidden;
+      border-radius: 1.5em;
+      cursor: pointer;
+    }
+  } 
+
+  >div.add-item-container {
+    min-height: 79px;
+    padding: 5px;
+    display: grid;
+    place-content: center;
+
+    > button.add-item {
+      height: 69px;
+      border-radius: 50%;
+      background-color: rgba(0, 0, 0, 0.3);
       border: none;
-      border-radius: 2rem 0 0 2rem;
-      padding-left: 1.5rem;
-      flex: 8 0 auto;
-    }
-    > div.tabs {
-      flex: 1 0 auto;
-      display: flex;
-      background: white;
+      position: relative;
+      bottom: 0;
+      width: 69px;
+      justify-content: center;
+      align-items: center;
     }
   }
 
-  > button.friger-onoff {
-    position: relative;
-    right: -31em;
-    width: 3em;
-    height: 3em;
-    margin: 1em;
-    background-color: white;
-    border-style: hidden;
-    border-radius: 1.5em;
-    box-shadow: 10px 5px 20px rgba(0, 0, 0, 0.5);
-    cursor: pointer;
-  }
-  > button.add-item {
-    height: 15%;
-    margin: 0 0.7rem 0.7rem 0.7rem;
-    border-radius: 0.5rem;
-    background-color: rgba(0, 0, 0, 0.3);
-    border: none;
-    position: relative;
-    bottom: 0;
-  }
-
-  > div.friger-item {
-    height: 15%;
-    margin: 0 0.7rem 0.7rem 0.7rem;
-    border-radius: 0.5rem;
-    display: flex;
+  > div.friger-item-container {
+    height: auto;
+    display: grid;
     flex-direction: column;
+    overflow: auto;
+    padding-left: 30px;
 
-    > div.item-sec-upper {
-      flex: 3 0 auto;
-      display: flex;
+    > div.friger-item {
+      display: grid;
+      grid-template-columns: 70px 200px 380px 30px;
+      grid-template-rows: 30px 30px;
+      row-gap: 10px;
+      column-gap: 10px;
+      height: 15%;
+      margin: 0 0.7rem 0.7rem 0.7rem;
+      border-radius: 0.5rem;
 
       > div.item-name {
         border: solid black 1px;
@@ -142,33 +167,59 @@ const Friger = styled.div`
         padding: 0 2em 0 1em;
         border: solid black 1px;
         font-size: 1.3em;
+        grid-column-start: 2;
+        grid-column-end: 3;
+        grid-row-start: 1;
+        grid-row-end: 2;
+        place-content: center;
+        display: grid;
       }
       > div.item-quant {
         border: solid black 1px;
         flex: 1 0 auto;
+        grid-column-start: 2;
+        grid-column-end: 3;
+        grid-row-start: 2;
+        grid-row-end: 3;
+        place-content: center;
+        display: grid;
       }
       > button.item-edit {
         border: solid black 1px;
         flex: 1 0 auto;
+        grid-column-start: 4;
+        grid-column-end: 5;
+        grid-row-start: 1;
+        grid-row-end: 2;
+        place-content: center;
+        display: grid;
       }
       > div.item-expir {
         padding-right: 1em;
         border: solid black 1px;
+        grid-column-start: 3;
+        grid-column-end: 4;
+        grid-row-start: 1;
+        grid-row-end: 2;
       }
-    }
-    > div.item-sec-lower {
-      flex: 2 0 auto;
-      display: flex;
-      > div.item-desc {
-        flex: 1 0 auto;
+      > div.item-remain {
         border: solid black 1px;
+        grid-column-start: 3;
+        grid-column-end: 4;
+        grid-row-start: 2;
+        grid-row-end: 3;
       }
       > div.item-storage {
         border: solid black 1px;
+        grid-column-start: 1;
+        grid-column-end: 2;
+        grid-row-start: 1;
+        grid-row-end: 3;
+        place-content: center;
+        display: grid;
       }
     }
-  }
-
+  } 
   /* animation-name: ${(props) =>
     props.isFrigerOpen ? "slideout" : "slidein"}; */
   animation-name: ${(props) => {
@@ -188,58 +239,75 @@ const Friger = styled.div`
       left: 0;
     }
     to {
-      left: -26em;
+      left: -40em;
     }
   }
 
   @keyframes slideout {
     from {
-      left: -26em;
+      left: -40em;
     }
-
     to {
       left: 0em;
     }
   }
-
-  > button.friger-onoff {
-    position: relative;
-    right: -26rem;
-    width: 3em;
-    height: 3em;
-    margin: 1em;
-    background-color: white;
-    box-shadow: 0rem 0.5rem 1.5rem rgba(0, 0, 0, 0.5);
-    border-style: hidden;
-    border-radius: 1.5em;
-    cursor: pointer;
-  }
-  > div.friger-view {
-  }
 `;
 
 const RecipeContainer = styled.div`
-  width: vw;
+  width: 100%;
+  margin: 1em;
+  margin-left: 9.25em;
   background-color: white;
   padding: 1.25em;
   display: flex;
   flex-flow: row wrap;
-  align-items: center;
   justify-content: space-around;
 `;
 
 const RecipeCard = styled.div`
-  position: relative;
-  height: 30vh;
-  width: auto;
-  flex: 1 0 auto;
+  height: 400px;
+  width: 300px;
+  display: flex;
+  flex-direction: column;
   margin: 0.25em;
-  background-color: blue;
+  background-color: white;
+  min-width: 300px;
+  max-height: 300px;
+  border: solid 0.25em white;
+  border-radius: 0.5em;
+  //padding: 0.2em;
+  //margin-bottom: 0.5em;
+  //position: absolute;
+  //flex: 4 0 auto;
+  //border-width: 0.5em;
 
-  > a {
-    position: relative;
+  > a { 
+    width: auto;
+    height: 75%;
+    background-color: white;
+    //margin: 0.05em;
+    //text-alignposition: relative;
+
+    > img {
+      width: 100%;
+      height: 100%;
+    }
+  }
+
+  > div.title{
     width: 100%;
-    background-color: red;
+    height: 16%;
+    text-overflow: ellipsis;
+
+    > text {
+      max-height: 16%
+    }
+  }
+
+  > div.hits{
+    height: 9%;
+    width: 100%;
+    //text-align: right;
   }
 `;
 
@@ -337,41 +405,43 @@ export function Main({ isLogin, userinfo }) {
   return (
     <Container>
       <Friger isFrigerOpen={isFrigerOpen}>
-        <div className="friger-search"></div>
-        <button onClick={frigerHandler} className="friger-onoff">
-          {isFrigerOpen ? (
-            <i class="fas fa-angle-right"></i>
-          ) : (
-            <i class="fas fa-angle-left"></i>
-          )}
-        </button>
-        {items.map((item, index) => {
-          return (
-            <div className="friger-item">
-              <div className="item-sec-upper">
-                <button
-                  className="item-name"
-                  onClick={() => searchRecipe(item.name)}
-                >
-                  {item.name}
-                </button>
-                <div className="item-quant">{item.quantity}</div>
-                <button
-                  className="item-edit"
-                  onClick={() => modalHandler("edit", index)}
-                />
-                <div className="item-expir">~ {item.expiration}</div>
+        <div className="friger-search-container">
+          <div className="friger-search"></div>
+            <button onClick={frigerHandler} className="friger-onoff">
+              {isFrigerOpen ? (
+                <i class="fas fa-angle-right"></i>
+              ) : (
+                <i class="fas fa-angle-left"></i>
+              )}
+            </button>
+          </div>
+        <div className="friger-item-container">1
+          {items.map((item, index) => {
+            return (
+              <div className="friger-item">
+                  <button
+                    className="item-name"
+                    onClick={() => searchRecipe(item.name)}
+                  >
+                    {item.name}
+                  </button>
+                  <div className="item-quant">{item.quantity}</div>
+                  <button
+                    className="item-edit"
+                    onClick={() => modalHandler("edit", index)}
+                  />
+                  <div className="item-expir">~ {item.expiration}</div>
+                  <div calssName="item-remain">{Date.now()}</div>
+                  <div className="item-storage">{item.storage}</div>
               </div>
-              <div className="item-sec-lower">
-                <div className="item-desc">{item.desc}</div>
-                <div className="item-storage">{item.storage}</div>
-              </div>
-            </div>
-          );
-        })}
-        <button className="add-item" onClick={() => modalHandler("add")}>
-          ADD
-        </button>
+            );
+          })}
+        </div>
+        <div className="add-item-container">
+          <button className="add-item" onClick={() => modalHandler("add")}>
+            +
+          </button>
+        </div>
       </Friger>
       <Navigationbar isLogin={isLogin} />
       <Searchbar>
@@ -400,6 +470,12 @@ export function Main({ isLogin, userinfo }) {
                 <a href={recp.url}>
                   <img src={recp.image} />
                 </a>
+                <div className="title">
+                  {recp.name.length > 35? recp.name.slice(0, 35) + " ..." :  recp.name}
+                </div>
+                <div className="hits">
+                  {recp.hits}
+                </div>
               </RecipeCard>
             );
           })}
