@@ -9,7 +9,7 @@ const Wallpaper = styled.div`
   left: 0;
   width: 100%;
   height: 100%;
-  background: url("https://picsum.photos/1920/1080"),
+  background: url("backgroundimage/backgroundimage-11.jpg"),
     linear-gradient(to right bottom, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.5));
   background-size: cover; // cover;
   background-repeat: no-repeat;

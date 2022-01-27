@@ -179,9 +179,9 @@ export default function Signup() {
         <button className="submit" onClick={checkEmail}>
           이메일 인증하고 회원가입
         </button>
-        <button className="oauth" onClick={oAuthHandler}>
+        {/* <button className="oauth" onClick={oAuthHandler}>
           카카오 계정으로 계속하기
-        </button>
+        </button> */}
       </TouchPoint>
     </div>
   );

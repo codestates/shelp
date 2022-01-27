@@ -26,19 +26,77 @@ const ModalBackdrop = styled.div`
 
 const ModalView = styled.div`
   border-radius: 30px;
-  background-color: rgba(255, 255, 255, 0.7);
+  background-color: white;
+  display: flex;
+  flex-direction: column;
   width: 300px;
   height: 500px;
 
-  > span.close-btn {
-    margin-top: 50%;
-    cursor: pointer;
-    color: grey;
+  > div.header {
+    > div.title {
+      cursor: default;
+      float: left;
+      margin: 30px;
+      color: rgba(92, 201, 165);
+      font-size: 100px;
+      font-weight: bold;
+    }
+    > button.trash {
+      cursor: pointer;
+      padding-left: 80px;
+      margin-top: 13px;
+      height: 50px;
+      background: white;
+      width: 100px;
+      color: black;
+      border: 0;
+      outline: 0;
+    }
   }
-
-  > div.title {
-    margin-top: 30px;
-    color: blue;
+  > div.body {
+    > div.text {
+      cursor: default;
+      flex-direction: column;
+      float: center;
+      color: rgba(178, 178, 178);
+      margin-top: 3px;
+    }
+    > input {
+      cursor: pointer;
+      border-style: solid;
+      border-radius: 10px;
+      border-color: gray;
+      margin: 5px;
+      height: 25px;
+      width: 200px;
+    }
+  }
+  > div.footer {
+    > button.save {
+      cursor: pointer;
+      border: 3px solid gray;
+      border-radius: 2rem;
+      margin-top: 30px;
+      margin-left: 10px;
+      height: 50px;
+      background: rgba(92, 201, 165);
+      width: 100px;
+      color: white;
+      border: 0;
+      outline: 0;
+    }
+    > button.fail {
+      cursor: pointer;
+      border: 3px solid gray;
+      border-radius: 2rem;
+      margin-top: 30px;
+      height: 50px;
+      background: rgba(242, 242, 242);
+      width: 100px;
+      color: black;
+      border: 0;
+      outline: 0;
+    }
   }
 
   > div.query {
@@ -152,34 +210,34 @@ export function AddItemModal({ userinfo, modalHandler, items, setItems }) {
     <ModalContainer>
       <ModalBackdrop onClick={() => modalHandler("close")}>
         <ModalView onClick={(e) => e.stopPropagation()}>
-          <span className="close-btn" onClick={() => modalHandler("close")}>
-            close
-          </span>
-          <div className="title">아이템 추가</div>
-          <div>
-            이름 <input onChange={(e) => handleInputValue(e, "name")} />
+          <div className="header">
+            <div className="title">상품 추가하기</div>
           </div>
-          <div>
-            설명
+          <div className="body">
+            <div className="text">이름</div>
+            <input onChange={(e) => handleInputValue(e, "name")} />
+            <div className="text">설명</div>
             <input onChange={(e) => handleInputValue(e, "desc")} />
-          </div>
-          <div>
-            수량
+            <div className="text">수량</div>
             <input onChange={(e) => handleInputValue(e, "quantity")} />
-          </div>
-          <div>
-            유통기한
+
+            <div className="text">유통기한</div>
             <input
               type="date"
               onChange={(e) => handleInputValue(e, "expiration")}
             />
-          </div>
-          <div>
-            보관
+            <div className="text">보관</div>
             <input onChange={(e) => handleInputValue(e, "storage")} />
           </div>
-          <div>{errorMessage}</div>
-          <button onClick={handleAdd}>저장</button>
+          <div className="footer">
+            <div>{errorMessage}</div>
+            <button className="fail" onClick={() => modalHandler("close")}>
+              취소
+            </button>
+            <button className="save" onClick={handleAdd}>
+              저장
+            </button>
+          </div>
         </ModalView>
       </ModalBackdrop>
     </ModalContainer>
@@ -228,54 +286,38 @@ export function EditItemModal({ index, modalHandler, items, setItems }) {
 
   return (
     <ModalContainer>
-      이건 수정버튼 눌렀을때
       <ModalBackdrop onClick={() => modalHandler("close")}>
         <ModalView onClick={(e) => e.stopPropagation()}>
-          <span className="close-btn" onClick={() => modalHandler("close")}>
-            close
-          </span>
-          <div className="title">아이템 수정</div>
-          {/* <div className={errorMessage? 'errorbox': null}> */}
-          <div className={errorMessage ? "errorbox" : null}>
-            이름{" "}
-            <input
-              placeholder={items[index].name}
-              onChange={(e) => handleInputValue(e, "name")}
-            />
+          <div className="header">
+            <div className="title">상품 상세정보</div>
+            <button className="trash" onClick={handleDelete}>
+              <i class="fas fa-trash-alt"></i>
+            </button>
           </div>
-          <div>
-            설명
-            <input
-              placeholder={items[index].desc}
-              onChange={(e) => handleInputValue(e, "desc")}
-            />
-          </div>
-          <div className={errorMessage ? "errorbox" : null}>
-            수량
-            <input
-              type="number"
-              placeholder={items[index].quantity}
-              onChange={(e) => handleInputValue(e, "quantity")}
-            />
-          </div>
-          <div className={errorMessage ? "errorbox" : null}>
-            유통기한
+          <div className="body">
+            <div className="text">이름</div>
+            <input onChange={(e) => handleInputValue(e, "name")} />
+            <div className="text">설명</div>
+            <input onChange={(e) => handleInputValue(e, "desc")} />
+            <div className="text">수량</div>
+            <input onChange={(e) => handleInputValue(e, "quantity")} />
+            <div className="text">유통기한</div>
             <input
               type="date"
-              placeholder={items[index].expiration}
               onChange={(e) => handleInputValue(e, "expiration")}
             />
+            <div className="text">보관</div>
+            <input onChange={(e) => handleInputValue(e, "storage")} />
           </div>
-          <div>
-            보관
-            <input
-              placeholder={items[index].storage}
-              onChange={(e) => handleInputValue(e, "storage")}
-            />
+          <div className="footer">
+            <div>{errorMessage}</div>
+            <button className="fail" onClick={() => modalHandler("close")}>
+              취소
+            </button>
+            <button className="save" onClick={handleAdd}>
+              저장
+            </button>
           </div>
-          <div>{errorMessage}</div>
-          <button onClick={handleAdd}>저장</button>
-          <button onClick={handleDelete}>삭제</button>
         </ModalView>
       </ModalBackdrop>
     </ModalContainer>

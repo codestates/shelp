@@ -16,6 +16,7 @@ const Navigator = styled.div`
     margin-left: 2rem;
     > img {
       height: 2.4rem;
+      margin: 0.3rem 0;
       width: auto;
     }
   }
@@ -31,7 +32,17 @@ const Navigator = styled.div`
   > button.nav-button {
     flex: 1 0 auto;
     text-align: center;
+    cursor: pointer;
   }
+`;
+
+const NavButton = styled.button`
+  border: none;
+  background-color: white;
+  font-size: 1em;
+  font-weight: bold;
+  margin-right: 1.5em;
+  cursor: pointer;
 `;
 
 export default function Navigationbar() {
@@ -63,19 +74,19 @@ export default function Navigationbar() {
         {window.localStorage.userinfo ? (
           <div>
             <Link to="/mypage">
-            {/* <div href="/mypage"> */}
-              <i class="far fa-user"></i>
-            {/* </div> */}
+              <NavButton>계정</NavButton>
             </Link>
-            <span onClick={handleLogOut}>로그아웃</span>
+            <Link to="/intro">
+              <NavButton onClick={handleLogOut}>로그아웃</NavButton>
+            </Link>
           </div>
         ) : (
           <div>
             <Link to="/login">
-              <button className="nav-button">로그인</button>
+              <NavButton>로그인</NavButton>
             </Link>
             <Link to="/signup">
-              <button className="nav-button">회원가입</button>
+              <NavButton>회원가입</NavButton>
             </Link>
           </div>
         )}

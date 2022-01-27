@@ -1,5 +1,5 @@
 import { Route, Switch, Link, Routes, useNavigate } from "react-router-dom";
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useContext } from "react";
 import styled from "styled-components";
 import Mypage from "./mypage.js";
 import { AddItemModal, EditItemModal } from "./modals.js";
@@ -8,12 +8,10 @@ const axios = require("axios").default;
 const serverUrl = "http://localhost:4000";
 axios.defaults.withCredentials = true;
 
-const dummyCards = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16];
-
 const Container = styled.div`
   top: 0;
   left: 0;
-  width: 98vw;
+  width: 100vw;
   height: 100vh;
   display: flex;
   flex-direction: column;
@@ -24,23 +22,22 @@ const Container = styled.div`
 
 const Searchbar = styled.div`
   height: 3rem;
-  display: flex;
-  flex-direction: row;
   margin: 1.5rem;
   border: solid lightgrey 1px;
   border-radius: 2rem;
   text-align: justify;
+  display: flex;
+  flex-direction: row;
 
   > input.text-area {
+    flex: 8 0 auto;
     border: none;
     border-radius: 2rem 0 0 2rem;
     padding-left: 1.5rem;
-    flex: 8 0 auto;
     background-color: rgba(0, 0, 0, 0.05);
   }
   > div.tabs {
     flex: 1 0 auto;
-    display: flex;
   }
 `;
 
@@ -56,6 +53,7 @@ const SortOpt = styled.div`
   margin-right: 3rem;
   margin-bottom: 0.4rem;
   text-align: right;
+  cursor: pointer;
 `;
 
 const Section = styled.div`
@@ -66,12 +64,12 @@ const Section = styled.div`
 `;
 
 const Friger = styled.div`
-  z-index: 900;
+  z-index: 800;
   position: absolute;
-  width: 50em;
+  width: 46em;
   left: 0;
   top: 8.5em;
-  height: 45em;
+  height: 38em;
   background-color: white;
   border-radius: 0 0.5em 0.5em 0;
   box-shadow: 10px 5px 20px rgba(0, 0, 0, 0.4);
@@ -79,39 +77,36 @@ const Friger = styled.div`
   flex-direction: column;
 
   > div.friger-search-container {
-    min-height: 100px;
-    flex: row wrap;
-    margin-bottom: 20px;
+    height: 2rem;
+    margin: 1.5rem 2rem 1rem 2rem;
+    text-align: justify;
+    display: flex;
 
     > input.friger-search {
-      position: absolute;
-      right: 9.5em;
-      top: 1.5em;
-      width: 35.5rem;
-      padding: 1em;
-      border-radius: 2em;
-      background: rgba(0, 0, 0, 0.05);
+      flex: 3 0 auto;
+      border: none;
+      border-radius: 1rem 0 0 1rem;
       border: solid lightgrey 1px;
-      min-height: 35px;
-      display: block;
+      border-radius: 1rem 0 0 1rem;
+      background-color: rgba(0, 0, 0, 0.05);
+    }
 
-      /* > input.text-area {
-        border: none;
-        border-radius: 2rem 0 0 2rem;
-        padding-left: 1.5rem;
-        flex: 8 0 auto;
-      } */
+    > div.friger-search {
+      flex: 1 0 auto;
+      margin-right: 4rem;
+      border: solid lightgrey 1px;
+      border-radius: 0 1rem 1rem 0;
+      border-left: 0;
+      color: grey;
+      text-align: center;
+      padding-top: 0.3em;
     }
 
     > button.friger-onoff {
-      position: relative;
-      right: -42.5rem;
-      top: 1.5em;
-      width: 65px;
-      min-height: 69px;
-      margin: 3px;
+      width: 2rem;
+      height: 2rem;
       background-color: white;
-      box-shadow: 0rem 0.5rem 1.5rem rgba(0, 0, 0, 0.5);
+      box-shadow: 0rem 0.5rem 1.5rem rgba(0, 0, 0, 0.4);
       border-style: hidden;
       border-radius: 1.5em;
       cursor: pointer;
@@ -138,12 +133,15 @@ const Friger = styled.div`
   }
 
   > div.friger-item-container {
+    width: 43em;
     height: auto;
     display: grid;
     flex-direction: column;
     overflow: auto;
-    padding-left: 30px;
+    margin-left: 2rem;
     padding-right: 10px;
+    padding-bottom: 1em;
+
     > div.friger-items {
       height: auto;
       display: flex;
@@ -151,70 +149,86 @@ const Friger = styled.div`
 
       > div.friger-item {
         display: grid;
-        grid-template-columns: 80px 200px 360px 30px;
+        grid-template-columns: 80px 100px 100px 295px 40px;
         grid-template-rows: 1fr 1fr;
         row-gap: 10px;
         column-gap: 10px;
         height: 80px;
-        margin: 0.7rem 0.7rem 0 0.7rem;
-        padding: 5px;
-        //border-radius: 0.5rem;
-        border: solid black 0.1em;
+        margin: 0.7rem 0.7rem 0 0;
+        padding: 5px 5px 5px 0;
+        border-radius: 0.5rem;
+        box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.3);
+        align-items: center;
+        cursor: pointer;
 
-        > div.item-name {
-          //border: solid black 1px;
-          //margin-top: auto;
-          //margin-bottom: auto;
-          //padding: 0 2em 0 1em;
-          //border: solid black 1px;
+        > button.item-name {
+          height: 100%;
           font-size: 1.3em;
           grid-column-start: 2;
           grid-column-end: 3;
+          grid-row-start: 1;
+          grid-row-end: 3;
+          place-content: center;
+          border: none;
+          background-color: white;
+          /* display: grid; */
+        }
+        > div.item-quant-index {
+          grid-column-start: 3;
+          grid-column-end: 4;
           grid-row-start: 1;
           grid-row-end: 2;
           place-content: center;
           display: grid;
         }
         > div.item-quant {
-          //border: solid black 1px;
-          //flex: 1 0 auto;
-          grid-column-start: 2;
-          grid-column-end: 3;
+          grid-column-start: 3;
+          grid-column-end: 4;
           grid-row-start: 2;
           grid-row-end: 3;
           place-content: center;
           display: grid;
+          font-weight: bold;
+          padding-bottom: 0.7em;
         }
         > button.item-edit {
           //border: solid black 1px;
           //flex: 1 0 auto;
-          grid-column-start: 4;
-          grid-column-end: 5;
+          z-index: 900;
+          height: 3em;
+          grid-column-start: 5;
+          grid-column-end: 6;
           grid-row-start: 1;
-          grid-row-end: 2;
+          grid-row-end: 3;
           place-content: center;
           display: grid;
+          border: none;
+          border-radius: 0.8em;
+          cursor: pointer;
         }
         > div.item-expir {
           padding-right: 1em;
           //border: solid black 1px;
-          text-align: right;
-          grid-column-start: 3;
-          grid-column-end: 4;
+          grid-column-start: 4;
+          grid-column-end: 5;
           grid-row-start: 1;
           grid-row-end: 2;
+          text-align: center;
+
+          //text-align: center;
         }
         > div.item-remain {
-          padding-right: 1em;
-          //border: solid black 1px;
           text-align: right;
-          grid-column-start: 3;
-          grid-column-end: 4;
+          grid-column-start: 4;
+          grid-column-end: 5;
           grid-row-start: 2;
           grid-row-end: 3;
+          text-align: center;
+          font-weight: bold;
+          padding-bottom: 0.7em;
         }
         > div.item-storage {
-          border: solid black 1px;
+          height: 100%;
           border-radius: 5%;
           grid-column-start: 1;
           grid-column-end: 2;
@@ -223,6 +237,7 @@ const Friger = styled.div`
           place-content: center;
           display: grid;
           margin: 5px;
+          //box-shadow: rgba(255, 255, 255, 1) 3px 3px 10px inset;
         }
       }
     }
@@ -271,12 +286,39 @@ const RecipeContainer = styled.div`
   //justify-content: space-around;
 `;
 
+const ColorTag = styled.div`
+  background-color: ${(props) => {
+    if (props.storage === "냉동") {
+      return "rgb(95, 157, 241)";
+    } else if (props.storage === "냉장") {
+      return "rgb(139, 224, 207)";
+    } else {
+      return "rgb(225, 116, 116)";
+    }
+  }};
+  text-align: center;
+  position: relative;
+  min-height: 100%;
+`;
+
+const ColorText = styled.div`
+  color: ${(props) => {
+    if (props.date[0] < 0) {
+      return "red";
+    } else if (props.date[0] > 0) {
+      return "green";
+    } else {
+      return "orange";
+    }
+  }};
+`;
+
 const RecipeCard = styled.div`
   height: 400px;
   width: 300px;
   display: flex;
   flex-direction: column;
-  margin: 0.25em;
+  margin: 0.5em;
   background-color: white;
   min-width: 300px;
   max-height: 300px;
@@ -285,14 +327,20 @@ const RecipeCard = styled.div`
     width: auto;
     height: 75%;
     background-color: white;
-    //margin: 0.05em;
+    margin: 0.05em;
     //text-alignposition: relative;
 
     > img {
       width: 100%;
       height: 100%;
-      border: solid 1px white;
-      border-radius: 0.5em;
+      border-radius: 0.25em;
+    }
+
+    > img:focus {
+      width: 100%;
+      height: 100%;
+      border-radius: 0.25em;
+      background: rgba(0, 0, 0, 0.5);
     }
   }
 
@@ -301,8 +349,8 @@ const RecipeCard = styled.div`
 
     > span.title {
       flex: 2.5 0 auto;
-      margin-top: 0.5em;
-      font-size: 1.2em;
+      margin: 0.4em;
+      font-size: 1.1em;
       font-weight: bold;
       text-overflow: ellipsis;
 
@@ -312,14 +360,15 @@ const RecipeCard = styled.div`
     }
 
     > i {
-      flex: 0.5 0 auto;
       color: grey;
-      margin: 0.5em;
+      margin-top: 0.4em 0.2em 0 0;
+      align-content: right;
     }
 
     > span.hits {
-      margin-top: 0.5em;
-      text-align: right;
+      width: auto;
+      margin: 0.3em;
+      margin-left: 0;
       color: grey;
     }
   }
@@ -334,6 +383,7 @@ export function Main({ isLogin, userinfo }) {
   const [recipes, setRecipes] = useState([]);
   const [isFrigerOpen, setisFrigerOpen] = useState(null);
   const [queryRecipe, setQueryRecipe] = useState("");
+  const [queryitem, setQueryitem] = useState("");
   const navigator = useNavigate();
 
   const getItems = async () => {
@@ -343,22 +393,21 @@ export function Main({ isLogin, userinfo }) {
         withCredentials: true,
       })
       .then((res) => {
-        //console.log(res);
         setItems(res.data.data);
       });
   };
 
   const frigerHandler = () => {
     setisFrigerOpen(!isFrigerOpen);
-    console.log(isFrigerOpen);
   };
 
-  const getFilteredItems = (qry) => {
-    console.log("1", qry);
-    setItems(items.filter((itm) => itm.name.includes(qry) === true));
-    console.log("2", qry);
-    navigator("/");
-    console.log("3", qry);
+  const getFilteredItems = () => {
+    if (queryitem !== "") {
+      setItems(items.filter((item) => item.name.includes(queryitem)));
+    } else {
+      getItems();
+      navigator("/");
+    }
   };
 
   const getDday = (expirationDate) => {
@@ -367,16 +416,17 @@ export function Main({ isLogin, userinfo }) {
     const gap = dday.getTime() - today.getTime();
     let left = Math.ceil(gap / (1000 * 60 * 60 * 24));
     if (left < 0) {
-      return [left, "일 지남"];
+      return [-1, -left, "일 지남"];
     } else if (left === 0) {
-      return ["", `오늘까지`];
+      return [0, "", `오늘까지`];
     } else {
-      return [left, "일 남음"];
+      return [1, left, "일 남음"];
     }
   };
 
-  const modalHandler = (e, index) => {
+  const modalHandler = (e, index, event) => {
     if (e === "edit") {
+      event.stopPropagation();
       setIsModalOpen("edit");
     }
     if (e === "add") {
@@ -445,8 +495,11 @@ export function Main({ isLogin, userinfo }) {
         <div className="friger-search-container">
           <input
             className="friger-search"
-            onChange={(e) => getFilteredItems(e.target.value)}
-          ></input>
+            onChange={(e) => setQueryitem(e.target.value)}
+          />
+          <div className="friger-search" onClick={() => getFilteredItems()}>
+            검색
+          </div>
           <button onClick={frigerHandler} className="friger-onoff">
             {isFrigerOpen ? (
               <i class="fas fa-angle-right"></i>
@@ -459,24 +512,32 @@ export function Main({ isLogin, userinfo }) {
           <div className="friger-items">
             {items.map((item, index) => {
               return (
-                <div className="friger-item">
-                  <button
-                    className="item-name"
-                    onClick={() => searchRecipe(item.name)}
-                  >
-                    {item.name}
-                  </button>
+                <div
+                  className="friger-item"
+                  //onClick={(e) => e.stopPropagation()}
+                  onClick={(e) => {
+                    searchRecipe(item.name);
+                  }}
+                >
+                  <button className="item-name">{item.name}</button>
+                  <ColorTag storage={item.storage} className="item-storage">
+                    {item.storage}
+                  </ColorTag>
+                  <div className="item-quant-index">수량</div>
                   <div className="item-quant">{item.quantity}</div>
                   <button
                     className="item-edit"
-                    onClick={() => modalHandler("edit", index)}
-                  />
+                    onClick={(e) => modalHandler("edit", index, e)}
+                  >
+                    <i class="fas fa-pen"></i>
+                  </button>
                   <div className="item-expir">~ {item.expiration}</div>
-                  <div className="item-remain" date={getDday(item.expiration)}>
-                    {getDday(item.expiration)[0]}
-                    {getDday(item.expiration)[1]}
+                  <div className="item-remain">
+                    <ColorText date={getDday(item.expiration)}>
+                      {getDday(item.expiration)[1]}
+                      {getDday(item.expiration)[2]}
+                    </ColorText>
                   </div>
-                  <div className="item-storage">{item.storage}</div>
                 </div>
               );
             })}
@@ -505,11 +566,10 @@ export function Main({ isLogin, userinfo }) {
           </SearchButton>
         </div>
       </Searchbar>
-      <SortOpt onClick={sortRecipes}>추천순</SortOpt>
+      <SortOpt onClick={sortRecipes}>정렬</SortOpt>
       <Section>
         <RecipeContainer>
           {recipes.map((recp) => {
-            //console.log(recp);
             return (
               <RecipeCard>
                 <a href={recp.url} target="_blank">

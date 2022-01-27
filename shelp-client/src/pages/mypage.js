@@ -174,13 +174,11 @@ const Collection = styled.div`
 const AlarmSet = styled.div``;
 
 function Mypage({ isLogin, userinfo, setUserinfo }) {
-  // console.log(userinfo.period)
   const [button, setButton] = useState(true);
   const [per, setPer] = useState(1);
   const [img, setImg] = useState();
 
   const handleChange = (e, key) => {
-    console.log(e.target.value);
     setUserinfo({ ...userinfo, [key]: e.target.value });
   };
 

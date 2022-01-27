@@ -4,17 +4,15 @@ import styled from "styled-components";
 import axios from "axios";
 const serverUrl = "http://localhost:4000";
 
-// font-family: adobe-clean-han-japanese,-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,sans-serif;
-
 const Wallpaper = styled.div`
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background: url("https://picsum.photos/1920/1080"),
+  background: url("backgroundimage/backgroundimage-10.jpg"),
     linear-gradient(to right bottom, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.5));
-  background-size: cover; // cover;
+  background-size: cover;
   background-repeat: no-repeat;
 `;
 
@@ -118,6 +116,10 @@ const TouchPoint = styled.div`
 `;
 
 export default function Login({ handleResponseSuccess }) {
+  // const randomImage = `backgroundimage/backgroundimage-${Math.ceil(
+  //   Math.random() * 11
+  // )}.jpeg`;
+
   const [loginInfo, setLoginInfo] = useState({
     email: "",
     password: "",
@@ -130,27 +132,27 @@ export default function Login({ handleResponseSuccess }) {
   };
 
   const handleLogin = () => {
-      axios.post(`${serverUrl}/user/signin`, loginInfo, {
+    axios
+      .post(`${serverUrl}/user/signin`, loginInfo, {
         "Content-Type": "application/json",
         withCredentials: true,
       })
       .then((res) => {
-          if(res.status === 200){
-            if(res.data.message === "Signin succeed"){
-              handleResponseSuccess(res.data.data);
-              window.location.replace("/");
-            }
-            if(res.data.messgae === "wrong password"){
-              alert("wrong password");
-            }
-          else if(res.status === 400){
+        if (res.status === 200) {
+          if (res.data.message === "Signin succeed") {
+            handleResponseSuccess(res.data.data);
+            window.location.replace("/");
+          }
+          if (res.data.messgae === "wrong password") {
+            alert("wrong password");
+          } else if (res.status === 400) {
             setErrorMessage("이메일과 비밀번호를 입력하세요");
           }
         }
       })
-        .catch((err)=>{
-          alert("falild!");
-        })
+      .catch((err) => {
+        alert("falild!");
+      });
   };
 
   return (
