@@ -97,13 +97,13 @@ export default function Signup () {
     setSignupInfo({ ...signupInfo, [key]: e.target.value });
   };
 
-  const handlePasswordError = (checkPassword) => {
-    if (checkPassword !== signupInfo.password) {
-      setErrorMessage("비밀번호를 확인해 주세요");
-    } else {
-      setErrorMessage("");
-    }
-  };
+  // const handlePasswordError = (checkPassword) => {
+  //   if (checkPassword !== signupInfo.password) {
+  //     setErrorMessage("비밀번호를 확인해 주세요");
+  //   } else {
+  //     setErrorMessage("");
+  //   }
+  // };
 
   const handleSignup = () => {
     if (signupInfo.email && signupInfo.name && signupInfo.password) {
@@ -114,7 +114,7 @@ export default function Signup () {
           console.log(res);
         });
       }
-      window.location.replace("/");
+      window.location.replace("/login");/////////////////////////////////////////////////////////
     }
     else{
       setErrorMessage("정보를 모두 입력해주세요");

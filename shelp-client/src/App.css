@@ -67,3 +67,8 @@
   border-radius: 10px;
   border-color: red;
 }
+
+.alerm {
+  border-style: solid;
+  border-color: red;
+}

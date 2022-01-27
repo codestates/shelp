@@ -245,7 +245,11 @@ const Friger = styled.div`
 
   @keyframes slideout {
     from {
+<<<<<<< HEAD
       left: -40em;
+=======
+      width: 30em;
+>>>>>>> 8e1cdb8f9acc9ccf1c1c73c4a2d3e6889b4578a3
     }
     to {
       left: 0em;
@@ -313,7 +317,7 @@ const RecipeCard = styled.div`
 
 // ===================================================================
 
-export function Main({ isLogin, userinfo }) {
+export function Main({ isLogin }) {
   const [isModalOpen, setIsModalOpen] = useState("");
   const [items, setItems] = useState([]);
   const [index, setIndex] = useState(null);
@@ -329,13 +333,14 @@ export function Main({ isLogin, userinfo }) {
         withCredentials: true,
       })
       .then((res) => {
-        console.log(res.data.data);
+        console.log(res);
         setItems(res.data.data);
       });
   };
 
   const frigerHandler = () => {
     setisFrigerOpen(!isFrigerOpen);
+    console.log(isFrigerOpen);
   };
 
   const modalHandler = (e, index) => {
@@ -480,10 +485,14 @@ export function Main({ isLogin, userinfo }) {
             );
           })}
         </RecipeContainer>
+        <div>
+          <button onClick={() => modalHandler("추가", 1)}>추가</button>
+          <button onClick={() => modalHandler("수정", 0)}>수정</button>
+        </div>
       </Section>
       {isModalOpen === "add" ? (
         <AddItemModal
-          userinfo={userinfo}
+          // userinfo={userinfo}
           modalHandler={modalHandler}
           items={items}
           setItems={setItems}
