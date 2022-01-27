@@ -62,9 +62,11 @@ export default function Navigationbar() {
         <div className="blank"></div>
         {window.localStorage.userinfo ? (
           <div>
-            <div href="/mypage">
+            <Link to="/mypage">
+            {/* <div href="/mypage"> */}
               <i class="far fa-user"></i>
-            </div>
+            {/* </div> */}
+            </Link>
             <span onClick={handleLogOut}>로그아웃</span>
           </div>
         ) : (

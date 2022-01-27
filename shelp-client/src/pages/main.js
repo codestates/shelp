@@ -412,7 +412,7 @@ export function Main({ isLogin }) {
       </Section>
       {isModalOpen === "add" ? (
         <AddItemModal
-          userinfo={userinfo}
+          // userinfo={userinfo}
           modalHandler={modalHandler}
           items={items}
           setItems={setItems}
