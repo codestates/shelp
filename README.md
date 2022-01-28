@@ -1,70 +1,123 @@
-# Getting Started with Create React App
+# 🥬 <span style="color:rgba(92, 201, 165)">Shelp</span>
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+유통기한 관리가 어려우신 분들을 위해 <span style="color:rgba(92, 201, 165)">Shelf</span> life관리를 <span style="color:rgba(92, 201, 165)">Help</span> 해드립니다.
 
-## Available Scripts
+> 냉장고에 식재료들이 쌓여 처리하기 힘들다면 shelp에서 도움받아보세요.  
+> Refrigerator management application for those who have a hard time managing ingredients.
 
-In the project directory, you can run:
+🏠 &nbsp; <a href="https://github.com/WonjaeJi0801">Shelp Homepage</a>
 
-### `npm start`
+&nbsp;
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+### 🍑 &nbsp; Project period
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+- 2022.01.17 ~ 2022.01.28 (2주)
 
-### `npm test`
+<br />
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## ✨ &nbsp; Feature
 
-### `npm run build`
+- 유통기한이 임박한 식재료들을 한눈에 파악할수 있습니다.  
+  grasp the ingredients that are approaching the expiration date at a glance.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+- 정렬된 식재료들로 만들 수 있는 요리들을 추천해 줍니다.  
+  recommend a dish that can be made from the ingredients in the refrigerator.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+- 처리해야 할 재료를 잊지 않도록 알림을 설정 할 수 있습니다.  
+  Set the alarm according to the expiration date.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+<br />
 
-### `npm run eject`
+## 😇 &nbsp; Contributing
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+> Team <span style="color:rgba(92, 201, 165)">_CodeJunkies_</span>
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+- 지원재 <a href="https://github.com/WonjaeJi0801">Github</a> - Front-end (Team leader)
+- 이윤성 <a href="https://github.com/flowervillagearp">Github</a> - Front-end
+- 임명섭 <a href="https://github.com/portis082">Github</a> - Back-end
+- 문현준 <a href="https://github.com/QuatoHub">Github</a> - Back-end
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+<br />
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+## 📚 &nbsp; Wiki
 
-## Learn More
+<a href="https://github.com/codestates/shelp/wiki">Github wiki 바로가기</a>
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+<br />
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+## 🔗 &nbsp; Link
 
-### Code Splitting
+`Main` > <a href="https://github.com/codestates/shelp">https://github.com/codestates/shelp</a>
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+`Client` > <a href="https://github.com/codestates/shelp/tree/main/shelp-client">https://github.com/codestates/shelp/tree/main/shelp-client</a>
 
-### Analyzing the Bundle Size
+`Server`> <a href="https://github.com/codestates/shelp/tree/main/shelp-server">https://github.com/codestates/shelp/tree/main/shelp-server</a>
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+<br />
 
-### Making a Progressive Web App
+# 🙋🏻 &nbsp; <span style="color:rgba(92, 201, 165)">Shelp</span> 서비스 소개
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+### • 로그인
 
-### Advanced Configuration
+<img src="./shelp-client/public/로그인.gif">
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+&nbsp;
 
-### Deployment
+### • 품목 검색 및 추가
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+<img src="./shelp-client/public/품목 검색 및 추가.gif">
 
-### `npm run build` fails to minify
+&nbsp;
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+### • 품목 삭제 및 레시피 크롤링
+
+<img src="./shelp-client/public/삭제 및 레시피 크롤링.gif">
+
+&nbsp;
+
+### • 레시피 검색 및 외부링크 이동
+
+<img src="./shelp-client/public/레시피 검색 및 외부링크 이동.gif">
+
+---
+
+<br />
+
+## ❓ 어떤 기술이 사용되었나요
+
+&nbsp;
+
+![](https://images.velog.io/images/quato/post/9e83185d-63e2-4b52-9955-525f897af293/image.png)
+
+| **FrontEnd** | **BackEnd** |  **Deploy**  |
+| :----------: | :---------: | :----------: |
+|     HTML     |   nodejs    |     EC2      |
+|  JavaScript  |   express   |      S3      |
+|    nodejs    |    MySQL    |     RDS      |
+| react Hooks  |     JWT     | CodePipeline |
+|    Redux     |  Sequelize  |              |
+|    axios     |   bcrypt    |              |
+
+<br />
+
+### 📐 &nbsp; Wireframe
+
+![shelp_wireframe_fin](https://user-images.githubusercontent.com/86043065/151372831-acabfb5d-c056-4660-9f0d-71546ba2640e.jpg)
+
+<br />
+
+### ✅ &nbsp; Prototype
+
+![prototype_01_col](https://user-images.githubusercontent.com/86043065/151485258-5cb44d47-5bed-484d-9102-a6de1112ba56.jpg)
+
+<br />
+
+### 📂 &nbsp; API Documentation
+
+<a href="https://app.swaggerhub.com/apis-docs/portis082/shelp/1.0.0#/">🍎 &nbsp; API 보러가기</a>
+
+<br />
+
+### 🗄 &nbsp; DB schema
+
+![](https://images.velog.io/images/quato/post/c9d123c2-c219-45d0-98eb-27e732889b9c/%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA%202022-01-27%20%E1%84%8B%E1%85%A9%E1%84%92%E1%85%AE%203.13.39.png)

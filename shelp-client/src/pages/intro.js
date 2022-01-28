@@ -1,77 +1,109 @@
-import axios from "axios";
+import { useState } from "react";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
+import { LoginModal } from "./modals.js";
 
 const Wallpaper = styled.div`
-  display: flex;
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
-  height: 300%;
-  background: linear-gradient(
-      to bottom,
-      rgba(232, 232, 232, 0.3),
-      rgba(191, 191, 191, 1)
-    ),
-    url("background-food-1.jpeg"); // 이미지 상대경로 기준: index.html
+  height: 100%;
+  background: url("backgroundimage/backgroundimage-10.jpg"),
+    linear-gradient(to right bottom, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.5));
   background-size: cover; // cover;
   background-repeat: no-repeat;
 `;
 
-const TouchPoint = styled.div`
-  flex-direction: column;
+const Wraper = styled.div`
   position: absolute;
-  bottom: 200px;
-  right: 200px;
-  background-color: aquamarine;
-  padding: 100px;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  background-size: cover;
+  background-repeat: no-repeat;
 `;
 
-function Intro({ setIsLogin }) {
-  const logInHandler = () => {
-    // axios
-    //   .post("localhost:4000/user/signin", {
-    //     user_email: "test_email",
-    //     user_password: "test_password",
-    //   })
-    //   .then((res) => {
-    //     if (res.body.message === "ok") {
-    //       setIsLogin(true);
-    //     } else {
-    //       console.log()
-    //     }
-    //   });
-    setIsLogin(true);
+const TouchPoint = styled.div`
+  bottom: 3rem;
+  right: 3rem;
+  width: 26rem;
+  height: 5rem;
+  position: absolute;
+  z-index: 999;
+  background-color: white;
+  padding: 2.5rem 3rem 4rem 3rem;
+  border-radius: 0.3rem;
+  display: flex;
+  flex-direction: column;
+
+  > div.hello {
+    flex: 1 0 auto;
+    font-size: 1.5em;
+    font-weight: bold;
+    color: rgba(0, 0, 0, 0.7);
+    padding-bottom: 1rem;
+    text-align: center;
+  }
+  > button.login {
+    flex: 1 0 auto;
+    margin: 0 9%;
+    padding: 0.3em;
+    border: none;
+    border-radius: 50vh;
+    font-size: 1.3em;
+    font-weight: bold;
+    > a {
+      color: grey;
+      padding: 0 40%;
+    }
+    > a:hover {
+      color: black;
+    }
+  }
+  > div.signup {
+    margin-top: 0.5em;
+    text-align: center;
+    font-size: 1em;
+    > a {
+      color: grey;
+    }
+    > a:hover {
+      color: black;
+    }
+  }
+`;
+
+export default function Intro({ handleResponseSuccess }) {
+  const [isModalOpen, SetIsModalOpen] = useState(false);
+
+  const modalHandler = () => {
+    SetIsModalOpen(!isModalOpen);
   };
 
   return (
-    <Wallpaper>
-      <TouchPoint>
-        this is touch point, you can login by the button below
-        <div>
-          <button onClick={logInHandler}>login</button>
-        </div>
-      </TouchPoint>
-    </Wallpaper>
+    <div>
+      {isModalOpen ? (
+        <LoginModal
+          modalHandler={modalHandler}
+          handleResponseSuccess={handleResponseSuccess}
+        />
+      ) : null}
+      <Wallpaper>
+        <Wraper>
+          <TouchPoint>
+            <div className="hello">오늘의 상차림, Shelp 와 함께하세요</div>
+            <button className="login">
+              <Link to="/login">로그인</Link>
+            </button>
+            <div className="signup">
+              <Link to="/signup">회원가입</Link>
+            </div>
+          </TouchPoint>
+        </Wraper>
+      </Wallpaper>
+    </div>
   );
 }
-
-export default Intro;
-
-// import styled from "styled-components";
-
-// function Intro() {
-//   return <Container>hello~!</Container>;
-// }
-
-// const Container = styled.div`
-//   position: absolute;
-//   top: 0;
-//   left: 0;
-//   width: 100%;
-//   height: 100%;
-//   background: url(https://source.unsplash.com/random/1920x1080);
-//   background-size: cover;
-// `;
-
-// export default Intro;
