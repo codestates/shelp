@@ -87,16 +87,7 @@
 
 &nbsp;
 
-![](https://images.velog.io/images/quato/post/9e83185d-63e2-4b52-9955-525f897af293/image.png)
-
-| **FrontEnd** | **BackEnd** |  **Deploy**  |
-| :----------: | :---------: | :----------: |
-|     HTML     |   nodejs    |     EC2      |
-|  JavaScript  |   express   |      S3      |
-|    nodejs    |    MySQL    |     RDS      |
-| react Hooks  |     JWT     | CodePipeline |
-|    Redux     |  Sequelize  |              |
-|    axios     |   bcrypt    |              |
+![](https://images.velog.io/images/quato/post/dd6ee014-7453-4378-95c5-a6c55ea28ed5/image.png)
 
 <br />
 
