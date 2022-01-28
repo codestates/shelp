@@ -25,77 +25,75 @@ const ModalBackdrop = styled.div`
 `;
 
 const ModalView = styled.div`
-  border-radius: 30px;
+  border-radius: 2em;
   background-color: white;
+  padding: 2em 4em;
+  width: 18rem;
+  height: 30rem;
   display: flex;
   flex-direction: column;
-  width: 300px;
-  height: 500px;
 
-  > div.header {
-    > div.title {
-      cursor: default;
-      float: left;
-      margin: 30px;
-      color: rgba(92, 201, 165);
-      font-size: 100px;
-      font-weight: bold;
-    }
-    > button.trash {
-      cursor: pointer;
-      padding-left: 80px;
-      margin-top: 13px;
-      height: 50px;
-      background: white;
-      width: 100px;
-      color: black;
-      border: 0;
-      outline: 0;
-    }
+  > div.title {
+    color: rgba(92, 201, 165);
+    font-size: 2.1em;
+    font-weight: bold;
+    padding-bottom: 0.8em;
   }
+
   > div.body {
-    > div.text {
-      cursor: default;
-      flex-direction: column;
-      float: center;
-      color: rgba(178, 178, 178);
-      margin-top: 3px;
+    display: flex;
+    height: 1.8em;
+    padding: 1em;
+
+    > div.index {
+      color: rgba(0, 0, 0, 0.4);
+      text-align: left;
+      align-items: middle;
+      font-size: 1.3em;
+      padding: 0.1em 0.5em 0 0;
     }
     > input {
-      cursor: pointer;
-      border-style: solid;
-      border-radius: 10px;
-      border-color: gray;
-      margin: 5px;
-      height: 25px;
-      width: 200px;
+      flex: 1 0 auto;
+      border-radius: 2em;
+      border-color: lightgrey;
+      text-align: center;
     }
   }
+
   > div.footer {
+    display: flex;
+    padding-top: 3em;
+
     > button.save {
-      cursor: pointer;
-      border: 3px solid gray;
-      border-radius: 2rem;
-      margin-top: 30px;
-      margin-left: 10px;
-      height: 50px;
+      flex: 1 0 auto;
+      width: 5em;
+      height: 3em;
+      border: none;
+      border-radius: 1.5em;
       background: rgba(92, 201, 165);
-      width: 100px;
-      color: white;
-      border: 0;
-      outline: 0;
-    }
-    > button.fail {
+      margin: 0.5em;
       cursor: pointer;
-      border: 3px solid gray;
-      border-radius: 2rem;
-      margin-top: 30px;
-      height: 50px;
+    }
+    > button.cancel {
+      flex: 1 0 auto;
+      width: 5em;
+      height: 3em;
+      border: none;
+      border-radius: 1.5em;
       background: rgba(242, 242, 242);
-      width: 100px;
-      color: black;
-      border: 0;
-      outline: 0;
+      margin: 0.5em;
+      cursor: pointer;
+    }
+    > button.delete {
+      flex: 1 0 auto;
+      width: 5em;
+      height: 3em;
+      border: 0.2em solid red;
+      border-radius: 1.5em;
+      margin: 0.5em;
+      background: white;
+      color: red;
+      cursor: pointer;
     }
   }
 
@@ -210,28 +208,33 @@ export function AddItemModal({ userinfo, modalHandler, items, setItems }) {
     <ModalContainer>
       <ModalBackdrop onClick={() => modalHandler("close")}>
         <ModalView onClick={(e) => e.stopPropagation()}>
-          <div className="header">
-            <div className="title">상품 추가하기</div>
+          <div className="title">상품 추가하기</div>
+          <div className="body">
+            <div className="index">이름</div>
+            <input onChange={(e) => handleInputValue(e, "name")} />
           </div>
           <div className="body">
-            <div className="text">이름</div>
-            <input onChange={(e) => handleInputValue(e, "name")} />
-            <div className="text">설명</div>
+            <div className="index">설명</div>
             <input onChange={(e) => handleInputValue(e, "desc")} />
-            <div className="text">수량</div>
+          </div>
+          <div className="body">
+            <div className="index">수량</div>
             <input onChange={(e) => handleInputValue(e, "quantity")} />
-
-            <div className="text">유통기한</div>
+          </div>
+          <div className="body">
+            <div className="index">유통기한</div>
             <input
               type="date"
               onChange={(e) => handleInputValue(e, "expiration")}
             />
-            <div className="text">보관</div>
+          </div>
+          <div className="body">
+            <div className="index">보관</div>
             <input onChange={(e) => handleInputValue(e, "storage")} />
           </div>
           <div className="footer">
             <div>{errorMessage}</div>
-            <button className="fail" onClick={() => modalHandler("close")}>
+            <button className="cancel" onClick={() => modalHandler("close")}>
               취소
             </button>
             <button className="save" onClick={handleAdd}>
@@ -288,34 +291,41 @@ export function EditItemModal({ index, modalHandler, items, setItems }) {
     <ModalContainer>
       <ModalBackdrop onClick={() => modalHandler("close")}>
         <ModalView onClick={(e) => e.stopPropagation()}>
-          <div className="header">
-            <div className="title">상품 상세정보</div>
-            <button className="trash" onClick={handleDelete}>
-              <i class="fas fa-trash-alt"></i>
-            </button>
+          <div className="title">상품 상세정보</div>
+          <div className="body">
+            <div className="index">설명</div>
+            <input onChange={(e) => handleInputValue(e, "name")} />
           </div>
           <div className="body">
-            <div className="text">이름</div>
-            <input onChange={(e) => handleInputValue(e, "name")} />
-            <div className="text">설명</div>
+            <div className="index">수량</div>
             <input onChange={(e) => handleInputValue(e, "desc")} />
-            <div className="text">수량</div>
+          </div>
+          <div className="body">
+            <div className="index">보관</div>
             <input onChange={(e) => handleInputValue(e, "quantity")} />
-            <div className="text">유통기한</div>
+          </div>
+          <div className="body">
+            <div className="index">유통기한</div>
             <input
               type="date"
               onChange={(e) => handleInputValue(e, "expiration")}
             />
-            <div className="text">보관</div>
+          </div>
+          <div className="body">
+            <div className="index">이름</div>
             <input onChange={(e) => handleInputValue(e, "storage")} />
           </div>
+
           <div className="footer">
             <div>{errorMessage}</div>
-            <button className="fail" onClick={() => modalHandler("close")}>
+            <button className="cancel" onClick={() => modalHandler("close")}>
               취소
             </button>
             <button className="save" onClick={handleAdd}>
               저장
+            </button>
+            <button className="delete" onClick={handleDelete}>
+              <i class="fas fa-trash-alt"></i>
             </button>
           </div>
         </ModalView>
