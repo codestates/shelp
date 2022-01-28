@@ -19,6 +19,7 @@
 .env.test.local
 .env.production.local
 .pem
+/.pem
 /.DS_Store
 
 npm-debug.log*

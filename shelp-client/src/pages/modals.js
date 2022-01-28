@@ -56,7 +56,7 @@ const ModalView = styled.div`
       flex: 1 0 auto;
       border-radius: 2em;
       border-color: lightgrey;
-      text-align: center;
+      text-align: left 1em;
     }
   }
 
@@ -293,27 +293,40 @@ export function EditItemModal({ index, modalHandler, items, setItems }) {
         <ModalView onClick={(e) => e.stopPropagation()}>
           <div className="title">상품 상세정보</div>
           <div className="body">
+            <div className="index">이름</div>
+            <input
+              onChange={(e) => handleInputValue(e, "name")}
+              placeholder={item.name}
+            />
+          </div>
+          <div className="body">
             <div className="index">설명</div>
-            <input onChange={(e) => handleInputValue(e, "name")} />
+            <input
+              onChange={(e) => handleInputValue(e, "desc")}
+              placeholder={item.desc}
+            />
           </div>
           <div className="body">
             <div className="index">수량</div>
-            <input onChange={(e) => handleInputValue(e, "desc")} />
+            <input
+              onChange={(e) => handleInputValue(e, "quantity")}
+              placeholder={item.quantity}
+            />
           </div>
           <div className="body">
             <div className="index">보관</div>
-            <input onChange={(e) => handleInputValue(e, "quantity")} />
+            <input
+              onChange={(e) => handleInputValue(e, "storage")}
+              placeholder={item.storage}
+            />
           </div>
           <div className="body">
             <div className="index">유통기한</div>
             <input
               type="date"
               onChange={(e) => handleInputValue(e, "expiration")}
+              placeholder={item.expiration}
             />
-          </div>
-          <div className="body">
-            <div className="index">이름</div>
-            <input onChange={(e) => handleInputValue(e, "storage")} />
           </div>
 
           <div className="footer">

@@ -38,11 +38,11 @@ const TouchPoint = styled.div`
   bottom: 3rem;
   right: 12rem;
   width: 26rem;
-  height: 33rem;
+  height: 25rem;
   position: absolute; // sticky  absolute?
   z-index: 999;
   background-color: white;
-  padding: 3rem;
+  padding: 6rem 6rem 4rem 6rem;
   border-radius: 0.3rem;
   align-content: space-between;
 
@@ -84,7 +84,7 @@ const TouchPoint = styled.div`
   }
 
   > div.error {
-    color: red;
+    color: rgba(0, 0, 0, 0.5);
     font-size: 0.9rem;
   }
 
@@ -93,7 +93,6 @@ const TouchPoint = styled.div`
     margin-top: 1rem;
     padding: 0.7rem 1rem;
     background-color: lightgrey;
-    color: black;
     font-weight: bold;
     border-style: hidden;
     border-radius: 2rem;
@@ -167,7 +166,7 @@ export default function Login({ handleResponseSuccess }) {
             </span>
             <div className="email-req">이메일 주소</div>
             <input onChange={(e) => handleInputValue(e, "email")}></input>
-            <div className="error">이메일 주소를 입력해 주세요</div>
+            {/* <div className="error">이메일 주소를 입력해 주세요</div> */}
             <div
               className="email-req"
               onKeyPress={(e) => {
@@ -187,7 +186,7 @@ export default function Login({ handleResponseSuccess }) {
               onChange={(e) => handleInputValue(e, "password")}
               type="password"
             ></input>
-            <div className="error">비밀번호를 입력해 주세요</div>
+            {/* <div className="error">비밀번호를 입력해 주세요</div> */}
             <button className="submit" onClick={handleLogin}>
               로그인
             </button>

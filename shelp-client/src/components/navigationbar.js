@@ -4,7 +4,7 @@ import axios from "axios";
 const serverUrl = "http://localhost:4000";
 
 const Navigator = styled.div`
-  height: 3rem;
+  height: 4rem;
   display: flex;
   align-items: center;
   min-height: 0.5rem;

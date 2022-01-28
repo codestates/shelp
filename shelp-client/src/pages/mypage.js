@@ -33,30 +33,11 @@ const Profile = styled.div`
   flex-direction: column;
   align-items: center;
 
-  /* > img.profile-left {
-    position: relative;
-    width: auto;
-    height: 70%;
-    margin-left: 10vh;
-    border-radius: 50%;
-    padding-top: 1rem;
-    overflow: hidden;
-    background-color: white;
-  } */
-
-  /* > div.profile-right {
-    flex: 1 0 auto;
-    top: 50%;
-    height: 70%;
-    margin: 10vh;
-    display: flex;
-    flex-direction: column; */
   > div.profile-image {
     border-radius: 70%;
     overflow: hidden;
     height: 300px;
     margin-top: 30px;
-    box-shadow: 0em 0em 1em rgba(0, 0, 0, 3);
   }
   > div.profile-container {
     margin-top: 30px;
@@ -70,14 +51,15 @@ const Profile = styled.div`
     height: auto;
     display: flex;
     padding: 1em 0;
+    > span.name {
+      width: auto;
+      padding-right: 0.5em;
+      margin-top: auto;
+      margin-bottom: auto;
+      font-size: 5em;
+    }
   }
-  > div.name {
-    width: auto;
-    padding-right: 0.5em;
-    margin-top: auto;
-    margin-bottom: auto;
-    font-size: 4em;
-  }
+
   > div.welcome-message {
     margin-top: auto;
     margin-bottom: auto;
@@ -95,18 +77,23 @@ const User = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
+  align-content: center;
 
   > div.periodButton {
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
+    justify-content: center;
+
     width: 200px;
 
     button {
       border: 3px solid gray;
-      border-radius: 10px;
+      border-radius: 2em;
+      font-size: 1.2em;
+      padding: 0.5em 1em;
+      margin: 0.3em;
     }
-    > button.alerm {
+    > button.alarm {
       border-style: solid;
       border-color: red;
     }
@@ -229,19 +216,19 @@ function Mypage({ isLogin, userinfo, setUserinfo }) {
             {button ? (
               <User>
                 <div className="profile-name">
-                  {userinfo.name}님 환영합니다.
+                  <span className="name">{userinfo.name}</span>님 환영합니다.
                 </div>
                 {/* <span>님 환영합니다.</span> */}
                 <div className="profile-email">{userinfo.email}</div>
                 {/* <div>{userinfo.period}</div> */}
                 <div className="periodButton">
-                  <button className={userinfo.period === "1" ? "alerm" : ""}>
+                  <button className={userinfo.period === "1" ? "alarm" : ""}>
                     1d
                   </button>
-                  <button className={userinfo.period === "3" ? "alerm" : ""}>
+                  <button className={userinfo.period === "3" ? "alarm" : ""}>
                     3d
                   </button>
-                  <button className={userinfo.period === "5" ? "alerm" : ""}>
+                  <button className={userinfo.period === "5" ? "alarm" : ""}>
                     5d
                   </button>
                   {/* <div></div> */}

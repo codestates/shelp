@@ -38,6 +38,9 @@ const Searchbar = styled.div`
   }
   > div.tabs {
     flex: 1 0 auto;
+    background-color: rgba(92, 201, 165, 0.5);
+    overflow: hidden;
+    border-radius: 0 2rem 2rem 0;
   }
 `;
 
@@ -46,6 +49,7 @@ const SearchButton = styled.div`
   padding: 1rem 0;
   text-align: center;
   font-weight: bold;
+  cursor: pointer;
 `;
 
 const SortOpt = styled.div`
@@ -68,7 +72,7 @@ const Friger = styled.div`
   position: absolute;
   width: 46em;
   left: 0;
-  top: 8.5em;
+  top: 10.5em;
   height: 38em;
   background-color: white;
   border-radius: 0 0.5em 0.5em 0;
@@ -100,6 +104,9 @@ const Friger = styled.div`
       color: grey;
       text-align: center;
       padding-top: 0.3em;
+      color: rgba(0, 0, 0, 0.6);
+      background-color: rgba(92, 201, 165, 0.5);
+      cursor: pointer;
     }
 
     > button.friger-onoff {
@@ -122,13 +129,15 @@ const Friger = styled.div`
     > button.add-item {
       height: 69px;
       border-radius: 50%;
-      background-color: rgba(0, 0, 0, 0.3);
       border: none;
       position: relative;
       bottom: 0;
       width: 69px;
-      justify-content: center;
       align-items: center;
+      font-size: 1.5em;
+      color: rgba(0, 0, 0, 0.6);
+      background-color: rgba(92, 201, 165, 0.7);
+      cursor: pointer;
     }
   }
 
@@ -149,7 +158,7 @@ const Friger = styled.div`
 
       > div.friger-item {
         display: grid;
-        grid-template-columns: 80px 100px 100px 295px 40px;
+        grid-template-columns: 80px 140px 60px 295px 40px;
         grid-template-rows: 1fr 1fr;
         row-gap: 10px;
         column-gap: 10px;
@@ -163,7 +172,9 @@ const Friger = styled.div`
 
         > button.item-name {
           height: 100%;
-          font-size: 1.3em;
+          font-size: 1em;
+          font-weight: bold;
+          color: rgba(0, 0, 0, 0.6);
           grid-column-start: 2;
           grid-column-end: 3;
           grid-row-start: 1;
@@ -204,6 +215,7 @@ const Friger = styled.div`
           display: grid;
           border: none;
           border-radius: 0.8em;
+          background-color: rgba(0, 0, 0, 0.2);
           cursor: pointer;
         }
         > div.item-expir {
@@ -293,7 +305,7 @@ const ColorTag = styled.div`
     } else if (props.storage === "냉장") {
       return "rgb(139, 224, 207)";
     } else {
-      return "rgb(225, 116, 116)";
+      return "rgb(255, 204, 102)";
     }
   }};
   text-align: center;
@@ -337,9 +349,6 @@ const RecipeCard = styled.div`
     }
 
     > img:focus {
-      width: 100%;
-      height: 100%;
-      border-radius: 0.25em;
       background: rgba(0, 0, 0, 0.5);
     }
   }
@@ -361,7 +370,7 @@ const RecipeCard = styled.div`
 
     > i {
       color: grey;
-      margin-top: 0.4em 0.2em 0 0;
+      margin: 0.4em 0.4em 0 0;
       align-content: right;
     }
 
