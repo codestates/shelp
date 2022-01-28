@@ -9,7 +9,7 @@ const Wallpaper = styled.div`
   left: 0;
   width: 100%;
   height: 100%;
-  background: url("backgroundimage/backgroundimage-11.jpg"),
+  background: url("backgroundimage/backgroundimage-10.jpg"),
     linear-gradient(to right bottom, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.5));
   background-size: cover; // cover;
   background-repeat: no-repeat;
